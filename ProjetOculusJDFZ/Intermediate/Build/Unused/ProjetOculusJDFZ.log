@@ -1,19 +1,10 @@
-﻿Build started 29.10.2014 18:08:31.
+﻿Build started 01.11.2014 18:30:57.
      1>Project "E:\Data\EPFL\Projet-bachelor\projet-oculus\ProjetOculusJDFZ\Intermediate\ProjectFiles\ProjetOculusJDFZ.vcxproj" on node 2 (Build target(s)).
      1>Build:
          "E:\programme\Epic Games\4.5\Engine\Build\BatchFiles\Build.bat" ProjetOculusJDFZEditor Win64 Development "E:\Data\EPFL\Projet-bachelor\projet-oculus\ProjetOculusJDFZ\ProjetOculusJDFZ.uproject" -rocket
-         Parsing headers for ProjetOculusJDFZEditor
-         Reflection code generated for ProjetOculusJDFZEditor
-         Performing 3 actions (4 in parallel)
-         GameGeneratedActor.cpp
-         ProjetOculusJDFZ.generated.cpp
-         [3/3] Link UE4Editor-ProjetOculusJDFZ.dll
-            Creating library E:\Data\EPFL\Projet-bachelor\projet-oculus\ProjetOculusJDFZ\Intermediate\Build\Win64\ProjetOculusJDFZEditor\Development\UE4Editor-ProjetOculusJDFZ.lib and object E:\Data\EPFL\Projet-bachelor\projet-oculus\ProjetOculusJDFZ\Intermediate\Build\Win64\ProjetOculusJDFZEditor\Development\UE4Editor-ProjetOculusJDFZ.exp
-         -------- End Detailed Actions Stats -----------------------------------------------------------
-         Cumulative action seconds (8 processors): 0.00 building projects, 0.75 compiling, 0.00 creating app bundles, 0.00 generating debug info, 0.42 linking, 0.00 other
-         UBT execution time: 6.15 seconds
+         Target is up to date.
      1>Done Building Project "E:\Data\EPFL\Projet-bachelor\projet-oculus\ProjetOculusJDFZ\Intermediate\ProjectFiles\ProjetOculusJDFZ.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:06.26
+Time Elapsed 00:00:01.38

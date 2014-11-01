@@ -4,7 +4,7 @@
 	<ItemGroup>
 		<None Include="..\..\ProjetOculusJDFZ.uproject" />
 		<Filter Include="Source">
-			<UniqueIdentifier>{718BAEE6-8991-41DA-B9DC-D31DB84EDDAC}</UniqueIdentifier>
+			<UniqueIdentifier>{5DB4448F-D35A-4068-88B2-D3620ADEEF6C}</UniqueIdentifier>
 		</Filter>
 		<None Include="..\..\Source\ProjetOculusJDFZ.Target.cs">
 			<Filter>Source</Filter>
@@ -13,7 +13,7 @@
 			<Filter>Source</Filter>
 		</None >
 		<Filter Include="Config">
-			<UniqueIdentifier>{78F8578E-3266-4C74-86B8-5E5FA321FF74}</UniqueIdentifier>
+			<UniqueIdentifier>{1710F024-CC7F-4DCE-91CC-AA57920DD7C6}</UniqueIdentifier>
 		</Filter>
 		<None Include="..\..\Config\DefaultEditor.ini">
 			<Filter>Config</Filter>
@@ -25,8 +25,14 @@
 			<Filter>Config</Filter>
 		</None >
 		<Filter Include="Source\ProjetOculusJDFZ">
-			<UniqueIdentifier>{F9AB5A0E-1B52-4D06-B1BA-921B0532F017}</UniqueIdentifier>
+			<UniqueIdentifier>{60E8BBBE-BD7A-4F8A-A493-432D58338199}</UniqueIdentifier>
 		</Filter>
+		<ClCompile Include="..\..\Source\ProjetOculusJDFZ\DataFromJson.cpp">
+			<Filter>Source\ProjetOculusJDFZ</Filter>
+		</ClCompile >
+		<ClInclude Include="..\..\Source\ProjetOculusJDFZ\DataFromJson.h">
+			<Filter>Source\ProjetOculusJDFZ</Filter>
+		</ClInclude >
 		<ClCompile Include="..\..\Source\ProjetOculusJDFZ\GameGeneratedActor.cpp">
 			<Filter>Source\ProjetOculusJDFZ</Filter>
 		</ClCompile >
@@ -39,10 +45,22 @@
 		<ClInclude Include="..\..\Source\ProjetOculusJDFZ\GeneratedMeshComponent.h">
 			<Filter>Source\ProjetOculusJDFZ</Filter>
 		</ClInclude >
+		<ClInclude Include="..\..\Source\ProjetOculusJDFZ\JSONOptions.h">
+			<Filter>Source\ProjetOculusJDFZ</Filter>
+		</ClInclude >
+		<ClInclude Include="..\..\Source\ProjetOculusJDFZ\libjson.h">
+			<Filter>Source\ProjetOculusJDFZ</Filter>
+		</ClInclude >
 		<ClCompile Include="..\..\Source\ProjetOculusJDFZ\OculusCharacter.cpp">
 			<Filter>Source\ProjetOculusJDFZ</Filter>
 		</ClCompile >
 		<ClInclude Include="..\..\Source\ProjetOculusJDFZ\OculusCharacter.h">
+			<Filter>Source\ProjetOculusJDFZ</Filter>
+		</ClInclude >
+		<ClCompile Include="..\..\Source\ProjetOculusJDFZ\ParseFromJson.cpp">
+			<Filter>Source\ProjetOculusJDFZ</Filter>
+		</ClCompile >
+		<ClInclude Include="..\..\Source\ProjetOculusJDFZ\ParseFromJson.h">
 			<Filter>Source\ProjetOculusJDFZ</Filter>
 		</ClInclude >
 		<None Include="..\..\Source\ProjetOculusJDFZ\ProjetOculusJDFZ.Build.cs">
@@ -61,10 +79,10 @@
 			<Filter>Source\ProjetOculusJDFZ</Filter>
 		</ClInclude >
 		<Filter Include="Source\ProjetOculusJDFZ\Resources">
-			<UniqueIdentifier>{3A210BC8-436A-4203-9193-B3E488DE7445}</UniqueIdentifier>
+			<UniqueIdentifier>{6A0E41EB-26F8-4137-82FB-18A98FE00942}</UniqueIdentifier>
 		</Filter>
 		<Filter Include="Source\ProjetOculusJDFZ\Resources\Windows">
-			<UniqueIdentifier>{A3EEF6F2-75A7-47E3-9EE6-C8A6DF259E3D}</UniqueIdentifier>
+			<UniqueIdentifier>{402BA714-4315-497B-A4F4-D525787B1214}</UniqueIdentifier>
 		</Filter>
 		<None Include="..\..\Source\ProjetOculusJDFZ\Resources\Windows\ProjetOculusJDFZ.ico">
 			<Filter>Source\ProjetOculusJDFZ\Resources\Windows</Filter>
