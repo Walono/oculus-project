@@ -1,0 +1,81 @@
+﻿Log file open, 10/29/14 17:58:19
+LogInit:Display: Running engine for game: ProjetOculusJDFZ
+LogInit: Version: 4.5.1-2336687+++depot+UE4-Releases+4.5
+LogInit: API Version: 2326478
+LogInit: Compiled (64-bit): Oct 21 2014 22:32:40
+LogInit: Compiled with Visual C++: 18.00.21005.01
+LogInit: Build Configuration: Development
+LogInit: Branch Name: ++depot+UE4-Releases+4.5
+LogInit: Command line: 
+LogInit: Base directory: E:/programme/Epic Games/4.5/Engine/Binaries/Win64/
+LogInit: Rocket: 1
+[2014.10.29-16.58.19:823][  0]LogTaskGraph: Started task graph with 3 named threads and 4 total threads.
+[2014.10.29-16.58.19:863][  0]LogOnline:Warning: No default platform service specified for OnlineSubsystem
+[2014.10.29-16.58.19:955][  0]LogInit: Presizing for 0 objects not considered by GC, pre-allocating 0 bytes.
+[2014.10.29-16.58.19:967][  0]LogInit: Object subsystem initialized
+[2014.10.29-16.58.19:971][  0]LogConsoleResponse:Warning: Skipping Unknown console variable: 'UIScaleRule = ShortestSide'
+[2014.10.29-16.58.19:971][  0]LogConsoleResponse:Warning:   Found in ini file 'E:/Data/EPFL/Projet-bachelor/projet-oculus/ProjetOculusJDFZ/Saved/Config/Windows/Engine.ini', in section '[/Script/Engine.RendererSettings]'
+[2014.10.29-16.58.19:971][  0]LogConsoleResponse:Warning: Skipping Unknown console variable: 'UIScaleCurve = (EditorCurveData=(Keys=((Time=480.000000,Value=0.444000),(Time=720.000000,Value=0.666000),(Time=1080.000000,Value=1.000000),(Time=8640.000000,Value=8.000000))),ExternalCurve=None)'
+[2014.10.29-16.58.19:972][  0]LogConsoleResponse:Warning:   Found in ini file 'E:/Data/EPFL/Projet-bachelor/projet-oculus/ProjetOculusJDFZ/Saved/Config/Windows/Engine.ini', in section '[/Script/Engine.RendererSettings]'
+[2014.10.29-16.58.19:973][  0]LogInit: Selected Device Profile: [Windows]
+[2014.10.29-16.58.19:973][  0]LogInit: Applying CVar settings loaded from the selected device profile: [Windows]
+[2014.10.29-16.58.19:994][  0]LogInit: Computer: WALONO-TOUR
+[2014.10.29-16.58.19:994][  0]LogInit: User: Walono
+[2014.10.29-16.58.19:995][  0]LogInit: CPU Page size=4096, Cores=4
+[2014.10.29-16.58.19:996][  0]LogInit: High frequency timer resolution =3.904033 MHz
+[2014.10.29-16.58.19:996][  0]LogMemory: Memory total: Physical=7.9GB (8GB approx) Virtual=8192.0GB
+[2014.10.29-16.58.19:996][  0]LogMemory: Platform Memory Stats for Windows
+[2014.10.29-16.58.19:997][  0]LogMemory: Process Physical Memory: 63.52 MB used, 63.52 MB peak
+[2014.10.29-16.58.19:997][  0]LogMemory: Process Virtual Memory: 38.35 MB used, 38.35 MB peak
+[2014.10.29-16.58.19:997][  0]LogMemory: Physical Memory: 4371.78 MB used, 8134.96 MB total
+[2014.10.29-16.58.19:998][  0]LogMemory: Virtual Memory: 269.38 MB used, 8388608.00 MB total
+[2014.10.29-16.58.20:074][  0]LogD3D11RHI: Found D3D11 adapter 0: NVIDIA GeForce GTX 780 (Feature Level 11_0)
+[2014.10.29-16.58.20:074][  0]LogD3D11RHI: Adapter has 2994MB of dedicated video memory, 0MB of dedicated system memory, and 3811MB of shared system memory, 2 output[s]
+[2014.10.29-16.58.20:075][  0]LogD3D11RHI: Chosen D3D11 Adapter Id = 0
+[2014.10.29-16.58.20:078][  0]LogRHI: Texture pool is 1361 MB (70% of 1945 MB)
+[2014.10.29-16.58.20:091][  0]LogD3D11RHI: Async texture creation enabled
+[2014.10.29-16.58.20:517][  0]LogTextLocalizationManager: The requested culture ('fr_CH') has no localization data; falling back to 'en' for localization and internationalization data.
+[2014.10.29-16.58.20:655][  0]LogContentStreaming: Texture pool size is 0.000000MB
+[2014.10.29-16.58.24:614][  0]LogTargetPlatformManager:Display: Building Assets For Windows
+[2014.10.29-16.58.25:121][  0]LogTargetPlatformManager:Display: Building Assets For Windows
+[2014.10.29-16.58.25:172][  0]LogDerivedDataCache:Display: Max Cache Size: 512 MB
+[2014.10.29-16.58.25:221][  0]LogDerivedDataCache: Loaded boot cache 0.05s 39MB C:/Users/Walono/AppData/Local/UnrealEngine/4.5/DerivedDataCache/Boot.ddc.
+[2014.10.29-16.58.25:222][  0]LogDerivedDataCache:Display: Loaded Boot cache: C:/Users/Walono/AppData/Local/UnrealEngine/4.5/DerivedDataCache/Boot.ddc
+[2014.10.29-16.58.25:222][  0]LogDerivedDataCache: FDerivedDataBackendGraph:  Pak pak cache file ../../../../../../Data/EPFL/Projet-bachelor/projet-oculus/ProjetOculusJDFZ/DerivedDataCache/DDC.ddp not found, will not use a pak cache.
+[2014.10.29-16.58.25:222][  0]LogDerivedDataCache: Unable to find inner node Pak for hierarchical cache Hierarchy.
+[2014.10.29-16.58.25:283][  0]LogDerivedDataCache:Display: Pak cache opened for reading ../../../Engine/DerivedDataCache/DDC.ddp.
+[2014.10.29-16.58.25:295][  0]LogDerivedDataCache: Using Local data cache path C:/Users/Walono/AppData/Local/UnrealEngine/Common/DerivedDataCache: Writable
+[2014.10.29-16.58.27:373][  0]LogMeshUtilities: No automatic mesh reduction module available
+[2014.10.29-16.58.27:373][  0]LogMeshUtilities: No automatic mesh merging module available
+[2014.10.29-16.58.27:695][  0]LogLinker:Warning: Asset '../../../Engine/Content/Functions/Engine_MaterialFunctions02/Texturing/FlipBook.uasset' has been saved with empty engine version. The asset will be loaded but may be incompatible.
+[2014.10.29-16.58.27:697][  0]LogLinker:Warning: Asset '../../../Engine/Content/Functions/Engine_MaterialFunctions02/ExampleContent/Textures/flipbook.uasset' has been saved with empty engine version. The asset will be loaded but may be incompatible.
+[2014.10.29-16.58.27:801][  0]LogInit: WinSock: version 1.1 (2.2), MaxSocks=32767, MaxUdp=65467
+[2014.10.29-16.58.31:578][  0]UdpMessaging: Initializing bridge on interface 0.0.0.0:0 to multicast group 230.0.0.1:6666.
+[2014.10.29-16.58.32:078][  0]SourceControl: Info Source control is disabled
+[2014.10.29-16.58.32:078][  0]SourceControl: Info Source control is disabled
+[2014.10.29-16.58.32:083][  0]SourceControl: Info Source control is disabled
+[2014.10.29-16.58.32:419][  0]LogObj: 22931 objects as part of root set at end of initial load.
+[2014.10.29-16.58.32:420][  0]LogUObjectAllocator: 4814136 out of 0 bytes used by permanent object pool.
+[2014.10.29-16.58.32:486][  0]LogEngine: Initializing Engine...
+[2014.10.29-16.58.32:569][  0]LogInit: XAudio2 using 'Speakers (3- High Definition Audio Device)' : 2 channels at 44.1 kHz using 16 bits per sample (channel mask 0x3)
+[2014.10.29-16.58.32:576][  0]LogInit: FAudioDevice initialized.
+[2014.10.29-16.58.32:609][  0]LogAIModule: Creating AISystem for world NewWorld
+[2014.10.29-16.58.32:626][  0]LogDerivedDataCache: Saved boot cache 0.02s 39MB C:/Users/Walono/AppData/Local/UnrealEngine/4.5/DerivedDataCache/Boot.ddc.
+[2014.10.29-16.58.32:629][  0]LogInit: Texture streaming: Enabled
+[2014.10.29-16.58.32:685][  0]LogInit: Transaction tracking system initialized
+[2014.10.29-16.58.32:827][  0]BlueprintLog: New page: Editor Load
+[2014.10.29-16.58.32:906][  0]LogAssetRegistry: FAssetRegistry took 0.0099 seconds to start up
+[2014.10.29-16.58.32:906][  0]LogDirectoryWatcher:Warning: Failed to begin reading directory changes for ../../../Engine/Plugins/Experimental/CharacterAI/Content/. Error: 0
+[2014.10.29-16.58.33:482][  0]LogTargetPlatformManager:Display: Building Assets For Windows
+[2014.10.29-16.58.33:711][  0]LogTargetPlatformManager:Display: Building Assets For Windows
+[2014.10.29-16.58.34:016][  0]LogConsoleResponse:Display: 
+[2014.10.29-16.58.34:132][  0]SourceControl: Info Source control is disabled
+[2014.10.29-16.58.34:132][  0]Cmd: MAP LOAD FILE="../../../../../../Data/EPFL/Projet-bachelor/projet-oculus/ProjetOculusJDFZ/Content/StartLvl.umap" TEMPLATE=0 SHOWPROGRESS=1
+[2014.10.29-16.58.34:132][  0]LightingResults: New page: Lighting Build
+[2014.10.29-16.58.34:139][  0]MapCheck: New page: Map Check
+[2014.10.29-16.58.34:139][  0]LightingResults: New page: Lighting Build
+[2014.10.29-16.58.34:154][  0]LogParticles: Destroying 0 GPU particle simulations for FXSystem 0x000000000FAACFE0
+[2014.10.29-16.58.34:282][  0]LogEditorServer: Finished looking for orphan Actors (0.000 secs)
+[2014.10.29-16.58.34:283][  0]LogAIModule: Creating AISystem for world StartLvl
+[2014.10.29-16.58.34:283][  0]Cmd: MAP CHECKDEP
+[2014.10.29-16.58.34:283][  0]MapCheck: N
