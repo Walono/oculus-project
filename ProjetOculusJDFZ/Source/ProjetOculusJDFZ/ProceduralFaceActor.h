@@ -19,7 +19,7 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = Materials)
 		TSubobjectPtr<UProceduralMeshComponent> mesh;
 
-	void GenerateFace(const TArray<FVector>& InPoints, int nbrPoints, TArray<FProceduralMeshTriangle>& OutTriangles);
+	void GenerateFace(const TArray<FVector>& InPoints, TArray<FProceduralMeshTriangle>& OutTriangles);
 	
 	
 };

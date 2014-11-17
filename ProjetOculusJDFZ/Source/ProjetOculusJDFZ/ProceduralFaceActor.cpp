@@ -25,28 +25,29 @@ AProceduralFaceActor::AProceduralFaceActor(const class FPostConstructInitializeP
 	points.Add(FVector(startPoint + 80.f, -startPoint, (startPoint / 2) + 60.f));
 	points.Add(FVector(startPoint + 40.f, -startPoint - 30.f, (startPoint / 2) + 30.f));
 	//TODO need to find a way to obtain this magic number
-	int nbrPoints = 6;
 
 	// Generate a face
 	TArray<FProceduralMeshTriangle> triangles;
-	GenerateFace(points, nbrPoints, triangles);
+	GenerateFace(points, triangles);
 	mesh->SetProceduralMeshTriangles(triangles);
 
 	RootComponent = mesh;
 }
 
-void AProceduralFaceActor::GenerateFace(const TArray<FVector>& InPoints, int nbrPoints, TArray<FProceduralMeshTriangle>& OutTriangles){
+void AProceduralFaceActor::GenerateFace(const TArray<FVector>& InPoints, TArray<FProceduralMeshTriangle>& OutTriangles){
 
 	//Creat the midle point
 	float middleXPos = 0;
 	float middleYPos = 0;
 	float middleZPos = 0;
-	int i;
-	for (i = 0; i < nbrPoints; ++i){
+	int nbrPoints;
+	int i ;
+	for (i = 0; i < InPoints.Num(); ++i) {
 		middleXPos += InPoints[i][0];
 		middleYPos += InPoints[i][1];
 		middleZPos += InPoints[i][2];
 	}
+	nbrPoints = i;
 	middleXPos = middleXPos / nbrPoints;
 	middleYPos = middleYPos / nbrPoints;
 	middleZPos = middleZPos / nbrPoints;
