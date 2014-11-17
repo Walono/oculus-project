@@ -1,5 +1,8 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+/*
+Author: Julie Djeffal (julied20)
 
+Class: ParseFromJson
+*/
 #include "ProjetOculusJDFZ.h"
 #include "ParseFromJson.h"
 
@@ -18,7 +21,7 @@ std::vector<DataFromJson> ParseFromJson::ParseJSON(){
 	std::vector<DataFromJson> allData;
 	JSONNode node = libjson::parse(libjson::to_json_string(json));
 
-
+	 //For all the JSON, we exctract the Data and store them in a ParsedMessage 
 	for (auto& message : node)
 	{
 		DataFromJson parsedMessage;

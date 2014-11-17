@@ -1,4 +1,9 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+/*
+Author: Julie Djeffal (julied20)
+
+Class: DataFromJson
+*/
+
 
 #include "ProjetOculusJDFZ.h"
 #include "DataFromJson.h"
@@ -12,8 +17,8 @@ DataFromJson::DataFromJson()
 DataFromJson::DataFromJson(std::string type, bool isTriangulated,
 	std::string material, coordinates3D normal, id objectId,
 	std::vector<coordinates3D> vertices, std::vector<id> remove) :
-	type(type), isTriangulated(isTriangulated), material(material), normal(normal),
-	objectId(objectId), vertices(vertices), remove(remove)
+	type(type), isTriangulated(isTriangulated), material(material), 
+	normal(normal), objectId(objectId), vertices(vertices), remove(remove)
 {
 }
 

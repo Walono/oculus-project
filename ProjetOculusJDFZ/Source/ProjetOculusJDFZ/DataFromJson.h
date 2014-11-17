@@ -1,4 +1,8 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+/*
+Author: Julie Djeffal (julied20)
+
+Class: DataFromJson
+*/
 
 #pragma once
 #include<string>
@@ -36,7 +40,6 @@ public:
 	void setIsTriangulated(bool pIsTriangulated);
 	void setMaterial(std::string pMaterial);
 	void setNormal(float x, float y, float z);
-	//coordinates3D setArray(float x, float y, float z);
 	void setId(id pId);
 	void addVertice(coordinates3D x);
 	void addIdToRemove(id pRemove);
