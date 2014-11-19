@@ -7,41 +7,37 @@ Class: Interface
 #pragma once
 #include "DataFromJson.h"
 #include "Object.h"
-#include<vector>
+#include<list>
 
 
 
 class Interface {
 
-	private:
-
-		// Add an Object to the environment from the data we extract 
-		//from the JSON
-		virtual Object add_object(DataFromJson data) = 0;
-		// Remove an object from the Environment
-		virtual void remove_object(Object polygon) = 0;
-		//Add a set of object to the environment
-		virtual Object add_scene(std::vector<Object> polygons) = 0;
-		// Remove a set of object from the environment
-		virtual void remove_scene(std::vector<Object> polygons) = 0;
-		// Add a sounf source to the environment
-		virtual Object add_sound_source(DataFromJson data) = 0;
-		// Remove a sound source from the environment
-		virtual void remove_sound_source(Object sound) = 0;
-
 	public:
 
-		//Interprete the Data we extracted from the JSON in order 
-		//to know wich method to call
-		virtual void interpreteJSON(DataFromJson data) = 0;
-		// Move an object from the environment
-		virtual void move_object(Object polygon) = 0;
+		// add a face 
+		// a texture is represented by is id (int)
+		virtual Object add_object(std::list<float> position, 
+			std::list<int> textures) = 0;
+		// Remove an object from the Environment
+		virtual void remove_object(std::list<float> position,
+			std::list<int> textures) = 0;
+		virtual Object add_sound_source(std::list<float> position, 
+			std::list<float> directionVector, int sourceId) = 0;
+		// Remove a sound source from the environment
+		virtual void remove_sound_source(std::list<float> position,
+			int sourceId) = 0;
+		virtual void move_object(std::list<float> position,
+			std::list<int> textures) = 0;
 		// Move a source sound from the environment
-		virtual void move_source(Object sound) = 0;
+		virtual void move_source(std::list<float> position,
+			std::list<float> directionVector, int sourceId) = 0;
 		// enable or disable the sound of a source sound
-		virtual void enable_sound(bool enable, Object sound) = 0;
+		virtual void enable_sound(bool enable) = 0;
 		// Set the initial position and view of the receiver
+		// Equal to reset_position()?
 		virtual void set_initial_position() = 0;
+		virtual void set_position(std::list<float> position) = 0;
 
 
 
