@@ -11,8 +11,6 @@ Class: Interface
 #include<vector>
 #include<string>
 
-
-
 class Interface {
 
 	public:
@@ -26,19 +24,21 @@ class Interface {
 		virtual void remove_face(int faceId) = 0;
 		
 		//Move a face in the Environment
-		virtual void move_face(int faceId) = 0;
+		virtual void move_face(std::list<float> newPosition, int faceId) = 0;
 		
 		//Add a sound source to the environment
 		virtual void add_sound_source(std::string name, 
 			std::list<float> position, 
-			std::list<std::vector<float>> viewDirection, 
-			std::list<std::vector<float>> upDirection, int sourceId) = 0;
+			std::vector<float> viewDirection, 
+			std::vector<float> upDirection, int sourceId) = 0;
 		
 		// Remove a sound source from the environment
 		virtual void remove_sound_source(int sourceId) = 0;
 		
 		// Move a source sound from the environment
-		virtual void move_source(int sourceId) = 0;
+		virtual void move_source(std::list<float> newPosition, 
+			std::vector<float> newViewDirection,
+			std::vector<float> newUpDirection, int sourceId) = 0;
 		
 		// Enable or disable the sound of a source sound
 		virtual void enable_sound(bool enable) = 0;
@@ -48,7 +48,5 @@ class Interface {
 
 		// Reset the position to the initial position
 		virtual void reset_position() = 0;
-
-
 
 };
