@@ -39,7 +39,7 @@ module FastTW
 		
 		#Modification by julied20
 		#fdirname = File.dirname(Sketchup.active_model.path) + "/textures/"
-		path = UI.select_directory(title: "Choose a directory to Export the Textures PD")
+		path = UI.select_directory(title: "Choose a directory to Export the Textures")
 		fdirname = path + "/textures/"
 		
 		dir_exists = File.directory?(fdirname)
