@@ -41,7 +41,7 @@ class Interface {
 			std::vector<float> newUpDirection, int sourceId) = 0;
 		
 		// Enable or disable the sound of a source sound
-		virtual void enable_sound(bool enable) = 0;
+		virtual void enable_sound(bool enable, int sourceId) = 0;
 		
 		// Set the initial position 
 		virtual void set_initial_position(std::list<float> position) = 0;
