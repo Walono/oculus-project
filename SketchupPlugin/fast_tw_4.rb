@@ -108,40 +108,6 @@ module FastTW
 		edges.each { |e| e.erase! if e.valid? }
 	end	#def
 	
-	### fast_tr added by bentleykf(niall.campbell@gmail.com)
-	def self.fast_tr
-		entries_hash = Hash.new()
-		
-		dirpath = UI.openpanel("Choose A File Inside The Texture Import Folder", File.dirname(Sketchup.active_model.path), "*.jpg;*.png;*.psd;*.tif;*.tga;*.bmp")
-		fdirname = File.dirname(dirpath)
-		
-		Dir.foreach(fdirname) { |filebase|
-			fileext  = File.extname(filebase)
-			filename = filebase[0,filebase.length-fileext.length]
-			entries_hash[filename] = filename	+ fileext
-		}
-		
-		Sketchup.active_model.materials.each do |mat|
-			if mat.texture
-				texture = mat.texture
-				filebase = File.basename(texture.filename)
-				fileext  = File.extname(texture.filename)
-				filename = filebase[0,filebase.length-fileext.length]
-				if (entries_hash[filename])
-					theight = texture.height
-					twidth  = texture.width
-					#should copy texture back to textures folder??? just run fast_tw at end of file
-					mat.texture = fdirname + "/" + entries_hash[filename]
-					mat.texture.size = [twidth,theight]
-				end #if
-				
-			end #if
-		end #do
-
-		FastTW.fast_tw(true)
-		
-		
-	end #def
 	
 end #module
 
@@ -151,26 +117,7 @@ if(not file_loaded?("fast_tw_4.rb"))
 	Sketchup.write_default("Export All Textures","UTP",true) if Sketchup.read_default("Export All Textures","UTP","fail") == "fail"
 	
 	### submenu added by bentleykf(niall.campbell@gmail.com)
-	submenu = UI.menu("Plugins").add_submenu("Export All Textures")
-	submenu.add_item("Export All Textures") {FastTW.fast_tw(Sketchup.read_default("Export All Textures","UTP",true))}
-	submenu.add_item("Import All Textures") {FastTW.fast_tr}
-	
-	submenu.add_separator
-	
-	cmd = UI::Command.new("Update Texture Paths") {
-		update_paths = Sketchup.read_default("Export All Textures","UTP",true)
-		if update_paths
-			Sketchup.write_default("Export All Textures","UTP",false)
-		else
-			Sketchup.write_default("Export All Textures","UTP",true)
-		end
-	}
-	
-	cmd.set_validation_proc {
-		Sketchup.read_default("UExport All Textures","UTP",true) ? MF_CHECKED : MF_UNCHECKED
-	}
-	
-	submenu.add_item(cmd)
+	submenu = UI.menu("Plugins").add_item("Export All Textures") {FastTW.fast_tw(Sketchup.read_default("Export All Textures","UTP",true))}
 	
 end
 
