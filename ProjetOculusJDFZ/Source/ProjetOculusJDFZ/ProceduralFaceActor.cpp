@@ -19,11 +19,11 @@ AProceduralFaceActor::AProceduralFaceActor(const class FPostConstructInitializeP
 	TArray<FVector> points;
 	float startPoint = 0;
 	points.Add(FVector(startPoint, -startPoint, (startPoint / 2)));
-	points.Add(FVector(startPoint, -startPoint + 30.f, (startPoint / 2)));
-	points.Add(FVector(startPoint + 40.f, -startPoint + 60.f, (startPoint / 2) + 30.f));
-	points.Add(FVector(startPoint + 80.f, -startPoint + 30.f, (startPoint / 2) + 60.f));
-	points.Add(FVector(startPoint + 80.f, -startPoint, (startPoint / 2) + 60.f));
-	points.Add(FVector(startPoint + 40.f, -startPoint - 30.f, (startPoint / 2) + 30.f));
+	points.Add(FVector(startPoint, -startPoint + 60.f, (startPoint / 2)));
+	points.Add(FVector(startPoint + 80.f, -startPoint + 120.f, (startPoint / 2) + 60.f));
+	points.Add(FVector(startPoint + 160.f, -startPoint + 60.f, (startPoint / 2) + 120.f));
+	points.Add(FVector(startPoint + 160.f, -startPoint, (startPoint / 2) + 120.f));
+	points.Add(FVector(startPoint + 80.f, -startPoint - 60.f, (startPoint / 2) + 60.f));
 	//TODO need to find a way to obtain this magic number
 
 	// Generate a face
@@ -52,8 +52,12 @@ void AProceduralFaceActor::GenerateFace(const TArray<FVector>& InPoints, TArray<
 	middleYPos = middleYPos / nbrPoints;
 	middleZPos = middleZPos / nbrPoints;
 
+	static const FColor Green(96, 169, 23);
 	for (i = 0; i < nbrPoints; ++i){
 		FProceduralMeshTriangle triangle;
+		triangle.Vertex0.Color = Green;
+		triangle.Vertex1.Color = Green;
+		triangle.Vertex2.Color = Green;
 		triangle.Vertex0.Position.Set(InPoints[i][0], InPoints[i][1], InPoints[i][2]);
 		if (i == nbrPoints - 1) {
 			triangle.Vertex1.Position.Set(InPoints[0][0], InPoints[0][1], InPoints[0][2]);
@@ -68,6 +72,9 @@ void AProceduralFaceActor::GenerateFace(const TArray<FVector>& InPoints, TArray<
 
 	for (i = nbrPoints - 1; i >= 0; --i){
 		FProceduralMeshTriangle triangle;
+		triangle.Vertex0.Color = Green;
+		triangle.Vertex1.Color = Green;
+		triangle.Vertex2.Color = Green;
 		triangle.Vertex0.Position.Set(InPoints[i][0], InPoints[i][1], InPoints[i][2]);
 		if (i == 0) {
 			triangle.Vertex1.Position.Set(InPoints[nbrPoints - 1][0], InPoints[nbrPoints - 1][1], InPoints[nbrPoints - 1][2]);
