@@ -11,8 +11,8 @@ ASpawnVolume::ASpawnVolume(const class FPostConstructInitializeProperties& PCIP)
 	//TODO: Find a way to self generate the spawnVolum without the editor
 
 	//Set the initial position and size of our  spawnVolum
-	InitialSpawnVolumeDim = FVector(2000.f, 2000.f, 2000.f);
-	InitialSpawnVolumePos = FVector(0.f, 0.f, 2500.f);
+	InitialSpawnVolumeDim = FVector(10000.f, 10000.f, 1200.f);
+	InitialSpawnVolumePos = FVector(0.f, 0.f, 1000.f);
 
 	//Create a simple StaticMeshComponent to represent the level
 	WhereToSpawn = PCIP.CreateDefaultSubobject<UBoxComponent>(this, TEXT("WhereToSpawn"));
@@ -21,7 +21,7 @@ ASpawnVolume::ASpawnVolume(const class FPostConstructInitializeProperties& PCIP)
 	WhereToSpawn->AttachTo(RootComponent);
 
 	//Set the spawn delay
-	SpawnDelay = 1.f;
+	SpawnDelay = 0.5f;
 
 
 	//Make the SpawnVolume tickable.
