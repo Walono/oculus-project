@@ -1,48 +1,66 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "ProjetOculusJDFZ.h"
+#include "ProceduralFaceActor.h"
 #include "SpawnVolume.h"
 
 
 ASpawnVolume::ASpawnVolume(const class FPostConstructInitializeProperties& PCIP)
 	: Super(PCIP)
 {
-	//Set the initial pos of the spawn volume.
-	InitialSpawnVolumePos = FVector(0, 0, 0);
+	//TODO: Find a way to self generate the spawnVolum without the editor
 
-	//Set the initial dim of the spawn volume.
-	InitialSpawnVolumeDim = FVector(4600, 4600, 2500);
+	//Set the initial position and size of our  spawnVolum
+	InitialSpawnVolumeDim = FVector(2000.f, 2000.f, 2000.f);
+	InitialSpawnVolumePos = FVector(0.f, 0.f, 2500.f);
 
 	//Create a simple StaticMeshComponent to represent the level
 	WhereToSpawn = PCIP.CreateDefaultSubobject<UBoxComponent>(this, TEXT("WhereToSpawn"));
-	WhereToSpawn->SetWorldScale3D(InitialSpawnVolumeDim);
-	WhereToSpawn->Bounds.Origin = InitialSpawnVolumePos;
+	WhereToSpawn->SetBoxExtent(InitialSpawnVolumeDim);
+	WhereToSpawn->SetWorldLocation(InitialSpawnVolumePos);
 	WhereToSpawn->AttachTo(RootComponent);
 
 	//Set the spawn delay
-	SpawnDelay = 10.f;
+	SpawnDelay = 1.f;
+
 
 	//Make the SpawnVolume tickable.
 	PrimaryActorTick.bCanEverTick = true;
+
+	//TODO Use a key after to set it true/false
+	SetSpawningEnable(true);
 }
 
 void ASpawnVolume::SpawnObject()
 {
-	//Check we have something to spawn
-	if (WhatToSpawn != NULL)
-	{
+
 		//Check the world is valid
 		UWorld* const World = GetWorld();
 		if (World)
 		{
-			//TODO make it spawn
-			//TODO define WhatToSpawn
+			//TODO: Switch between diferent object to generate
+
+			//Set the spawn parameters
+			FActorSpawnParameters SpawnParams;
+			SpawnParams.Owner = this;
+			SpawnParams.Instigator = Instigator;
+
+			//Get a random location to spawn at
+			FVector SpawnLocation = GetRandomPointInVolum();
+
+			//Get a random rotation for the spawned item
+			FRotator SpawnRotation;
+			SpawnRotation.Yaw = FMath::FRand() * 360.f;
+			SpawnRotation.Pitch = FMath::FRand() * 360.f;
+			SpawnRotation.Roll = FMath::FRand() * 360.f;
+
+			AProceduralFaceActor* const SpawnedFace = World->SpawnActor<AProceduralFaceActor>(SpawnLocation, SpawnRotation, SpawnParams);
+
 		}
-	}
 }
 
 
-FVector ASpawnVolume::GetRandomPointInVolume()
+FVector ASpawnVolume::GetRandomPointInVolum()
 {
 	FVector RandomLocation;
 	float MinX;
@@ -55,7 +73,7 @@ FVector ASpawnVolume::GetRandomPointInVolume()
 	FVector BoxExtent;
 
 	//Get the SpawnVolume's box extent
-	BoxExtent = WhereToSpawn->Bounds.BoxExtent;
+	BoxExtent = InitialSpawnVolumeDim;
 
 	//Calculate the limite where to spawn
 	MinX = InitialSpawnVolumePos.X - BoxExtent.X / 2.f;
@@ -77,20 +95,18 @@ FVector ASpawnVolume::GetRandomPointInVolume()
 void ASpawnVolume::Tick(float DeltaSeconds)
 {
 	//Do nothing if spawning aren't enable
-	if (!bSpawningEnabled)
+	if (bSpawningEnabled)
 	{
-		return
-	}
+		//increment the time befor spawnng
+		SpawnTime += DeltaSeconds;
 
-	//increment the time befor spawnng
-	SpawnTime += DeltaSeconds;
+		if (SpawnTime > SpawnDelay)
+		{
+			SpawnObject();
 
-	if (SpawnTime > SpawnDelay)
-	{
-		SpawnObject();
-
-		//Restart the timer
-		SpawnTime = 0;
+			//Restart the timer
+			SpawnTime -= SpawnDelay;
+		}
 	}
 }
 

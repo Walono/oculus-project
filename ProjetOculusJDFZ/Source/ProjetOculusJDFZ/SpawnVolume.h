@@ -3,6 +3,7 @@
 #pragma once
 
 #include "GameFramework/Actor.h"
+#include "ProceduralMeshComponent.h"
 #include "SpawnVolume.generated.h"
 
 /**
@@ -17,17 +18,13 @@ class PROJETOCULUSJDFZ_API ASpawnVolume : public AActor
 	UPROPERTY(VisibleInstanceOnly, Category = Spawning)
 	TSubobjectPtr<UBoxComponent> WhereToSpawn;
 
-	/**Which object we want to spawn */
-	UPROPERTY(EditAnyWhere, Category = Spawning)
-	TSubclassOf<class AProceduralFaceActor> WhatToSpawn;
-
 	/** The delay of the delay */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Spawning)
 	float SpawnDelay;
 
 	/** Find a random point in the level */
 	UFUNCTION(BlueprintPure, Category = Spawning)
-	FVector GetRandomPointInVolume();
+	FVector GetRandomPointInVolum();
 
 	/** ovverdide the tick to spawn object on the right time */
 	virtual void Tick(float DeltSeconds) override;
