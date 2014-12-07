@@ -17,54 +17,55 @@ AProceduralFaceActor::AProceduralFaceActor(const class FPostConstructInitializeP
 
 	//The array of triangles who will build all faces
 	TArray<FProceduralMeshTriangle> triangles;
+	float startPoint = 0.f;
+	float vectorLength = 300.f;
 
 	// Define and generate face 0
 	TArray<FVector> face0;
-	float startPoint = 0;
 	face0.Add(FVector(startPoint, startPoint, startPoint));
-	face0.Add(FVector(startPoint, startPoint + 100.f, startPoint));
-	face0.Add(FVector(startPoint, startPoint + 100.f, startPoint + 100.f));
-	face0.Add(FVector(startPoint, startPoint, startPoint + 100.f));
+	face0.Add(FVector(startPoint, startPoint + vectorLength, startPoint));
+	face0.Add(FVector(startPoint, startPoint + vectorLength, startPoint + vectorLength));
+	face0.Add(FVector(startPoint, startPoint, startPoint + vectorLength));
 	GenerateFace(face0, triangles);
 
 	// Define and generate face 1
 	TArray<FVector> face1;
 	face1.Add(FVector(startPoint, startPoint, startPoint));
-	face1.Add(FVector(startPoint - 100.f, startPoint, startPoint));
-	face1.Add(FVector(startPoint - 100.f, startPoint + 100.f, startPoint));
-	face1.Add(FVector(startPoint, startPoint + 100.f, startPoint));
+	face1.Add(FVector(startPoint - vectorLength, startPoint, startPoint));
+	face1.Add(FVector(startPoint - vectorLength, startPoint + vectorLength, startPoint));
+	face1.Add(FVector(startPoint, startPoint + vectorLength, startPoint));
 	GenerateFace(face1, triangles);
 
 	// Define and generate face 2
 	TArray<FVector> face2;
 	face2.Add(FVector(startPoint, startPoint, startPoint));
-	face2.Add(FVector(startPoint - 100.f, startPoint, startPoint));
-	face2.Add(FVector(startPoint - 100.f, startPoint, startPoint + 100.f));
-	face2.Add(FVector(startPoint, startPoint, startPoint + 100.f));
+	face2.Add(FVector(startPoint - vectorLength, startPoint, startPoint));
+	face2.Add(FVector(startPoint - vectorLength, startPoint, startPoint + vectorLength));
+	face2.Add(FVector(startPoint, startPoint, startPoint + vectorLength));
 	GenerateFace(face2, triangles);
 
 	// Define and generate face 3
 	TArray<FVector> face3;
-	face3.Add(FVector(startPoint - 100.f, startPoint, startPoint));
-	face3.Add(FVector(startPoint - 100.f, startPoint + 100.f, startPoint));
-	face3.Add(FVector(startPoint - 100.f, startPoint + 100.f, startPoint + 100.f));
-	face3.Add(FVector(startPoint - 100.f, startPoint, startPoint + 100.f));
+	face3.Add(FVector(startPoint - vectorLength, startPoint, startPoint));
+	face3.Add(FVector(startPoint - vectorLength, startPoint + vectorLength, startPoint));
+	face3.Add(FVector(startPoint - vectorLength, startPoint + vectorLength, startPoint + vectorLength));
+	face3.Add(FVector(startPoint - vectorLength, startPoint, startPoint + vectorLength));
 	GenerateFace(face3, triangles);
 
 	// Define and generate face 4
 	TArray<FVector> face4;
-	face4.Add(FVector(startPoint, startPoint + 100.f, startPoint));
-	face4.Add(FVector(startPoint - 100.f, startPoint + 100.f, startPoint));
-	face4.Add(FVector(startPoint - 100.f, startPoint + 100.f, startPoint + 100.f));
-	face4.Add(FVector(startPoint, startPoint + 100.f, startPoint + 100.f));
+	face4.Add(FVector(startPoint, startPoint + vectorLength, startPoint));
+	face4.Add(FVector(startPoint - vectorLength, startPoint + vectorLength, startPoint));
+	face4.Add(FVector(startPoint - vectorLength, startPoint + vectorLength, startPoint + vectorLength));
+	face4.Add(FVector(startPoint, startPoint + vectorLength, startPoint + vectorLength));
 	GenerateFace(face4, triangles);
 
 	// Define and generate face 5
 	TArray<FVector> face5;
-	face5.Add(FVector(startPoint, startPoint, startPoint + 100.f));
-	face5.Add(FVector(startPoint, startPoint + 100.f, startPoint + 100.f));
-	face5.Add(FVector(startPoint - 100.f, startPoint + 100.f, startPoint + 100.f));
-	face5.Add(FVector(startPoint - 100.f, startPoint, startPoint + 100.f));
+	face5.Add(FVector(startPoint, startPoint, startPoint + vectorLength));
+	face5.Add(FVector(startPoint, startPoint + vectorLength, startPoint + vectorLength));
+	face5.Add(FVector(startPoint - vectorLength, startPoint + vectorLength, startPoint + vectorLength));
+	face5.Add(FVector(startPoint - vectorLength, startPoint, startPoint + vectorLength));
 	GenerateFace(face5, triangles);
 
 	//Create the object
