@@ -7,7 +7,7 @@
 AProceduralFaceActor::AProceduralFaceActor(const class FPostConstructInitializeProperties& PCIP)
 	: Super(PCIP)
 {
-	mesh = PCIP.CreateDefaultSubobject<UProceduralMeshComponent>(this, TEXT("ProceduralCube"));
+	mesh = PCIP.CreateDefaultSubobject<UProceduralMeshComponent>(this, TEXT("ProceduralFace"));
 
 	// Apply a simple material directly using the VertexColor as its BaseColor input
 	static ConstructorHelpers::FObjectFinder<UMaterialInterface> Material(TEXT("Material'/Game/Materials/BaseColor.BaseColor'"));

@@ -40,6 +40,7 @@ class PROJETOCULUSJDFZ_API ASpawnVolume : public AActor
 	void SetSpawningEnable(bool isEnable);
 
 private:
+	int32 Counter;
 
 	/** Base location for the SpawnVolume. */
 	FVector InitialSpawnVolumePos;

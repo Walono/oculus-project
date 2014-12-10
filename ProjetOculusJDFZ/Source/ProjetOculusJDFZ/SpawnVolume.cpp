@@ -2,6 +2,7 @@
 
 #include "ProjetOculusJDFZ.h"
 #include "ProceduralFaceActor.h"
+#include "ProceduralSoundActor.h"
 #include "SpawnVolume.h"
 
 
@@ -21,7 +22,7 @@ ASpawnVolume::ASpawnVolume(const class FPostConstructInitializeProperties& PCIP)
 	WhereToSpawn->AttachTo(RootComponent);
 
 	//Set the spawn delay
-	SpawnDelay = 0.1f;
+	SpawnDelay = 1.f;
 
 
 	//Make the SpawnVolume tickable.
@@ -29,11 +30,12 @@ ASpawnVolume::ASpawnVolume(const class FPostConstructInitializeProperties& PCIP)
 
 	//TODO Use a key after to set it true/false
 	SetSpawningEnable(true);
+	Counter = 0;
 }
 
 void ASpawnVolume::SpawnObject()
 {
-
+	Counter += 1;
 		//Check the world is valid
 		UWorld* const World = GetWorld();
 		if (World)
@@ -54,7 +56,13 @@ void ASpawnVolume::SpawnObject()
 			SpawnRotation.Pitch = FMath::FRand() * 360.f;
 			SpawnRotation.Roll = FMath::FRand() * 360.f;
 
-			AProceduralFaceActor* const SpawnedFace = World->SpawnActor<AProceduralFaceActor>(SpawnLocation, SpawnRotation, SpawnParams);
+			if (Counter != 100) {
+				AProceduralFaceActor* const SpawnedFace = World->SpawnActor<AProceduralFaceActor>(SpawnLocation, SpawnRotation, SpawnParams);
+			}
+			else {
+				AProceduralSoundActor* const SpawnedSound = World->SpawnActor<AProceduralSoundActor>(SpawnLocation, SpawnRotation, SpawnParams);
+			}
+			
 
 		}
 }
