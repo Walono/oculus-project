@@ -5,8 +5,6 @@ Class: Interface
 */
 
 #pragma once
-#include "DataFromJson.h"
-#include "Object.h"
 #include<list>
 #include<vector>
 #include<string>
@@ -15,10 +13,12 @@ class Interface {
 
 	public:
 
+		virtual ~Interface() {};
+
 		// add a face 
 		// a texture is represented by is id (int)
 		virtual void add_face(std::list<float> position, 
-			int texture, int faceId) = 0;
+			std::list<std::list<float>> coordinates, int texture, int faceId) = 0;
 		
 		// Remove a face from the Environment
 		virtual void remove_face(int faceId) = 0;
