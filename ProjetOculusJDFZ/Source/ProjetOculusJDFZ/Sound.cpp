@@ -1,3 +1,4 @@
+#include "ProjetOculusJDFZ.h"
 #include "Sound.h"
 
 
@@ -11,6 +12,8 @@ Sound::Sound(const Sound& other) :
 	name(other.name), position(other.position),
 	viewDirection(other.viewDirection), upDirection(other.upDirection),
 	sourceId(other.sourceId) {}
+
+Sound::Sound() {}
 
 
 

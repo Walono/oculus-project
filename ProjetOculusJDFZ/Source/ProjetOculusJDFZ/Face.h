@@ -8,6 +8,7 @@ class Face
 public:
 	Face(std::list<float> position, std::list<std::list<float>> coordinates, 
 		int texture, int faceId);
+	Face();
 	~Face();
 	Face(const Face& other);
 

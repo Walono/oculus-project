@@ -1,3 +1,4 @@
+#include "ProjetOculusJDFZ.h"
 #include "Face.h"
 
 
@@ -6,6 +7,9 @@ Face::Face(std::list<float> position, std::list<std::list<float>> coordinates,
 	position(position), coordinates(coordinates), 
 	texture(texture), faceId(faceId)  {}
 
+Face::Face()
+{
+}
 
 Face::~Face()
 {

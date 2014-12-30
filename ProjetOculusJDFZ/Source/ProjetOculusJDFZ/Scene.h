@@ -5,10 +5,11 @@ class Scene
 {
 public:
 	Scene(int sceneId, std::list<int> objectsId);
+	Scene();
 	~Scene();
 
 	int getSceneId();
-	std::list<int> getObjectsId();
+	//std::list<int> getObjectsId();
 
 private:
 

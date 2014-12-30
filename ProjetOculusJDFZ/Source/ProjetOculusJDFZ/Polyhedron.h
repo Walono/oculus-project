@@ -6,6 +6,7 @@ class Polyhedron
 {
 public:
 	Polyhedron(std::list<int> facesId, int polyhedronId);
+	Polyhedron();
 	~Polyhedron();
 
 	std::list<int> getFaces();

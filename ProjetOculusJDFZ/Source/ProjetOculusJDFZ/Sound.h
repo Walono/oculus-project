@@ -10,6 +10,8 @@ public:
 		std::vector<float> viewDirection,
 		std::vector<float> upDirection, int sourceId);
 
+	Sound();
+
 	Sound(const Sound& other);
 
 	~Sound();

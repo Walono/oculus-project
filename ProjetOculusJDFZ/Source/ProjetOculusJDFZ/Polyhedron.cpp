@@ -1,8 +1,12 @@
+#include "ProjetOculusJDFZ.h"
 #include "Polyhedron.h"
-
 
 Polyhedron::Polyhedron(std::list<int> facesId, int polyhedronId):
 facesId(facesId), polyhedronId(polyhedronId) {}
+
+Polyhedron::Polyhedron()
+{
+}
 
 
 Polyhedron::~Polyhedron()
