@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "ProjetOculusJDFZ.h"
+#include <iostream> 
 #include "ProceduralFaceActor.h"
 
 
@@ -14,64 +15,50 @@ AProceduralFaceActor::AProceduralFaceActor(const class FPostConstructInitializeP
 	// TODO Apply a real material with textures, using UVs
 	//	static ConstructorHelpers::FObjectFinder<UMaterialInterface> Material(TEXT("Material'/Game/Materials/M_Concrete_Poured.M_Concrete_Poured'"));
 	mesh->SetMaterial(0, Material.Object);
+	
 
-	//The array of triangles who will build all faces
-	TArray<FProceduralMeshTriangle> triangles;
-	float startPoint = 0.f;
-	float vectorLength = 300.f;
-
-	// Define and generate face 0
-	TArray<FVector> face0;
-	face0.Add(FVector(startPoint, startPoint, startPoint));
-	face0.Add(FVector(startPoint, startPoint + vectorLength, startPoint));
-	face0.Add(FVector(startPoint, startPoint + vectorLength, startPoint + vectorLength));
-	face0.Add(FVector(startPoint, startPoint, startPoint + vectorLength));
-	GenerateFace(face0, triangles);
-
-	// Define and generate face 1
-	TArray<FVector> face1;
-	face1.Add(FVector(startPoint, startPoint, startPoint));
-	face1.Add(FVector(startPoint - vectorLength, startPoint, startPoint));
-	face1.Add(FVector(startPoint - vectorLength, startPoint + vectorLength, startPoint));
-	face1.Add(FVector(startPoint, startPoint + vectorLength, startPoint));
-	GenerateFace(face1, triangles);
-
-	// Define and generate face 2
-	TArray<FVector> face2;
-	face2.Add(FVector(startPoint, startPoint, startPoint));
-	face2.Add(FVector(startPoint - vectorLength, startPoint, startPoint));
-	face2.Add(FVector(startPoint - vectorLength, startPoint, startPoint + vectorLength));
-	face2.Add(FVector(startPoint, startPoint, startPoint + vectorLength));
-	GenerateFace(face2, triangles);
-
-	// Define and generate face 3
-	TArray<FVector> face3;
-	face3.Add(FVector(startPoint - vectorLength, startPoint, startPoint));
-	face3.Add(FVector(startPoint - vectorLength, startPoint + vectorLength, startPoint));
-	face3.Add(FVector(startPoint - vectorLength, startPoint + vectorLength, startPoint + vectorLength));
-	face3.Add(FVector(startPoint - vectorLength, startPoint, startPoint + vectorLength));
-	GenerateFace(face3, triangles);
-
-	// Define and generate face 4
-	TArray<FVector> face4;
-	face4.Add(FVector(startPoint, startPoint + vectorLength, startPoint));
-	face4.Add(FVector(startPoint - vectorLength, startPoint + vectorLength, startPoint));
-	face4.Add(FVector(startPoint - vectorLength, startPoint + vectorLength, startPoint + vectorLength));
-	face4.Add(FVector(startPoint, startPoint + vectorLength, startPoint + vectorLength));
-	GenerateFace(face4, triangles);
-
-	// Define and generate face 5
-	TArray<FVector> face5;
-	face5.Add(FVector(startPoint, startPoint, startPoint + vectorLength));
-	face5.Add(FVector(startPoint, startPoint + vectorLength, startPoint + vectorLength));
-	face5.Add(FVector(startPoint - vectorLength, startPoint + vectorLength, startPoint + vectorLength));
-	face5.Add(FVector(startPoint - vectorLength, startPoint, startPoint + vectorLength));
-	GenerateFace(face5, triangles);
-
-	//Create the object
-	mesh->SetProceduralMeshTriangles(triangles);
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("creating a face"));
+	
 	RootComponent = mesh;
+	library = Library::getLibrary();
+	
 }
+
+
+void AProceduralFaceActor::PostInitializeComponents(){
+    Super::PostInitializeComponents();
+	
+
+	// Verify if there is a new face to spawn
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("PostInitializeComponents"));
+	if (library->isFacesToSpawnEmpty() == false) {
+		
+
+
+		Face newFace = library->getNextFaceToSpawn();
+		std::list<std::list<float>> coordinate = newFace.getCoordinates();
+		std::list<std::list<float>>::const_iterator
+			lit(coordinate.begin()),
+			lend(coordinate.end());
+		TArray<FVector> newPoints;
+		for (; lit != lend; ++lit) {
+
+			std::list<float> point = *lit;
+			float x = point.front();
+			point.pop_front();
+			float y = point.front();
+			point.pop_front();
+			float z = point.front();
+
+			newPoints.Add(FVector(x, y, z));
+		}
+		TArray<FProceduralMeshTriangle> newTriangles;
+		GenerateFace(newPoints, newTriangles);
+		mesh->SetProceduralMeshTriangles(newTriangles);
+		RootComponent = mesh;
+	}
+
+} 
 
 void AProceduralFaceActor::GenerateFace(const TArray<FVector>& InPoints, TArray<FProceduralMeshTriangle>& OutTriangles){
 

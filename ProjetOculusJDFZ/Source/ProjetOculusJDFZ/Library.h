@@ -13,8 +13,8 @@
 class Library : public Interface
 {
 public:
-	
-	Library();
+	/* Get the Library */
+	static Library * getLibrary();
 
 	/* Concerning the faces */
 	virtual void add_face(std::list<float> position,
@@ -69,11 +69,14 @@ public:
 	bool isFacesToSpawnEmpty();
 	void deleteFaceSpawned();
 
-	/* Get the Library */
 
-	static Library getLibrary();
 
 private:
+
+	static Library * _singletonInst;
+	Library() {}
+	Library(Library const&);
+	void operator=(Library const&);
 
 	std::map<int, Scene> scenes;
 	std::map<int, Polyhedron> polyhedrons;

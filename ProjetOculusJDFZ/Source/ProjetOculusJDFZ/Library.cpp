@@ -1,7 +1,12 @@
 #include"ProjetOculusJDFZ.h"
 #include "Library.h"
 
-Library::Library() {}
+Library * Library::_singletonInst = new Library();
+
+Library * Library::getLibrary() {
+	return _singletonInst;
+
+}
 
 void Library::add_face(std::list<float> position,
 	std::list<std::list<float>> coordinates, int texture, int faceId) {
@@ -109,8 +114,3 @@ void Library::deleteFaceSpawned() {
 	facesToSpawn.RemoveAt(0);
 }
 
-Library  Library::getLibrary() {
-	static Library library;
-	return library;
-		
-}

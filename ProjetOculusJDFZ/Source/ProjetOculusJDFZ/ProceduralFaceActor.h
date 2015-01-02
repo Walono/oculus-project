@@ -4,6 +4,7 @@
 
 #include "GameFramework/Actor.h"
 #include "ProceduralMeshComponent.h"
+#include "Library.h"
 #include "ProceduralFaceActor.generated.h"
 
 /**
@@ -20,6 +21,11 @@ public:
 		TSubobjectPtr<UProceduralMeshComponent> mesh;
 
 	void GenerateFace(const TArray<FVector>& InPoints, TArray<FProceduralMeshTriangle>& OutTriangles);
+
+	virtual void PostInitializeComponents() override;
 	
+private:
+
+	Library * library;
 	
 };

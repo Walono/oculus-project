@@ -92,7 +92,7 @@ public:
 	FProceduralMeshSceneProxy(UProceduralMeshComponent* Component)
 		: FPrimitiveSceneProxy(Component)
 #if ENGINE_MAJOR_VERSION >= 4 && ENGINE_MINOR_VERSION >= 5
-		, MaterialRelevance(Component->GetMaterialRelevance(GetScene().GetFeatureLevel()))
+		, MaterialRelevance(Component->GetMaterialRelevance(GetScene()->GetFeatureLevel()))
 #else
 		, MaterialRelevance(Component->GetMaterialRelevance())
 #endif

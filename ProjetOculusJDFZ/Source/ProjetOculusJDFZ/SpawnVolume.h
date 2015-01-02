@@ -4,6 +4,7 @@
 
 #include "GameFramework/Actor.h"
 #include "ProceduralMeshComponent.h"
+#include "Library.h"
 #include "SpawnVolume.generated.h"
 
 /**
@@ -58,5 +59,8 @@ private:
 
 	/** The timer for when to spawn the Obect */
 	float SpawnTime;
+
+	/** The container of all object to spawn */
+	Library * library;
 	
 };

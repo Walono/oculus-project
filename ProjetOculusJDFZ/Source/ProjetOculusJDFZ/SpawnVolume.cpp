@@ -3,6 +3,7 @@
 #include "ProjetOculusJDFZ.h"
 #include "ProceduralFaceActor.h"
 #include "ProceduralSoundActor.h"
+#include "Library.h"
 #include "SpawnVolume.h"
 
 
@@ -31,6 +32,80 @@ ASpawnVolume::ASpawnVolume(const class FPostConstructInitializeProperties& PCIP)
 	//TODO Use a key after to set it true/false
 	SetSpawningEnable(true);
 	Counter = 0;
+
+	library = Library::getLibrary();
+	//Face::Face(std::list<float> position, std::list<std::list<float>> coordinates,
+	//	int texture, int faceId)
+	std::list<float> posOne;
+	posOne.push_back(0.f);
+	posOne.push_back(0.f);
+	posOne.push_back(0.f);
+
+	std::list<std::list<float>> coordiOne;
+	std::list<float> coordOne00;
+	coordOne00.push_back(0.f);
+	coordOne00.push_back(0.f);
+	coordOne00.push_back(0.f);
+	coordiOne.push_back(coordOne00);
+
+	std::list<float> coordOne01;
+	coordOne01.push_back(0.f);
+	coordOne01.push_back(400.f);
+	coordOne01.push_back(0.f);
+	coordiOne.push_back(coordOne01);
+
+	std::list<float> coordOne02;
+	coordOne02.push_back(0.f);
+	coordOne02.push_back(400.f);
+	coordOne02.push_back(200.f);
+	coordiOne.push_back(coordOne02);
+
+	/////////////////////////////
+
+	std::list<std::list<float>> coordiTwo;
+	std::list<float> coordOne10;
+	coordOne10.push_back(0.f);
+	coordOne10.push_back(0.f);
+	coordOne10.push_back(0.f);
+	coordiTwo.push_back(coordOne10);
+
+	std::list<float> coordOne11;
+	coordOne11.push_back(0.f);
+	coordOne11.push_back(400.f);
+	coordOne11.push_back(0.f);
+	coordiTwo.push_back(coordOne11);
+
+	std::list<float> coordOne12;
+	coordOne12.push_back(0.f);
+	coordOne12.push_back(400.f);
+	coordOne12.push_back(200.f);
+	coordiTwo.push_back(coordOne12);
+
+	std::list<float> coordOne13;
+	coordOne13.push_back(0.f);
+	coordOne13.push_back(200.f);
+	coordOne13.push_back(6000.f);
+	coordiTwo.push_back(coordOne13);
+
+	std::list<float> coordOne14;
+	coordOne14.push_back(0.f);
+	coordOne14.push_back(0.f);
+	coordOne14.push_back(200.f);
+	coordiTwo.push_back(coordOne14);
+
+	std::list<float> coordOne15;
+	coordOne15.push_back(0.f);
+	coordOne15.push_back(-2000.f);
+	coordOne15.push_back(100.f);
+	coordiTwo.push_back(coordOne15);
+
+	library->add_face(posOne, coordiOne, 0, 1);
+	library->add_face(posOne, coordiTwo, 0, 2);
+	library->add_face(posOne, coordiOne, 0, 3);
+	library->add_face(posOne, coordiOne, 0, 4);
+	library->add_face(posOne, coordiTwo, 0, 5);
+	library->add_face(posOne, coordiOne, 0, 6);
+
 }
 
 void ASpawnVolume::SpawnObject()
@@ -56,8 +131,10 @@ void ASpawnVolume::SpawnObject()
 			SpawnRotation.Pitch = FMath::FRand() * 360.f;
 			SpawnRotation.Roll = FMath::FRand() * 360.f;
 
-			if (Counter != 100) {
+			if (Counter % 100 != 0) {
 				AProceduralFaceActor* const SpawnedFace = World->SpawnActor<AProceduralFaceActor>(SpawnLocation, SpawnRotation, SpawnParams);
+				//SpawnedFace->PostInitializeComponents();
+				library->deleteFaceSpawned();
 			}
 			else {
 				AProceduralSoundActor* const SpawnedSound = World->SpawnActor<AProceduralSoundActor>(SpawnLocation, SpawnRotation, SpawnParams);
@@ -105,15 +182,19 @@ void ASpawnVolume::Tick(float DeltaSeconds)
 	//Do nothing if spawning aren't enable
 	if (bSpawningEnabled)
 	{
-		//increment the time befor spawnng
-		SpawnTime += DeltaSeconds;
+		//Do nothing if there is no face to spawn
+		if (library->isFacesToSpawnEmpty() == false){
 
-		if (SpawnTime > SpawnDelay)
-		{
-			SpawnObject();
+			//increment the time befor spawnng
+			SpawnTime += DeltaSeconds;
 
-			//Restart the timer
-			SpawnTime -= SpawnDelay;
+			if (SpawnTime > SpawnDelay)
+			{
+				SpawnObject();
+	
+				//Restart the timer
+				SpawnTime -= SpawnDelay;
+			}
 		}
 	}
 }
