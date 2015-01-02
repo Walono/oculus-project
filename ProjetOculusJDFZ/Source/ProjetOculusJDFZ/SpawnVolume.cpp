@@ -23,7 +23,7 @@ ASpawnVolume::ASpawnVolume(const class FPostConstructInitializeProperties& PCIP)
 	WhereToSpawn->AttachTo(RootComponent);
 
 	//Set the spawn delay
-	SpawnDelay = 1.f;
+	SpawnDelay = 500000.f;
 
 
 	//Make the SpawnVolume tickable.
@@ -41,90 +41,223 @@ ASpawnVolume::ASpawnVolume(const class FPostConstructInitializeProperties& PCIP)
 	posOne.push_back(0.f);
 	posOne.push_back(0.f);
 
-	std::list<float> posTwo;
-	posTwo.push_back(100.f);
-	posTwo.push_back(100.f);
-	posTwo.push_back(100.f);
-
-	std::list<float> posTree;
-	posTree.push_back(200.f);
-	posTree.push_back(200.f);
-	posTree.push_back(200.f);
-
-	std::list<float> posFour;
-	posFour.push_back(300.f);
-	posFour.push_back(300.f);
-	posFour.push_back(300.f);
-
-	std::list<float> posFive;
-	posFive.push_back(400.f);
-	posFive.push_back(400.f);
-	posFive.push_back(400.f);
-
-	std::list<float> posSix;
-	posSix.push_back(500.f);
-	posSix.push_back(500.f);
-	posSix.push_back(500.f);
-
-
+	//Base floor
 	std::list<std::list<float>> coordiOne;
 	std::list<float> coordOne00;
-	coordOne00.push_back(0.f);
-	coordOne00.push_back(0.f);
-	coordOne00.push_back(0.f);
+	coordOne00.push_back(300.f);
+	coordOne00.push_back(-500.f);
+	coordOne00.push_back(100.f);
 	coordiOne.push_back(coordOne00);
 
 	std::list<float> coordOne01;
-	coordOne01.push_back(0.f);
-	coordOne01.push_back(400.f);
-	coordOne01.push_back(0.f);
+	coordOne01.push_back(300.f);
+	coordOne01.push_back(500.f);
+	coordOne01.push_back(100.f);
 	coordiOne.push_back(coordOne01);
 
 	std::list<float> coordOne02;
-	coordOne02.push_back(0.f);
-	coordOne02.push_back(400.f);
-	coordOne02.push_back(200.f);
+	coordOne02.push_back(1300.f);
+	coordOne02.push_back(500.f);
+	coordOne02.push_back(100.f);
 	coordiOne.push_back(coordOne02);
 
-	/////////////////////////////
+	std::list<float> coordOne03;
+	coordOne03.push_back(1300.f);
+	coordOne03.push_back(-500.f);
+	coordOne03.push_back(100.f);
+	coordiOne.push_back(coordOne03);
 
+	//Left wall
 	std::list<std::list<float>> coordiTwo;
-	std::list<float> coordOne10;
-	coordOne10.push_back(0.f);
-	coordOne10.push_back(0.f);
-	coordOne10.push_back(0.f);
-	coordiTwo.push_back(coordOne10);
+	std::list<float> coordiTwo0;
+	coordiTwo0.push_back(300.f);
+	coordiTwo0.push_back(-500.f);
+	coordiTwo0.push_back(100.f);
+	coordiTwo.push_back(coordiTwo0);
 
-	std::list<float> coordOne11;
-	coordOne11.push_back(0.f);
-	coordOne11.push_back(400.f);
-	coordOne11.push_back(0.f);
-	coordiTwo.push_back(coordOne11);
+	std::list<float> coordiTwo1;
+	coordiTwo1.push_back(300.f);
+	coordiTwo1.push_back(-500.f);
+	coordiTwo1.push_back(800.f);
+	coordiTwo.push_back(coordiTwo1);
 
-	std::list<float> coordOne12;
-	coordOne12.push_back(0.f);
-	coordOne12.push_back(400.f);
-	coordOne12.push_back(200.f);
-	coordiTwo.push_back(coordOne12);
+	std::list<float> coordiTwo2;
+	coordiTwo2.push_back(1300.f);
+	coordiTwo2.push_back(-500.f);
+	coordiTwo2.push_back(800.f);
+	coordiTwo.push_back(coordiTwo2);
 
-	std::list<float> coordOne13;
-	coordOne13.push_back(0.f);
-	coordOne13.push_back(200.f);
-	coordOne13.push_back(1000.f);
-	coordiTwo.push_back(coordOne13);
+	std::list<float> coordiTwo3;
+	coordiTwo3.push_back(1300.f);
+	coordiTwo3.push_back(-500.f);
+	coordiTwo3.push_back(100.f);
+	coordiTwo.push_back(coordiTwo3);
 
-	std::list<float> coordOne14;
-	coordOne14.push_back(0.f);
-	coordOne14.push_back(0.f);
-	coordOne14.push_back(200.f);
-	coordiTwo.push_back(coordOne14);
+	//Back wall
+	std::list<std::list<float>> coordiTree;
+	std::list<float> coordiTree0;
+	coordiTree0.push_back(1300.f);
+	coordiTree0.push_back(-500.f);
+	coordiTree0.push_back(100.f);
+	coordiTree.push_back(coordiTree0);
+
+	std::list<float> coordiTree1;
+	coordiTree1.push_back(1300.f);
+	coordiTree1.push_back(-500.f);
+	coordiTree1.push_back(800.f);
+	coordiTree.push_back(coordiTree1);
+
+	std::list<float> coordiTree2;
+	coordiTree2.push_back(1300.f);
+	coordiTree2.push_back(500.f);
+	coordiTree2.push_back(800.f);
+	coordiTree.push_back(coordiTree2);
+	
+	std::list<float> coordiTree3;
+	coordiTree3.push_back(1300.f);
+	coordiTree3.push_back(500.f);
+	coordiTree3.push_back(100.f);
+	coordiTree.push_back(coordiTree3);
+
+	//Right wall
+	std::list<std::list<float>> coordiFour;
+	std::list<float> coordiFour0;
+	coordiFour0.push_back(1300.f);
+	coordiFour0.push_back(500.f);
+	coordiFour0.push_back(100.f);
+	coordiFour.push_back(coordiFour0);
+
+	std::list<float> coordiFour1;
+	coordiFour1.push_back(1300.f);
+	coordiFour1.push_back(500.f);
+	coordiFour1.push_back(800.f);
+	coordiFour.push_back(coordiFour1);
+
+	std::list<float> coordiFour2;
+	coordiFour2.push_back(300.f);
+	coordiFour2.push_back(500.f);
+	coordiFour2.push_back(800.f);
+	coordiFour.push_back(coordiFour2);
+
+	std::list<float> coordiFour3;
+	coordiFour3.push_back(300.f);
+	coordiFour3.push_back(500.f);
+	coordiFour3.push_back(100.f);
+	coordiFour.push_back(coordiFour3);
+
+	//Front wall right from door
+	std::list<std::list<float>> coordiFive;
+	std::list<float> coordiFive0;
+	coordiFive0.push_back(300.f);
+	coordiFive0.push_back(500.f);
+	coordiFive0.push_back(100.f);
+	coordiFive.push_back(coordiFive0);
+
+	std::list<float> coordiFive1;
+	coordiFive1.push_back(300.f);
+	coordiFive1.push_back(500.f);
+	coordiFive1.push_back(800.f);
+	coordiFive.push_back(coordiFive1);
+
+	std::list<float> coordiFive2;
+	coordiFive2.push_back(300.f);
+	coordiFive2.push_back(100.f);
+	coordiFive2.push_back(800.f);
+	coordiFive.push_back(coordiFive2);
+
+	std::list<float> coordiFive3;
+	coordiFive3.push_back(300.f);
+	coordiFive3.push_back(100.f);
+	coordiFive3.push_back(100.f);
+	coordiFive.push_back(coordiFive3);
+
+	//Front wall left from door
+	std::list<std::list<float>> coordiSix;
+	std::list<float> coordiSix0;
+	coordiSix0.push_back(300.f);
+	coordiSix0.push_back(-100.f);
+	coordiSix0.push_back(100.f);
+	coordiSix.push_back(coordiSix0);
+
+	std::list<float> coordiSix1;
+	coordiSix1.push_back(300.f);
+	coordiSix1.push_back(-100.f);
+	coordiSix1.push_back(800.f);
+	coordiSix.push_back(coordiSix1);
+
+	std::list<float> coordiSix2;
+	coordiSix2.push_back(300.f);
+	coordiSix2.push_back(-500.f);
+	coordiSix2.push_back(800.f);
+	coordiSix.push_back(coordiSix2);
+
+	std::list<float> coordiSix3;
+	coordiSix3.push_back(300.f);
+	coordiSix3.push_back(-500.f);
+	coordiSix3.push_back(100.f);
+	coordiSix.push_back(coordiSix3);
+
+	//Front wall up from door
+	std::list<std::list<float>> coordiSeven;
+	std::list<float> coordiSeven0;
+	coordiSeven0.push_back(300.f);
+	coordiSeven0.push_back(-100.f);
+	coordiSeven0.push_back(350.f);
+	coordiSeven.push_back(coordiSeven0);
+
+	std::list<float> coordiSeven1;
+	coordiSeven1.push_back(300.f);
+	coordiSeven1.push_back(-100.f);
+	coordiSeven1.push_back(800.f);
+	coordiSeven.push_back(coordiSeven1);
+
+	std::list<float> coordiSeven2;
+	coordiSeven2.push_back(300.f);
+	coordiSeven2.push_back(100.f);
+	coordiSeven2.push_back(800.f);
+	coordiSeven.push_back(coordiSeven2);
+
+	std::list<float> coordiSeven3;
+	coordiSeven3.push_back(300.f);
+	coordiSeven3.push_back(100.f);
+	coordiSeven3.push_back(350.f);
+	coordiSeven.push_back(coordiSeven3);
+
+	//Roof
+	std::list<std::list<float>> coordiHeight;
+	std::list<float> coordiHeight0;
+	coordiHeight0.push_back(300.f);
+	coordiHeight0.push_back(-500.f);
+	coordiHeight0.push_back(800.f);
+	coordiHeight.push_back(coordiHeight0);
+
+	std::list<float> coordiHeight1;
+	coordiHeight1.push_back(300.f);
+	coordiHeight1.push_back(500.f);
+	coordiHeight1.push_back(800.f);
+	coordiHeight.push_back(coordiHeight1);
+
+	std::list<float> coordiHeight2;
+	coordiHeight2.push_back(1300.f);
+	coordiHeight2.push_back(500.f);
+	coordiHeight2.push_back(800.f);
+	coordiHeight.push_back(coordiHeight2);
+
+	std::list<float> coordiHeight3;
+	coordiHeight3.push_back(1300.f);
+	coordiHeight3.push_back(-500.f);
+	coordiHeight3.push_back(800.f);
+	coordiHeight.push_back(coordiHeight3);
+
 
 	library->add_face(posOne, coordiOne, 0, 1);
-	library->add_face(posTwo, coordiTwo, 0, 2);
-	library->add_face(posTree, coordiOne, 0, 3);
-	library->add_face(posFour, coordiOne, 0, 4);
-	library->add_face(posFive, coordiTwo, 0, 5);
-	library->add_face(posSix, coordiOne, 0, 6);
+	library->add_face(posOne, coordiTwo, 0, 2);
+	library->add_face(posOne, coordiTree, 0, 3);
+	library->add_face(posOne, coordiFour, 0, 4);
+	library->add_face(posOne, coordiFive, 0, 5);
+	library->add_face(posOne, coordiSix, 0, 6);
+	library->add_face(posOne, coordiSeven, 0, 7);
+	library->add_face(posOne, coordiHeight, 0, 8);
 
 }
 
