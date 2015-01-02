@@ -22,7 +22,7 @@ public:
 
 	void GenerateFace(const TArray<FVector>& InPoints, TArray<FProceduralMeshTriangle>& OutTriangles);
 
-	virtual void PostInitializeComponents() override;
+	//virtual void PostInitializeComponents() override;
 	
 private:
 

@@ -93,12 +93,6 @@ ASpawnVolume::ASpawnVolume(const class FPostConstructInitializeProperties& PCIP)
 	coordOne14.push_back(200.f);
 	coordiTwo.push_back(coordOne14);
 
-	std::list<float> coordOne15;
-	coordOne15.push_back(0.f);
-	coordOne15.push_back(-2000.f);
-	coordOne15.push_back(100.f);
-	coordiTwo.push_back(coordOne15);
-
 	library->add_face(posOne, coordiOne, 0, 1);
 	library->add_face(posOne, coordiTwo, 0, 2);
 	library->add_face(posOne, coordiOne, 0, 3);

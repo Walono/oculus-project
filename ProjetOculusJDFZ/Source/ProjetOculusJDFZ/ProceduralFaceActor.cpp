@@ -17,22 +17,13 @@ AProceduralFaceActor::AProceduralFaceActor(const class FPostConstructInitializeP
 	mesh->SetMaterial(0, Material.Object);
 	
 
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("creating a face"));
+	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("creating a face"));
 	
-	RootComponent = mesh;
 	library = Library::getLibrary();
-	
-}
-
-
-void AProceduralFaceActor::PostInitializeComponents(){
-    Super::PostInitializeComponents();
-	
-
 	// Verify if there is a new face to spawn
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("PostInitializeComponents"));
+	
 	if (library->isFacesToSpawnEmpty() == false) {
-		
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Enter the if"));
 
 
 		Face newFace = library->getNextFaceToSpawn();
@@ -57,8 +48,14 @@ void AProceduralFaceActor::PostInitializeComponents(){
 		mesh->SetProceduralMeshTriangles(newTriangles);
 		RootComponent = mesh;
 	}
+	
+}
 
-} 
+
+//void AProceduralFaceActor::PostInitializeComponents(){
+//    Super::PostInitializeComponents();
+	
+//} 
 
 void AProceduralFaceActor::GenerateFace(const TArray<FVector>& InPoints, TArray<FProceduralMeshTriangle>& OutTriangles){
 

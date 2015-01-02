@@ -100,7 +100,7 @@ void Library::removeScene(int sceneId) {
 }
 
 Face Library::getNextFaceToSpawn() {
-	return facesToSpawn.Top();
+	return facesToSpawn[0];
 }
 bool Library::isFacesToSpawnEmpty() {
 	if (facesToSpawn.Num() == 0) {
