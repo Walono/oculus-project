@@ -23,8 +23,6 @@ AProceduralFaceActor::AProceduralFaceActor(const class FPostConstructInitializeP
 	// Verify if there is a new face to spawn
 	
 	if (library->isFacesToSpawnEmpty() == false) {
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Enter the if"));
-
 
 		Face newFace = library->getNextFaceToSpawn();
 		std::list<std::list<float>> coordinate = newFace.getCoordinates();

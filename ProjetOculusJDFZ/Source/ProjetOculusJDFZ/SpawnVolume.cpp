@@ -41,6 +41,32 @@ ASpawnVolume::ASpawnVolume(const class FPostConstructInitializeProperties& PCIP)
 	posOne.push_back(0.f);
 	posOne.push_back(0.f);
 
+	std::list<float> posTwo;
+	posTwo.push_back(100.f);
+	posTwo.push_back(100.f);
+	posTwo.push_back(100.f);
+
+	std::list<float> posTree;
+	posTree.push_back(200.f);
+	posTree.push_back(200.f);
+	posTree.push_back(200.f);
+
+	std::list<float> posFour;
+	posFour.push_back(300.f);
+	posFour.push_back(300.f);
+	posFour.push_back(300.f);
+
+	std::list<float> posFive;
+	posFive.push_back(400.f);
+	posFive.push_back(400.f);
+	posFive.push_back(400.f);
+
+	std::list<float> posSix;
+	posSix.push_back(500.f);
+	posSix.push_back(500.f);
+	posSix.push_back(500.f);
+
+
 	std::list<std::list<float>> coordiOne;
 	std::list<float> coordOne00;
 	coordOne00.push_back(0.f);
@@ -84,7 +110,7 @@ ASpawnVolume::ASpawnVolume(const class FPostConstructInitializeProperties& PCIP)
 	std::list<float> coordOne13;
 	coordOne13.push_back(0.f);
 	coordOne13.push_back(200.f);
-	coordOne13.push_back(6000.f);
+	coordOne13.push_back(1000.f);
 	coordiTwo.push_back(coordOne13);
 
 	std::list<float> coordOne14;
@@ -94,11 +120,11 @@ ASpawnVolume::ASpawnVolume(const class FPostConstructInitializeProperties& PCIP)
 	coordiTwo.push_back(coordOne14);
 
 	library->add_face(posOne, coordiOne, 0, 1);
-	library->add_face(posOne, coordiTwo, 0, 2);
-	library->add_face(posOne, coordiOne, 0, 3);
-	library->add_face(posOne, coordiOne, 0, 4);
-	library->add_face(posOne, coordiTwo, 0, 5);
-	library->add_face(posOne, coordiOne, 0, 6);
+	library->add_face(posTwo, coordiTwo, 0, 2);
+	library->add_face(posTree, coordiOne, 0, 3);
+	library->add_face(posFour, coordiOne, 0, 4);
+	library->add_face(posFive, coordiTwo, 0, 5);
+	library->add_face(posSix, coordiOne, 0, 6);
 
 }
 
@@ -117,13 +143,30 @@ void ASpawnVolume::SpawnObject()
 			SpawnParams.Instigator = Instigator;
 
 			//Get a random location to spawn at
-			FVector SpawnLocation = GetRandomPointInVolum();
+			//FVector SpawnLocation = GetRandomPointInVolum();
+
+			//Get the current coordinat from our object.
+			Face newFace = library->getNextFaceToSpawn();
+			std::list<float> facePositionList = newFace.getPosition();
+			FVector SpawnLocation;
+			if (facePositionList.size() >= 3){
+				SpawnLocation.X = facePositionList.front();
+				std::list<float>::iterator itY = facePositionList.begin();
+				std::advance(itY, 1);
+				SpawnLocation.Y = *itY;
+				std::list<float>::iterator itZ = facePositionList.begin();
+				std::advance(itZ, 2);
+				SpawnLocation.Z = *itZ;
+			}
+			
 
 			//Get a random rotation for the spawned item
-			FRotator SpawnRotation;
-			SpawnRotation.Yaw = FMath::FRand() * 360.f;
-			SpawnRotation.Pitch = FMath::FRand() * 360.f;
-			SpawnRotation.Roll = FMath::FRand() * 360.f;
+			//FRotator SpawnRotation;
+			//SpawnRotation.Yaw = FMath::FRand() * 360.f;
+			//SpawnRotation.Pitch = FMath::FRand() * 360.f;
+			//SpawnRotation.Roll = FMath::FRand() * 360.f;
+			FRotator SpawnRotation = FRotator(0.f,0.f,0.f);
+
 
 			if (Counter % 100 != 0) {
 				AProceduralFaceActor* const SpawnedFace = World->SpawnActor<AProceduralFaceActor>(SpawnLocation, SpawnRotation, SpawnParams);
