@@ -41,7 +41,7 @@ AProceduralFaceActor* Face::getProceduralFaceActor() {
 
 
 void Face::setPosition(std::list<float> setPosition) {
-
+	position = setPosition;
 }
 
 void Face::setCoordinates(std::list<std::list<float>> setCoordinates) {
@@ -54,4 +54,8 @@ void Face::setTexture(int setTexture) {
 
 void Face::setfaceId(int setFaceId) {
 	faceId = setFaceId;
+}
+
+void Face::setProceduralFaceActor(AProceduralFaceActor* newActor) {
+	proceduralFaceActor = newActor;
 }

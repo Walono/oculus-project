@@ -71,6 +71,7 @@ public:
 	Face getNextFaceToMove();
 	bool isFacesToMoveEmpty();
 	void deleteFaceMoved();
+	bool isInTArray(TArray<Face> faces, int id);
 
 
 private:
