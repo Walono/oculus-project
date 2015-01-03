@@ -35,7 +35,8 @@ void Library::move_face(std::list<float> newPosition, int faceId) {
 		faces.at(faceId) = newFace;
 		
 		if (isInTArray(facesToSpawn, faceId) == false 
-			&& newFace.getProceduralFaceActor() != NULL) {			
+			&& newFace.getProceduralFaceActor() != NULL) {	
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Add move!!!"));
 			facesToMove.Add(newFace);			
 		}
 	}

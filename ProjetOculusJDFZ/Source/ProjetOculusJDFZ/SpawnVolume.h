@@ -23,18 +23,12 @@ class PROJETOCULUSJDFZ_API ASpawnVolume : public AActor
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Spawning)
 	float SpawnDelay;
 
-	/** Find a random point in the level */
-	UFUNCTION(BlueprintPure, Category = Spawning)
-	FVector GetRandomPointInVolum();
-
 	/** ovverdide the tick to spawn object on the right time */
 	virtual void Tick(float DeltSeconds) override;
 
-	//TODO: add a addObjectToList(Object o) methode to add an abject in the list
-
 	/** change the dimension of the spawnVolum according to the level dim */
 	UFUNCTION()
-		void SetSpawnVolumeDimension(float NewX, float NewY, float NewZ);
+	void SetSpawnVolumeDimension(float NewX, float NewY, float NewZ);
 
 	/** Enable/disable the spawning behaviours */
 	UFUNCTION()
@@ -54,8 +48,11 @@ private:
 
 	//TODO: add a list of spawnable obect we can fil.
 
-	/** Handles the spawning of a new Obect */
-	void SpawnObject();
+	/** Handles the spawning of a new Face */
+	void SpawnFace();
+
+	/** Handles the move of an existing face */
+	void MoveFace();
 
 	/** The timer for when to spawn the Obect */
 	float SpawnTime;

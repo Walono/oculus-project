@@ -41,6 +41,11 @@ ASpawnVolume::ASpawnVolume(const class FPostConstructInitializeProperties& PCIP)
 	posOne.push_back(0.f);
 	posOne.push_back(0.f);
 
+	std::list<float> posTwo;
+	posTwo.push_back(-300.f);
+	posTwo.push_back(0.f);
+	posTwo.push_back(100.f);
+
 	//Base floor
 	std::list<std::list<float>> coordiOne;
 	std::list<float> coordOne00;
@@ -258,25 +263,22 @@ ASpawnVolume::ASpawnVolume(const class FPostConstructInitializeProperties& PCIP)
 	library->add_face(posOne, coordiSix, 0, 6);
 	library->add_face(posOne, coordiSeven, 0, 7);
 	library->add_face(posOne, coordiHeight, 0, 8);
+	library->move_face(posTwo, 1);
 
 }
 
-void ASpawnVolume::SpawnObject()
+void ASpawnVolume::SpawnFace()
 {
 	Counter += 1;
 		//Check the world is valid
 		UWorld* const World = GetWorld();
 		if (World)
 		{
-			//TODO: Switch between diferent object to generate
 
 			//Set the spawn parameters
 			FActorSpawnParameters SpawnParams;
 			SpawnParams.Owner = this;
 			SpawnParams.Instigator = Instigator;
-
-			//Get a random location to spawn at
-			//FVector SpawnLocation = GetRandomPointInVolum();
 
 			//Get the current coordinat from our object.
 			Face newFace = library->getNextFaceToSpawn();
@@ -292,59 +294,30 @@ void ASpawnVolume::SpawnObject()
 				SpawnLocation.Z = *itZ;
 			}
 			
-
-			//Get a random rotation for the spawned item
-			//FRotator SpawnRotation;
-			//SpawnRotation.Yaw = FMath::FRand() * 360.f;
-			//SpawnRotation.Pitch = FMath::FRand() * 360.f;
-			//SpawnRotation.Roll = FMath::FRand() * 360.f;
 			FRotator SpawnRotation = FRotator(0.f,0.f,0.f);
 
-
-			if (Counter % 100 != 0) {
-				AProceduralFaceActor* const SpawnedFace = World->SpawnActor<AProceduralFaceActor>(SpawnLocation, SpawnRotation, SpawnParams);
-				//SpawnedFace->PostInitializeComponents();
-				library->deleteFaceSpawned();
-			}
-			else {
-				AProceduralSoundActor* const SpawnedSound = World->SpawnActor<AProceduralSoundActor>(SpawnLocation, SpawnRotation, SpawnParams);
-			}
-			
-
+			AProceduralFaceActor* const SpawnedFace = World->SpawnActor<AProceduralFaceActor>(SpawnLocation, SpawnRotation, SpawnParams);
+			newFace.setProceduralFaceActor(SpawnedFace);
+			library->deleteFaceSpawned();
 		}
 }
 
-
-FVector ASpawnVolume::GetRandomPointInVolum()
+void ASpawnVolume::MoveFace()
 {
-	FVector RandomLocation;
-	float MinX;
-	float MinY;
-	float MinZ;
-	float MaxX; 
-	float MaxY;
-	float MaxZ;
-
-	FVector BoxExtent;
-
-	//Get the SpawnVolume's box extent
-	BoxExtent = InitialSpawnVolumeDim;
-
-	//Calculate the limite where to spawn
-	MinX = InitialSpawnVolumePos.X - BoxExtent.X / 2.f;
-	MinY = InitialSpawnVolumePos.Y - BoxExtent.Y / 2.f;
-	MinZ = InitialSpawnVolumePos.Z - BoxExtent.Z / 2.f;
-
-	MaxX = InitialSpawnVolumePos.X + BoxExtent.X / 2.f;
-	MaxY = InitialSpawnVolumePos.Y + BoxExtent.Y / 2.f;
-	MaxZ = InitialSpawnVolumePos.Z + BoxExtent.Z / 2.f;
-
-	//The random spawn location will fall between the min and max
-	RandomLocation.X = FMath::FRandRange(MinX, MaxX);
-	RandomLocation.Y = FMath::FRandRange(MinY, MaxY);
-	RandomLocation.Z = FMath::FRandRange(MinZ, MaxZ);
-
-	return RandomLocation;
+	Face movedFace = library->getNextFaceToMove();
+	FVector newPosition;
+	std::list<float> facePositionList = movedFace.getPosition();
+	if (facePositionList.size() >= 3){
+		newPosition.X = facePositionList.front();
+		std::list<float>::iterator itY = facePositionList.begin();
+		std::advance(itY, 1);
+		newPosition.Y = *itY;
+		std::list<float>::iterator itZ = facePositionList.begin();
+		std::advance(itZ, 2);
+		newPosition.Z = *itZ;
+	}	
+	movedFace.getProceduralFaceActor()->SetActorLocation(newPosition, true);
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("Mouve!!!!!"));
 }
 
 void ASpawnVolume::Tick(float DeltaSeconds)
@@ -352,22 +325,32 @@ void ASpawnVolume::Tick(float DeltaSeconds)
 	//Do nothing if spawning aren't enable
 	if (bSpawningEnabled)
 	{
-		//Do nothing if there is no face to spawn
-		if (library->isFacesToSpawnEmpty() == false){
+		//Skip if there is no face to spawn
+		if (library->isFacesToSpawnEmpty() == false) {
 
 			//increment the time befor spawnng
 			SpawnTime += DeltaSeconds;
 
 			if (SpawnTime > SpawnDelay)
 			{
-				SpawnObject();
+				SpawnFace();
 	
 				//Restart the timer
 				SpawnTime -= SpawnDelay;
 			}
 		}
 	}
-}
+	//Test if
+	if (Counter > 4) {
+		
+		//Skip if there is no face to move
+		if (library->isFacesToMoveEmpty() == false) {
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Mouve???"));
+			MoveFace();
+		}
+	}
+	}
+
 
 void ASpawnVolume::SetSpawningEnable(bool isEnable)
 {
