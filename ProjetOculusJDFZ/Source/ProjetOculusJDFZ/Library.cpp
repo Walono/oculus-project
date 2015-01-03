@@ -114,3 +114,18 @@ void Library::deleteFaceSpawned() {
 	facesToSpawn.RemoveAt(0);
 }
 
+Face Library::getNextFaceToMove() {
+	return facesToMove[0];
+}
+bool Library::isFacesToMoveEmpty() {
+	if (facesToMove.Num() == 0) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+void Library::deleteFaceMoved() {
+	facesToMove.RemoveAt(0);
+}

@@ -3,6 +3,8 @@
 #include<vector>
 #include<string>
 
+class AProceduralFaceActor;
+
 class Face
 {
 public:
@@ -16,6 +18,7 @@ public:
 	std::list<std::list<float>> getCoordinates();
 	int getTexture();
 	int getFaceId();
+	AProceduralFaceActor* getProceduralFaceActor();
 
 	void setPosition(std::list<float> position);
 	void setCoordinates(std::list<std::list<float>> coordinates);
@@ -28,6 +31,7 @@ private:
 	std::list<std::list<float>> coordinates;
 	int texture; 
 	int faceId;
+	AProceduralFaceActor* proceduralFaceActor;
 
 };
 

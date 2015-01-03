@@ -10,7 +10,7 @@
 #include<map>
 #include"Runtime/Core/Public/Containers/Array.h"
 
-class Library : public Interface
+class Library : public virtual Interface
 {
 public:
 	/* Get the Library */
@@ -68,7 +68,9 @@ public:
 	Face getNextFaceToSpawn();
 	bool isFacesToSpawnEmpty();
 	void deleteFaceSpawned();
-
+	Face getNextFaceToMove();
+	bool isFacesToMoveEmpty();
+	void deleteFaceMoved();
 
 
 private:
@@ -83,5 +85,7 @@ private:
 	std::map<int, Face> faces;
 	std::map<int, Sound> sounds;
 	TArray<Face> facesToSpawn;
+	TArray<Face> facesToMove;
+
 };
 
