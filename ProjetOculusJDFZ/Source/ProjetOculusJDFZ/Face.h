@@ -26,6 +26,8 @@ public:
 	void setfaceId(int faceId);
 	void setProceduralFaceActor(AProceduralFaceActor* newActor);
 
+	bool hasProceduralFaceActor;
+
 private:
 
 	std::list<float> position;
@@ -33,6 +35,5 @@ private:
 	int texture; 
 	int faceId;
 	AProceduralFaceActor* proceduralFaceActor;
-
 };
 

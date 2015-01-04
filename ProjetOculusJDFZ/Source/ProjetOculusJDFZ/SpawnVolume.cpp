@@ -41,11 +41,6 @@ ASpawnVolume::ASpawnVolume(const class FPostConstructInitializeProperties& PCIP)
 	posOne.push_back(0.f);
 	posOne.push_back(0.f);
 
-	std::list<float> posTwo;
-	posTwo.push_back(-300.f);
-	posTwo.push_back(0.f);
-	posTwo.push_back(100.f);
-
 	//Base floor
 	std::list<std::list<float>> coordiOne;
 	std::list<float> coordOne00;
@@ -263,7 +258,6 @@ ASpawnVolume::ASpawnVolume(const class FPostConstructInitializeProperties& PCIP)
 	library->add_face(posOne, coordiSix, 0, 6);
 	library->add_face(posOne, coordiSeven, 0, 7);
 	library->add_face(posOne, coordiHeight, 0, 8);
-	library->move_face(posTwo, 1);
 
 }
 
@@ -297,13 +291,21 @@ void ASpawnVolume::SpawnFace()
 			FRotator SpawnRotation = FRotator(0.f,0.f,0.f);
 
 			AProceduralFaceActor* const SpawnedFace = World->SpawnActor<AProceduralFaceActor>(SpawnLocation, SpawnRotation, SpawnParams);
-			newFace.setProceduralFaceActor(SpawnedFace);
+			library->getNextFaceToSpawn().setProceduralFaceActor(Cast<AProceduralFaceActor>(SpawnedFace));
 			library->deleteFaceSpawned();
+			//if (Counter == 6) {
+			//	std::list<float> posTwo;
+			//	posTwo.push_back(-300.f);
+			//	posTwo.push_back(0.f);
+			//	posTwo.push_back(3000.f);
+			//	library->move_face(posTwo, 1);
+			//}
 		}
 }
 
 void ASpawnVolume::MoveFace()
 {
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Move!!!"));
 	Face movedFace = library->getNextFaceToMove();
 	FVector newPosition;
 	std::list<float> facePositionList = movedFace.getPosition();
@@ -316,8 +318,8 @@ void ASpawnVolume::MoveFace()
 		std::advance(itZ, 2);
 		newPosition.Z = *itZ;
 	}	
-	movedFace.getProceduralFaceActor()->SetActorLocation(newPosition, true);
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("Mouve!!!!!"));
+	library->getNextFaceToMove().getProceduralFaceActor()->SetActorLocation(newPosition, true);
+	library->deleteFaceMoved();
 }
 
 void ASpawnVolume::Tick(float DeltaSeconds)
@@ -339,17 +341,15 @@ void ASpawnVolume::Tick(float DeltaSeconds)
 				SpawnTime -= SpawnDelay;
 			}
 		}
-	}
-	//Test if
-	if (Counter > 4) {
+	}		
+
+	//Skip if there is no face to move
+	if (library->isFacesToMoveEmpty() == false) {
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Move???"));
+		MoveFace();
 		
-		//Skip if there is no face to move
-		if (library->isFacesToMoveEmpty() == false) {
-			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Mouve???"));
-			MoveFace();
-		}
 	}
-	}
+}
 
 
 void ASpawnVolume::SetSpawningEnable(bool isEnable)

@@ -58,4 +58,5 @@ void Face::setfaceId(int setFaceId) {
 
 void Face::setProceduralFaceActor(AProceduralFaceActor* newActor) {
 	proceduralFaceActor = newActor;
+	hasProceduralFaceActor = true;
 }

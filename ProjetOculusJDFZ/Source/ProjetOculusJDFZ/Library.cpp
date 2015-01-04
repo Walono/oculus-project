@@ -11,6 +11,7 @@ Library * Library::getLibrary() {
 void Library::add_face(std::list<float> position,
 	std::list<std::list<float>> coordinates, int texture, int faceId) {
 	Face newFace = Face::Face(position, coordinates, texture, faceId);
+	newFace.hasProceduralFaceActor = false;
 	faces[faceId] = newFace;
 	//TODO Remove duplicata in facesToSpawn?
 	facesToSpawn.Add(newFace);
@@ -27,17 +28,11 @@ void Library::remove_face(int faceId) {
 
 void Library::move_face(std::list<float> newPosition, int faceId) {
 	std::map<int, Face>::iterator it = faces.find(faceId);
-	
 	if (it != faces.end()) {
-		Face newFace = Face::Face(faces.at(faceId));
-		newFace.setPosition(newPosition);
-		//add a part to move it in the editor
-		faces.at(faceId) = newFace;
-		
-		if (isInTArray(facesToSpawn, faceId) == false 
-			&& newFace.getProceduralFaceActor() != NULL) {	
-			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Add move!!!"));
-			facesToMove.Add(newFace);			
+		it->second.setPosition(newPosition);
+		Face newFace = it->second;
+		if (newFace.hasProceduralFaceActor) {
+			facesToMove.Add(newFace);
 		}
 	}
 }
@@ -108,6 +103,10 @@ void Library::removeScene(int sceneId) {
 }
 
 Face Library::getNextFaceToSpawn() {
+	std::map<int, Face>::iterator it = faces.find(facesToSpawn[0].getFaceId());
+	if (it != faces.end()) {
+		return it->second;
+	}
 	return facesToSpawn[0];
 }
 bool Library::isFacesToSpawnEmpty() {
@@ -123,6 +122,11 @@ void Library::deleteFaceSpawned() {
 }
 
 Face Library::getNextFaceToMove() {
+	std::map<int, Face>::iterator it = faces.find(facesToMove[0].getFaceId());
+	if (it != faces.end()) {
+		Face moveFace = it->second;
+		return moveFace;
+	}
 	return facesToMove[0];
 }
 bool Library::isFacesToMoveEmpty() {

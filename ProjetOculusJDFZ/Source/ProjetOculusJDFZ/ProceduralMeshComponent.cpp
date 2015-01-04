@@ -419,11 +419,11 @@ void UProceduralMeshComponent::UpdateCollision()
 	{
 		DestroyPhysicsState();
 		UpdateBodySetup();
-		CreatePhysicsState();
 
 		// Works in Packaged build only since UE4.5:
 		ModelBodySetup->InvalidatePhysicsData();
 		ModelBodySetup->CreatePhysicsMeshes();
+		CreatePhysicsState();
 	}
 }
 
