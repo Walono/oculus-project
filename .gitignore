@@ -2,6 +2,7 @@
 /ProjetOculusJDFZ/Binaries/
 /ProjetOculusJDFZ/Intermediate/
 /ProjetOculusJDFZ/Saved/
+/ProjetOculusJDFZ/Build/
 *.opensdf
 *.sdf
 *.v12.suo
