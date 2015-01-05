@@ -34,6 +34,9 @@ class PROJETOCULUSJDFZ_API ASpawnVolume : public AActor
 	UFUNCTION()
 	void SetSpawningEnable(bool isEnable);
 
+	/** Verify if a FName already existe or not */
+	bool IsFaceAlreadySpawned(FString FaceName);
+
 private:
 	int32 Counter;
 

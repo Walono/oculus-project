@@ -269,43 +269,57 @@ void ASpawnVolume::SpawnFace()
 		if (World)
 		{
 
-			//Set the spawn parameters
-			FActorSpawnParameters SpawnParams;
-			SpawnParams.Owner = this;
-			SpawnParams.Instigator = Instigator;
-
 			//Get the current coordinat from our object.
 			Face newFace = library->getNextFaceToSpawn();
-			std::list<float> facePositionList = newFace.getPosition();
-			FVector SpawnLocation;
-			if (facePositionList.size() >= 3){
-				SpawnLocation.X = facePositionList.front();
-				std::list<float>::iterator itY = facePositionList.begin();
-				std::advance(itY, 1);
-				SpawnLocation.Y = *itY;
-				std::list<float>::iterator itZ = facePositionList.begin();
-				std::advance(itZ, 2);
-				SpawnLocation.Z = *itZ;
-			}
-			
-			FRotator SpawnRotation = FRotator(0.f,0.f,0.f);
 
-			AProceduralFaceActor* const SpawnedFace = World->SpawnActor<AProceduralFaceActor>(SpawnLocation, SpawnRotation, SpawnParams);
-			library->getNextFaceToSpawn().setProceduralFaceActor(Cast<AProceduralFaceActor>(SpawnedFace));
-			library->deleteFaceSpawned();
-			//if (Counter == 6) {
-			//	std::list<float> posTwo;
-			//	posTwo.push_back(-300.f);
-			//	posTwo.push_back(0.f);
-			//	posTwo.push_back(3000.f);
-			//	library->move_face(posTwo, 1);
-			//}
+			//Verify this face doesn't already exist
+			FString searchedFace = FString(TEXT("Face")) + FString::SanitizeFloat(newFace.getFaceId());
+
+			if (IsFaceAlreadySpawned(searchedFace) == false) {
+					std::list<float> facePositionList = newFace.getPosition();
+					FVector SpawnLocation;
+					if (facePositionList.size() >= 3){
+						SpawnLocation.X = facePositionList.front();
+						std::list<float>::iterator itY = facePositionList.begin();
+						std::advance(itY, 1);
+						SpawnLocation.Y = *itY;
+						std::list<float>::iterator itZ = facePositionList.begin();
+						std::advance(itZ, 2);
+						SpawnLocation.Z = *itZ;
+					}
+
+					//Set the spawn parameters
+					FActorSpawnParameters SpawnParams;
+					SpawnParams.Owner = this;
+					SpawnParams.Instigator = Instigator;
+					FString FaceNameString = FString(TEXT("Face")) + FString::SanitizeFloat(newFace.getFaceId());
+					FName FaceName = FName(*FaceNameString);
+					SpawnParams.Name = FName(FaceName);
+
+					FRotator SpawnRotation = FRotator(0.f, 0.f, 0.f);
+
+					AProceduralFaceActor* const SpawnedFace = World->SpawnActor<AProceduralFaceActor>(SpawnLocation, SpawnRotation, SpawnParams);
+					library->getNextFaceToSpawn().faceSpawned();
+					library->deleteFaceSpawned();
+					if (Counter == 6) {
+						std::list<float> posTwo;
+						posTwo.push_back(-300.f);
+						posTwo.push_back(0.f);
+						posTwo.push_back(3000.f);
+						library->move_face(posTwo, 1);
+						//AProceduralSoundActor* const SpawnedSound = World->SpawnActor<AProceduralSoundActor>(FVector(800.f, 0.f, 500.f), FRotator(0.f, 180.f, 0.f), SpawnParams);
+					}
+				}
+			
+
+
+
+			
 		}
 }
 
 void ASpawnVolume::MoveFace()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Move!!!"));
 	Face movedFace = library->getNextFaceToMove();
 	FVector newPosition;
 	std::list<float> facePositionList = movedFace.getPosition();
@@ -318,7 +332,15 @@ void ASpawnVolume::MoveFace()
 		std::advance(itZ, 2);
 		newPosition.Z = *itZ;
 	}	
-	library->getNextFaceToMove().getProceduralFaceActor()->SetActorLocation(newPosition, true);
+	//Find the actor from the face
+	FString searchedFace = FString(TEXT("Face")) + FString::SanitizeFloat(movedFace.getFaceId());
+	for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
+	{
+		if (ActorItr->GetName() == searchedFace) {
+			//Teleport the actor to the new location
+			ActorItr->SetActorLocation(newPosition, true);
+		}
+	}
 	library->deleteFaceMoved();
 }
 
@@ -345,7 +367,6 @@ void ASpawnVolume::Tick(float DeltaSeconds)
 
 	//Skip if there is no face to move
 	if (library->isFacesToMoveEmpty() == false) {
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Move???"));
 		MoveFace();
 		
 	}
@@ -360,4 +381,14 @@ void ASpawnVolume::SetSpawningEnable(bool isEnable)
 void ASpawnVolume::SetSpawnVolumeDimension(float NewX, float NewY, float NewZ)
 {
 	InitialSpawnVolumeDim = FVector(NewX, NewY, NewZ);
+}
+
+bool ASpawnVolume::IsFaceAlreadySpawned(FString FaceName){
+	for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
+	{
+		if (ActorItr->GetName() == FaceName) {
+			return true;
+		}
+	}
+	return false;
 }

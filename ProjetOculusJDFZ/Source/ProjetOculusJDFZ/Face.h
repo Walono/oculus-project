@@ -24,9 +24,10 @@ public:
 	void setCoordinates(std::list<std::list<float>> coordinates);
 	void setTexture(int texture);
 	void setfaceId(int faceId);
-	void setProceduralFaceActor(AProceduralFaceActor* newActor);
+	void faceSpawned();
 
 	bool hasProceduralFaceActor;
+	
 
 private:
 
@@ -34,6 +35,6 @@ private:
 	std::list<std::list<float>> coordinates;
 	int texture; 
 	int faceId;
-	AProceduralFaceActor* proceduralFaceActor;
+	
 };
 

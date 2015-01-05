@@ -35,11 +35,6 @@ int Face::getFaceId() {
 	return faceId;
 }
 
-AProceduralFaceActor* Face::getProceduralFaceActor() {
-	return proceduralFaceActor;
-}
-
-
 void Face::setPosition(std::list<float> setPosition) {
 	position = setPosition;
 }
@@ -56,7 +51,7 @@ void Face::setfaceId(int setFaceId) {
 	faceId = setFaceId;
 }
 
-void Face::setProceduralFaceActor(AProceduralFaceActor* newActor) {
-	proceduralFaceActor = newActor;
+void Face::faceSpawned() {
 	hasProceduralFaceActor = true;
 }
+

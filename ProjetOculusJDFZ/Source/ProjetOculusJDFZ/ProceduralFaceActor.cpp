@@ -49,12 +49,6 @@ AProceduralFaceActor::AProceduralFaceActor(const class FPostConstructInitializeP
 	
 }
 
-
-//void AProceduralFaceActor::PostInitializeComponents(){
-//    Super::PostInitializeComponents();
-	
-//} 
-
 void AProceduralFaceActor::GenerateFace(const TArray<FVector>& InPoints, TArray<FProceduralMeshTriangle>& OutTriangles){
 
 	//Creat the midle point

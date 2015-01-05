@@ -39,9 +39,14 @@ AProceduralSoundActor::AProceduralSoundActor(const class FPostConstructInitializ
 	RootComponent = mesh;
 
 	AudioComp->SetSound(Sound.Object);
-
-		AudioComp->AttachParent = RootComponent;
-		AudioComp->Play();
+	AudioComp->AttachParent = RootComponent;
+	AudioComp->bOverrideAttenuation = true;
+	AudioComp->AttenuationOverrides.AttenuationShape = EAttenuationShape::Cone;
+	AudioComp->AttenuationOverrides.DistanceAlgorithm = ESoundDistanceModel::ATTENUATION_Linear;
+	AudioComp->AttenuationOverrides.ConeOffset = 0.f;
+	AudioComp->AttenuationOverrides.FalloffDistance = 1.f;
+	AudioComp->AttenuationOverrides.AttenuationShapeExtents = FVector(1000.f, 45.f, 1.f);
+	AudioComp->Play();
 	
 }
 
