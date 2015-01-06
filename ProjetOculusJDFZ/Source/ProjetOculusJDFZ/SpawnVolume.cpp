@@ -274,8 +274,8 @@ void ASpawnVolume::SpawnFace()
 
 			//Verify this face doesn't already exist
 			FString searchedFace = FString(TEXT("Face")) + FString::SanitizeFloat(newFace.getFaceId());
-
 			if (IsFaceAlreadySpawned(searchedFace) == false) {
+					//Extract the position of the face to spawn
 					std::list<float> facePositionList = newFace.getPosition();
 					FVector SpawnLocation;
 					if (facePositionList.size() >= 3){
@@ -292,29 +292,25 @@ void ASpawnVolume::SpawnFace()
 					FActorSpawnParameters SpawnParams;
 					SpawnParams.Owner = this;
 					SpawnParams.Instigator = Instigator;
-					FString FaceNameString = FString(TEXT("Face")) + FString::SanitizeFloat(newFace.getFaceId());
-					FName FaceName = FName(*FaceNameString);
-					SpawnParams.Name = FName(FaceName);
+					SpawnParams.Name = FName(*searchedFace);
 
-					FRotator SpawnRotation = FRotator(0.f, 0.f, 0.f);
-
-					AProceduralFaceActor* const SpawnedFace = World->SpawnActor<AProceduralFaceActor>(SpawnLocation, SpawnRotation, SpawnParams);
+					//Spawn the face, and update the library
+					AProceduralFaceActor* const SpawnedFace = World->SpawnActor<AProceduralFaceActor>(SpawnLocation, FRotator(0.f, 0.f, 0.f), SpawnParams);
 					library->getNextFaceToSpawn().faceSpawned();
 					library->deleteFaceSpawned();
+
+					//Test hard coded part
 					if (Counter == 6) {
 						std::list<float> posTwo;
 						posTwo.push_back(-300.f);
 						posTwo.push_back(0.f);
 						posTwo.push_back(3000.f);
 						library->move_face(posTwo, 1);
+						
+
 						//AProceduralSoundActor* const SpawnedSound = World->SpawnActor<AProceduralSoundActor>(FVector(800.f, 0.f, 500.f), FRotator(0.f, 180.f, 0.f), SpawnParams);
 					}
 				}
-			
-
-
-
-			
 		}
 }
 
@@ -363,13 +359,13 @@ void ASpawnVolume::Tick(float DeltaSeconds)
 				SpawnTime -= SpawnDelay;
 			}
 		}
-	}		
-
+	}	
 	//Skip if there is no face to move
 	if (library->isFacesToMoveEmpty() == false) {
 		MoveFace();
-		
 	}
+
+
 }
 
 

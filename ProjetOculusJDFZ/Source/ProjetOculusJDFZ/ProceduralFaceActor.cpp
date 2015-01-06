@@ -67,7 +67,10 @@ void AProceduralFaceActor::GenerateFace(const TArray<FVector>& InPoints, TArray<
 	middleYPos = middleYPos / nbrPoints;
 	middleZPos = middleZPos / nbrPoints;
 
+	
 	static const FColor RandomColor(FMath::FRandRange(0, 255), FMath::FRandRange(0, 255), FMath::FRandRange(0, 255));
+
+	//generate the triangle of the mesh for one side of the face
 	for (i = 0; i < nbrPoints; ++i){
 		FProceduralMeshTriangle triangle;
 		triangle.Vertex0.Color = RandomColor;
@@ -84,7 +87,7 @@ void AProceduralFaceActor::GenerateFace(const TArray<FVector>& InPoints, TArray<
 
 		OutTriangles.Add(triangle);
 	}
-
+	//The same procedure is call on the other side to generate the mesh visible on both side
 	for (i = nbrPoints - 1; i >= 0; --i){
 		FProceduralMeshTriangle triangle;
 		triangle.Vertex0.Color = RandomColor;

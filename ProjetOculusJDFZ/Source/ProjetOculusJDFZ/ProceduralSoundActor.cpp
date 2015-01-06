@@ -45,6 +45,12 @@ AProceduralSoundActor::AProceduralSoundActor(const class FPostConstructInitializ
 	AudioComp->AttenuationOverrides.DistanceAlgorithm = ESoundDistanceModel::ATTENUATION_Linear;
 	AudioComp->AttenuationOverrides.ConeOffset = 0.f;
 	AudioComp->AttenuationOverrides.FalloffDistance = 1.f;
+	/* The dimensions to use for the attenuation shape. Interpretation of the values differ per shape.
+	Sphere  - X is Sphere Radius. Y and Z are unused
+	Capsule - X is Capsule Half Height, Y is Capsule Radius, Z is unused
+	Box     - X, Y, and Z are the Box's dimensions
+	Cone    - X is Cone Radius, Y is Cone Angle, Z is Cone Falloff Angle
+	*/
 	AudioComp->AttenuationOverrides.AttenuationShapeExtents = FVector(1000.f, 45.f, 1.f);
 	AudioComp->Play();
 	
