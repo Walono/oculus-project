@@ -106,5 +106,7 @@ void AProceduralFaceActor::GenerateFace(const TArray<FVector>& InPoints, TArray<
 	}
 }
 
-
+void AProceduralFaceActor::DeleteFaceActor() {
+	Destroy();
+}
 
