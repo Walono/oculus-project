@@ -51,7 +51,7 @@ void Face::setfaceId(int setFaceId) {
 	faceId = setFaceId;
 }
 
-void Face::faceSpawned() {
-	hasProceduralFaceActor = true;
+void Face::setFaceSpawned(bool isSpawned){
+	hasProceduralFaceActor = isSpawned;
 }
 

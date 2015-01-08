@@ -147,7 +147,3 @@ void AProceduralSoundActor::GenerateLathe(const TArray<FVector>& InPoints, const
 		}
 	}
 }
-
-void AProceduralSoundActor::DeleteSoundActor() {
-	Destroy();
-}

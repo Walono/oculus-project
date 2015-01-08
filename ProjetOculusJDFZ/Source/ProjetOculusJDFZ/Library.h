@@ -72,6 +72,9 @@ public:
 	bool isFacesToMoveEmpty();
 	void deleteFaceMoved();
 	bool isInTArray(TArray<Face> faces, int id);
+	int getNextFaceIdToDelete();
+	bool isFacesToDeleteEmpty();
+	void deleteFaceDeleted();
 
 
 private:
@@ -87,6 +90,7 @@ private:
 	std::map<int, Sound> sounds;
 	TArray<Face> facesToSpawn;
 	TArray<Face> facesToMove;
+	TArray<Face> facesToDelete;
 
 };
 

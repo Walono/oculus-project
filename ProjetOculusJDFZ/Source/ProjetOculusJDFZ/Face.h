@@ -24,7 +24,7 @@ public:
 	void setCoordinates(std::list<std::list<float>> coordinates);
 	void setTexture(int texture);
 	void setfaceId(int faceId);
-	void faceSpawned();
+	void setFaceSpawned(bool isSpawned);
 
 	bool hasProceduralFaceActor;
 	

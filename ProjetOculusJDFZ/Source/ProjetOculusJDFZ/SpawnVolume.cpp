@@ -274,6 +274,8 @@ void ASpawnVolume::SpawnFace()
 
 			//Verify this face doesn't already exist
 			FString searchedFace = FString(TEXT("Face")) + FString::SanitizeFloat(newFace.getFaceId());
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, searchedFace + TEXT(" Spawned"));
+
 			if (IsFaceAlreadySpawned(searchedFace) == false) {
 					//Extract the position of the face to spawn
 					std::list<float> facePositionList = newFace.getPosition();
@@ -296,18 +298,18 @@ void ASpawnVolume::SpawnFace()
 
 					//Spawn the face, and update the library
 					AProceduralFaceActor* const SpawnedFace = World->SpawnActor<AProceduralFaceActor>(SpawnLocation, FRotator(0.f, 0.f, 0.f), SpawnParams);
-					library->getNextFaceToSpawn().faceSpawned();
+					library->getNextFaceToSpawn().setFaceSpawned(true);
 					library->deleteFaceSpawned();
 
 					//Test hard coded part
 					if (Counter == 6) {
+						GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Counter = 6!!!"));
 						std::list<float> posTwo;
 						posTwo.push_back(-300.f);
 						posTwo.push_back(0.f);
 						posTwo.push_back(3000.f);
 						library->move_face(posTwo, 1);
-						
-
+						library->remove_face(2);
 						//AProceduralSoundActor* const SpawnedSound = World->SpawnActor<AProceduralSoundActor>(FVector(800.f, 0.f, 500.f), FRotator(0.f, 180.f, 0.f), SpawnParams);
 					}
 				}
@@ -330,8 +332,7 @@ void ASpawnVolume::MoveFace()
 	}	
 	//Find the actor from the face
 	FString searchedFace = FString(TEXT("Face")) + FString::SanitizeFloat(movedFace.getFaceId());
-	for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
-	{
+	for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)	{
 		if (ActorItr->GetName() == searchedFace) {
 			//Teleport the actor to the new location
 			ActorItr->SetActorLocation(newPosition, true);
@@ -340,9 +341,22 @@ void ASpawnVolume::MoveFace()
 	library->deleteFaceMoved();
 }
 
+void ASpawnVolume::DeleteFace()
+{
+	int faceId = library->getNextFaceIdToDelete();
+	FString searchedFace = FString(TEXT("Face")) + FString::FromInt(faceId);
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, searchedFace);
+	for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr) {
+		if (ActorItr->GetName() == searchedFace) {
+			ActorItr->Destroy();
+		}
+	}
+	library->deleteFaceDeleted();
+}
+
 void ASpawnVolume::Tick(float DeltaSeconds)
 {
-	//Do nothing if spawning aren't enable
+	//Is there a face to spawn?
 	if (bSpawningEnabled)
 	{
 		//Skip if there is no face to spawn
@@ -360,12 +374,16 @@ void ASpawnVolume::Tick(float DeltaSeconds)
 			}
 		}
 	}	
-	//Skip if there is no face to move
+	//Is there a face to move?
 	if (library->isFacesToMoveEmpty() == false) {
 		MoveFace();
 	}
 
-
+	//Is there a face to delete?
+	if (library->isFacesToDeleteEmpty() == false) {
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Delete it, it's an order!!!"));
+		DeleteFace();
+	}
 }
 
 

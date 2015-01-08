@@ -11,17 +11,32 @@ Library * Library::getLibrary() {
 void Library::add_face(std::list<float> position,
 	std::list<std::list<float>> coordinates, int texture, int faceId) {
 	Face newFace = Face::Face(position, coordinates, texture, faceId);
-	newFace.hasProceduralFaceActor = false;
+	newFace.setFaceSpawned(false);
 	faces[faceId] = newFace;
 	//TODO Remove duplicata in facesToSpawn?
-	facesToSpawn.Add(newFace);
+	if (isInTArray(facesToSpawn, newFace.getFaceId()) == false) {
+		facesToSpawn.Add(newFace);
+	}
+	
 }
 
 void Library::remove_face(int faceId) {
 	//Add a part to remove it in the editor
 	std::map<int, Face>::iterator it = faces.find(faceId);
-	if (it != faces.end()) {
-		sounds.erase(faceId);
+	if (it != faces.end()) {		
+		if (it->second.hasProceduralFaceActor) {
+			if (isInTArray(facesToSpawn, it->first)) {
+				for (int i = 0; i < facesToSpawn.Num(); ++i) {
+					if (facesToSpawn[i].getFaceId() == it->first) {
+						facesToSpawn.RemoveAt(i);
+						break;
+					}
+				}
+			}
+			else {
+				facesToDelete.Add(it->second);
+			}			
+		}
 	}
 }
 
@@ -103,10 +118,6 @@ void Library::removeScene(int sceneId) {
 }
 
 Face Library::getNextFaceToSpawn() {
-	std::map<int, Face>::iterator it = faces.find(facesToSpawn[0].getFaceId());
-	if (it != faces.end()) {
-		return it->second;
-	}
 	return facesToSpawn[0];
 }
 bool Library::isFacesToSpawnEmpty() {
@@ -122,11 +133,6 @@ void Library::deleteFaceSpawned() {
 }
 
 Face Library::getNextFaceToMove() {
-	std::map<int, Face>::iterator it = faces.find(facesToMove[0].getFaceId());
-	if (it != faces.end()) {
-		Face moveFace = it->second;
-		return moveFace;
-	}
 	return facesToMove[0];
 }
 bool Library::isFacesToMoveEmpty() {
@@ -140,7 +146,29 @@ bool Library::isFacesToMoveEmpty() {
 
 void Library::deleteFaceMoved() {
 	facesToMove.RemoveAt(0);
+	
 }
+
+int Library::getNextFaceIdToDelete() {
+	return facesToDelete[0].getFaceId();
+}
+
+bool Library::isFacesToDeleteEmpty() {
+	if (facesToDelete.Num() == 0) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+
+void Library::deleteFaceDeleted() {
+	int id = facesToDelete[0].getFaceId();
+	facesToDelete.RemoveAt(0);
+	faces.erase(id);
+}
+
 
 bool Library::isInTArray(TArray<Face> faces, int id) {
 

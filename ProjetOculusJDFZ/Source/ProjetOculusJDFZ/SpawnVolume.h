@@ -49,13 +49,14 @@ private:
 	/** Can be changed with SetSpawningEnable */
 	bool bSpawningEnabled;
 
-	//TODO: add a list of spawnable obect we can fil.
-
 	/** Handles the spawning of a new Face */
 	void SpawnFace();
 
 	/** Handles the move of an existing face */
 	void MoveFace();
+
+	/** Handles the delete of an existing face */
+	void DeleteFace();
 
 	/** The timer for when to spawn the Obect */
 	float SpawnTime;
