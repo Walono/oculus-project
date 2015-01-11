@@ -5,7 +5,8 @@
 Face::Face(std::list<float> position, std::list<std::list<float>> coordinates,
 	int texture, int faceId) :
 	position(position), coordinates(coordinates), 
-	texture(texture), faceId(faceId)  {}
+	texture(texture), faceId(faceId), 
+	hasProceduralFaceActor(false){}
 
 Face::Face()
 {
@@ -17,7 +18,8 @@ Face::~Face()
 
 Face::Face(const Face& other) :
 	position(other.position), coordinates(other.coordinates), 
-	texture(other.texture), faceId(other.faceId) {}
+	texture(other.texture), faceId(other.faceId), 
+	hasProceduralFaceActor(other.hasProceduralFaceActor) {}
 
 std::list<float> Face::getPosition() {
 	return position;

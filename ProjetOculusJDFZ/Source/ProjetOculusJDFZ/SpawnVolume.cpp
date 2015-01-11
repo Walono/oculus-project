@@ -270,15 +270,15 @@ void ASpawnVolume::SpawnFace()
 		{
 
 			//Get the current coordinat from our object.
-			Face newFace = library->getNextFaceToSpawn();
+			Face* newFace = library->getNextFaceToSpawn();
 
 			//Verify this face doesn't already exist
-			FString searchedFace = FString(TEXT("Face")) + FString::SanitizeFloat(newFace.getFaceId());
+			FString searchedFace = FString(TEXT("Face")) + FString::SanitizeFloat(newFace->getFaceId());
 			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, searchedFace + TEXT(" Spawned"));
 
 			if (IsFaceAlreadySpawned(searchedFace) == false) {
 					//Extract the position of the face to spawn
-					std::list<float> facePositionList = newFace.getPosition();
+					std::list<float> facePositionList = newFace->getPosition();
 					FVector SpawnLocation;
 					if (facePositionList.size() >= 3){
 						SpawnLocation.X = facePositionList.front();
@@ -298,7 +298,7 @@ void ASpawnVolume::SpawnFace()
 
 					//Spawn the face, and update the library
 					AProceduralFaceActor* const SpawnedFace = World->SpawnActor<AProceduralFaceActor>(SpawnLocation, FRotator(0.f, 0.f, 0.f), SpawnParams);
-					library->getNextFaceToSpawn().setFaceSpawned(true);
+					library->getNextFaceToSpawn()->setFaceSpawned(true);
 					library->deleteFaceSpawned();
 
 					//Test hard coded part
@@ -318,9 +318,9 @@ void ASpawnVolume::SpawnFace()
 
 void ASpawnVolume::MoveFace()
 {
-	Face movedFace = library->getNextFaceToMove();
+	Face* movedFace = library->getNextFaceToMove();
 	FVector newPosition;
-	std::list<float> facePositionList = movedFace.getPosition();
+	std::list<float> facePositionList = movedFace->getPosition();
 	if (facePositionList.size() >= 3){
 		newPosition.X = facePositionList.front();
 		std::list<float>::iterator itY = facePositionList.begin();
@@ -331,7 +331,7 @@ void ASpawnVolume::MoveFace()
 		newPosition.Z = *itZ;
 	}	
 	//Find the actor from the face
-	FString searchedFace = FString(TEXT("Face")) + FString::SanitizeFloat(movedFace.getFaceId());
+	FString searchedFace = FString(TEXT("Face")) + FString::SanitizeFloat(movedFace->getFaceId());
 	for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)	{
 		if (ActorItr->GetName() == searchedFace) {
 			//Teleport the actor to the new location
@@ -344,7 +344,7 @@ void ASpawnVolume::MoveFace()
 void ASpawnVolume::DeleteFace()
 {
 	int faceId = library->getNextFaceIdToDelete();
-	FString searchedFace = FString(TEXT("Face")) + FString::FromInt(faceId);
+	FString searchedFace = FString(TEXT("Face")) + FString::SanitizeFloat((float)faceId);
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, searchedFace);
 	for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr) {
 		if (ActorItr->GetName() == searchedFace) {

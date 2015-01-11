@@ -65,13 +65,13 @@ public:
 
 	/* Concerning the Faces to Spawn */
 
-	Face getNextFaceToSpawn();
+	Face* getNextFaceToSpawn();
 	bool isFacesToSpawnEmpty();
 	void deleteFaceSpawned();
-	Face getNextFaceToMove();
+	Face* getNextFaceToMove();
 	bool isFacesToMoveEmpty();
 	void deleteFaceMoved();
-	bool isInTArray(TArray<Face> faces, int id);
+	bool isInTArray(TArray<int> faces, int id);
 	int getNextFaceIdToDelete();
 	bool isFacesToDeleteEmpty();
 	void deleteFaceDeleted();
@@ -88,9 +88,9 @@ private:
 	std::map<int, Polyhedron> polyhedrons;
 	std::map<int, Face> faces;
 	std::map<int, Sound> sounds;
-	TArray<Face> facesToSpawn;
-	TArray<Face> facesToMove;
-	TArray<Face> facesToDelete;
+	TArray<int> facesToSpawn;
+	TArray<int> facesToMove;
+	TArray<int> facesToDelete;
 
 };
 

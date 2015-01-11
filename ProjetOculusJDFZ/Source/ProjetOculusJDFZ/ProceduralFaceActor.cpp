@@ -24,8 +24,8 @@ AProceduralFaceActor::AProceduralFaceActor(const class FPostConstructInitializeP
 	
 	if (library->isFacesToSpawnEmpty() == false) {
 
-		Face newFace = library->getNextFaceToSpawn();
-		std::list<std::list<float>> coordinate = newFace.getCoordinates();
+		Face* newFace = library->getNextFaceToSpawn();
+		std::list<std::list<float>> coordinate = newFace->getCoordinates();
 		std::list<std::list<float>>::const_iterator
 			lit(coordinate.begin()),
 			lend(coordinate.end());

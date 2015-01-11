@@ -11,11 +11,10 @@ Library * Library::getLibrary() {
 void Library::add_face(std::list<float> position,
 	std::list<std::list<float>> coordinates, int texture, int faceId) {
 	Face newFace = Face::Face(position, coordinates, texture, faceId);
-	newFace.setFaceSpawned(false);
 	faces[faceId] = newFace;
 	//TODO Remove duplicata in facesToSpawn?
 	if (isInTArray(facesToSpawn, newFace.getFaceId()) == false) {
-		facesToSpawn.Add(newFace);
+		facesToSpawn.Add(newFace.getFaceId());
 	}
 	
 }
@@ -25,17 +24,16 @@ void Library::remove_face(int faceId) {
 	std::map<int, Face>::iterator it = faces.find(faceId);
 	if (it != faces.end()) {		
 		if (it->second.hasProceduralFaceActor) {
+			facesToDelete.Add(it->first);
+		} else {
 			if (isInTArray(facesToSpawn, it->first)) {
 				for (int i = 0; i < facesToSpawn.Num(); ++i) {
-					if (facesToSpawn[i].getFaceId() == it->first) {
+					if (facesToSpawn[i] == it->first) {
 						facesToSpawn.RemoveAt(i);
 						break;
 					}
 				}
 			}
-			else {
-				facesToDelete.Add(it->second);
-			}			
 		}
 	}
 }
@@ -47,7 +45,7 @@ void Library::move_face(std::list<float> newPosition, int faceId) {
 		it->second.setPosition(newPosition);
 		Face newFace = it->second;
 		if (newFace.hasProceduralFaceActor) {
-			facesToMove.Add(newFace);
+			facesToMove.Add(newFace.getFaceId());
 		}
 	}
 }
@@ -117,8 +115,10 @@ void Library::removeScene(int sceneId) {
 	}
 }
 
-Face Library::getNextFaceToSpawn() {
-	return facesToSpawn[0];
+Face* Library::getNextFaceToSpawn() {
+	std::map<int, Face>::iterator it = faces.find(facesToSpawn[0]);
+	return &it->second;
+
 }
 bool Library::isFacesToSpawnEmpty() {
 	if (facesToSpawn.Num() == 0) {
@@ -132,8 +132,9 @@ void Library::deleteFaceSpawned() {
 	facesToSpawn.RemoveAt(0);
 }
 
-Face Library::getNextFaceToMove() {
-	return facesToMove[0];
+Face* Library::getNextFaceToMove() {
+	std::map<int, Face>::iterator it = faces.find(facesToMove[0]);
+	return &it->second;
 }
 bool Library::isFacesToMoveEmpty() {
 	if (facesToMove.Num() == 0) {
@@ -150,7 +151,7 @@ void Library::deleteFaceMoved() {
 }
 
 int Library::getNextFaceIdToDelete() {
-	return facesToDelete[0].getFaceId();
+	return facesToDelete[0];
 }
 
 bool Library::isFacesToDeleteEmpty() {
@@ -164,16 +165,15 @@ bool Library::isFacesToDeleteEmpty() {
 
 
 void Library::deleteFaceDeleted() {
-	int id = facesToDelete[0].getFaceId();
-	facesToDelete.RemoveAt(0);
-	faces.erase(id);
+	faces.erase(facesToDelete[0]);
+	facesToDelete.RemoveAt(0);	
 }
 
 
-bool Library::isInTArray(TArray<Face> faces, int id) {
+bool Library::isInTArray(TArray<int> facesId, int id) {
 
-	for (int i = 0; i < faces.Num(); ++i) {
-		if (faces[i].getFaceId() == id) {
+	for (int i = 0; i < facesId.Num(); ++i) {
+		if (facesId[i] == id) {
 			return true;
 		}
 	}
