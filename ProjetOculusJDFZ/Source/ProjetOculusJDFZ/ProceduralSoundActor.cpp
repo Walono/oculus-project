@@ -25,12 +25,12 @@ AProceduralSoundActor::AProceduralSoundActor(const class FPostConstructInitializ
 	// Contains the points describing the polyline we are going to rotate
 	TArray<FVector> points;
 
-	points.Add(FVector(100, 0, 0));
-	points.Add(FVector(75, 50, 0));
-	points.Add(FVector(150, 200, 0));
-	points.Add(FVector(100, 200, 0));
+	points.Add(FVector(25, 0, 0));
+	points.Add(FVector(19, 13, 0));
+	points.Add(FVector(38, 50, 0));
 	points.Add(FVector(25, 50, 0));
-	points.Add(FVector(0, 50, 0));
+	points.Add(FVector(7, 13, 0));
+	points.Add(FVector(0, 13, 0));
 
 	
 

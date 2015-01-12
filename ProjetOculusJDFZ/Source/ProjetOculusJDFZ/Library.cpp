@@ -10,26 +10,27 @@ Library * Library::getLibrary() {
 
 void Library::add_face(std::list<float> position,
 	std::list<std::list<float>> coordinates, int texture, int faceId) {
+
 	Face newFace = Face::Face(position, coordinates, texture, faceId);
 	faces[faceId] = newFace;
-	//TODO Remove duplicata in facesToSpawn?
 	if (isInTArray(facesToSpawn, newFace.getFaceId()) == false) {
 		facesToSpawn.Add(newFace.getFaceId());
 	}
-	
+
 }
 
 void Library::remove_face(int faceId) {
-	//Add a part to remove it in the editor
 	std::map<int, Face>::iterator it = faces.find(faceId);
-	if (it != faces.end()) {		
+	if (it != faces.end()) {
 		if (it->second.hasProceduralFaceActor) {
 			facesToDelete.Add(it->first);
-		} else {
+		}
+		else {
 			if (isInTArray(facesToSpawn, it->first)) {
 				for (int i = 0; i < facesToSpawn.Num(); ++i) {
 					if (facesToSpawn[i] == it->first) {
 						facesToSpawn.RemoveAt(i);
+						faces.erase(it->first);
 						break;
 					}
 				}
@@ -55,16 +56,31 @@ void Library::add_sound_source(std::string name,
 	std::vector<float> viewDirection,
 	std::vector<float> upDirection, int sourceId) {
 
-	Sound newSound = 
+	Sound newSound =
 		Sound::Sound(name, position, viewDirection, upDirection, sourceId);
 	sounds[sourceId] = newSound;
+	if (isInTArray(soundToSpawn, newSound.getSourceId()) == false) {
+		soundToSpawn.Add(newSound.getSourceId());
+	}
 }
 
 void Library::remove_sound_source(int sourceId) {
-	//Add a part to remove it in the editor
 	std::map<int, Sound>::iterator it = sounds.find(sourceId);
 	if (it != sounds.end()) {
-		sounds.erase(sourceId);
+		if (it->second.hasProceduralFaceActor) {
+			soundToDelete.Add(it->first);
+		}
+		else {
+			if (isInTArray(soundToSpawn, it->first)) {
+				for (int i = 0; i < soundToSpawn.Num(); i++) {
+					if (soundToSpawn[i] == it->first) {
+						soundToSpawn.RemoveAt(i);
+						sounds.erase(it->first);
+						break;
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -72,16 +88,20 @@ void Library::move_source(std::list<float> newPosition,
 	std::vector<float> newViewDirection,
 	std::vector<float> newUpDirection, int sourceId) {
 	
-	//add a part to move it in the editor
 	std::map<int, Sound>::iterator it = sounds.find(sourceId);
 	if (it != sounds.end()) {
-		Sound newSound = Sound::Sound(sounds.at(sourceId));
-		sounds.at(sourceId) = newSound;
+		it->second.setPosition(newPosition);
+		if (it->second.hasProceduralFaceActor) {
+			soundToMove.Add(it->first);
+		}
 	}
 }
 
 //TODO Define method
-void Library::enable_sound(bool enable, int sourceId) {}
+void Library::enable_sound(bool enable, int sourceId) 
+{
+
+}
 
 //TODO Define method
 void Library::set_initial_position(std::list<float> position) {}
@@ -118,55 +138,98 @@ void Library::removeScene(int sceneId) {
 Face* Library::getNextFaceToSpawn() {
 	std::map<int, Face>::iterator it = faces.find(facesToSpawn[0]);
 	return &it->second;
-
 }
+
+Sound* Library::getNextSoundToSpawn() {
+	std::map<int, Sound>::iterator it = sounds.find(soundToSpawn[0]);
+	return &it->second;
+}
+
 bool Library::isFacesToSpawnEmpty() {
 	if (facesToSpawn.Num() == 0) {
 		return true;
 	}
-	else {
-		return false;
-	}
+	return false;
 }
+
+bool Library::isSoundToSpawnEmpty() {
+	if (soundToSpawn.Num() == 0) {
+		return true;
+	}
+	return false;
+}
+
 void Library::deleteFaceSpawned() {
 	facesToSpawn.RemoveAt(0);
+}
+
+void Library::deleteSoundSpawned() {
+	soundToSpawn.RemoveAt(0);
 }
 
 Face* Library::getNextFaceToMove() {
 	std::map<int, Face>::iterator it = faces.find(facesToMove[0]);
 	return &it->second;
 }
+
+Sound* Library::getNextSoundToMove() {
+	std::map<int, Sound>::iterator it = sounds.find(soundToMove[0]);
+	return &it->second;
+}
+
 bool Library::isFacesToMoveEmpty() {
 	if (facesToMove.Num() == 0) {
 		return true;
 	}
-	else {
-		return false;
+	return false;
+}
+
+bool Library::isSoundToMoveEmpty() {
+	if (soundToMove.Num() == 0) {
+		return true;
 	}
+	return false;
 }
 
 void Library::deleteFaceMoved() {
-	facesToMove.RemoveAt(0);
-	
+	facesToMove.RemoveAt(0);	
+}
+
+void Library::deleteSoundMoved() {
+	soundToMove.RemoveAt(0);
 }
 
 int Library::getNextFaceIdToDelete() {
 	return facesToDelete[0];
 }
 
+int Library::getNextSoundIdToDelete() {
+	return soundToDelete[0];
+}
+
 bool Library::isFacesToDeleteEmpty() {
 	if (facesToDelete.Num() == 0) {
 		return true;
 	}
-	else {
-		return false;
+	return false;
+}
+
+bool Library::isSoundToDeleteEmpty() {
+	if (soundToDelete.Num() == 0) {
+		return true;
 	}
+	return false;
 }
 
 
 void Library::deleteFaceDeleted() {
 	faces.erase(facesToDelete[0]);
 	facesToDelete.RemoveAt(0);	
+}
+
+void Library::deleteSoundDeleted() {
+	sounds.erase(soundToDelete[0]);
+	soundToDelete.RemoveAt(0);
 }
 
 

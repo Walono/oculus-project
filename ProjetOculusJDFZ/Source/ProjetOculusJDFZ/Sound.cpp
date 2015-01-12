@@ -6,12 +6,14 @@ Sound::Sound(std::string name, std::list<float> position,
 	std::vector<float> viewDirection,
 	std::vector<float> upDirection, int sourceId):
 	name(name), position(position), viewDirection(viewDirection),
-	upDirection(upDirection), sourceId(sourceId) {}
+	upDirection(upDirection), sourceId(sourceId), 
+	hasProceduralFaceActor(false) {}
 
 Sound::Sound(const Sound& other) :
 	name(other.name), position(other.position),
 	viewDirection(other.viewDirection), upDirection(other.upDirection),
-	sourceId(other.sourceId) {}
+	sourceId(other.sourceId), 
+	hasProceduralFaceActor(other.hasProceduralFaceActor) {}
 
 Sound::Sound() {}
 
@@ -40,4 +42,22 @@ std::vector<float> Sound::getUpDirection() {
 
 int Sound::getSourceId() {
 	return sourceId;
+}
+
+bool Sound::getSoundActivity() {
+	return isActive;
+}
+
+void Sound::setPosition(std::list<float> newPosition) {
+	position = newPosition;
+}
+
+void Sound::setFaceSpawned(bool isSpawned)
+{
+	hasProceduralFaceActor = isSpawned;
+}
+
+void Sound::setSoundActive(bool isNewActive) 
+{
+	isActive = isNewActive;
 }

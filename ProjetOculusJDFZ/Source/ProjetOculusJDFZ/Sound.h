@@ -21,6 +21,13 @@ public:
 	std::vector<float> getViewDirection();
 	std::vector<float> getUpDirection();
 	int getSourceId();
+	bool getSoundActivity();
+
+	void setPosition(std::list<float> newPosition);
+	void setFaceSpawned(bool isSpawned);
+	void setSoundActive(bool isNewActive);
+
+	bool hasProceduralFaceActor;
 
 private:
 
@@ -29,5 +36,6 @@ private:
 	std::vector<float> viewDirection;
 	std::vector<float> upDirection; 
 	int sourceId;
+	bool isActive;
 };
 

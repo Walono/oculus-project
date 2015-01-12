@@ -63,7 +63,7 @@ public:
 
 	void removeScene(int sceneId);
 
-	/* Concerning the Faces to Spawn */
+	/* Concerning the Faces*/
 
 	Face* getNextFaceToSpawn();
 	bool isFacesToSpawnEmpty();
@@ -75,6 +75,18 @@ public:
 	int getNextFaceIdToDelete();
 	bool isFacesToDeleteEmpty();
 	void deleteFaceDeleted();
+
+	/* Concerning the Sound*/
+
+	Sound* getNextSoundToSpawn();
+	bool isSoundToSpawnEmpty();
+	void deleteSoundSpawned();
+	Sound* getNextSoundToMove();
+	bool isSoundToMoveEmpty();
+	void deleteSoundMoved();
+	int getNextSoundIdToDelete();
+	bool isSoundToDeleteEmpty();
+	void deleteSoundDeleted();
 
 
 private:
@@ -91,6 +103,9 @@ private:
 	TArray<int> facesToSpawn;
 	TArray<int> facesToMove;
 	TArray<int> facesToDelete;
+	TArray<int> soundToSpawn;
+	TArray<int> soundToMove;
+	TArray<int> soundToDelete;
 
 };
 
