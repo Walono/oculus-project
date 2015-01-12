@@ -2,6 +2,8 @@
 
 #include "ProjetOculusJDFZ.h"
 #include "OculusCharacter.h"
+#include "ProjetOculusJDFZGameMode.h"
+#include "Kismet/GameplayStatics.h"
 
 
 AOculusCharacter::AOculusCharacter(const class FPostConstructInitializeProperties& PCIP)
@@ -19,6 +21,8 @@ void AOculusCharacter::SetupPlayerInputComponent(UInputComponent* InputComponent
 	InputComponent->BindAxis("LookUp", this, &AOculusCharacter::AddControllerPitchInput);
 	InputComponent->BindAction("Jump", IE_Pressed, this, &AOculusCharacter::OnStartJump);
 	InputComponent->BindAction("Jump", IE_Released, this, &AOculusCharacter::OnStopJump);
+	InputComponent->BindAction("StartSpawning", IE_Pressed, this, &AOculusCharacter::OnStartSpawning);
+	InputComponent->BindAction("StartSpawning", IE_Released, this, &AOculusCharacter::OnReleaseSpawning);
 }
 
 void AOculusCharacter::MoveForward(float Value)
@@ -57,4 +61,18 @@ void AOculusCharacter::OnStartJump()
 void AOculusCharacter::OnStopJump()
 {
 	bPressedJump = false;
+}
+//Set the simulation to Spawning state
+void AOculusCharacter::OnStartSpawning()
+{
+	AProjetOculusJDFZGameMode* MyGameMode = Cast<AProjetOculusJDFZGameMode>(UGameplayStatics::GetGameMode(this));
+	if (MyGameMode->GetCurrentState() != EOculusProjectPlayStats::ESpawningEnable){
+		MyGameMode->SetCurrentState(EOculusProjectPlayStats::ESpawningEnable);
+	}
+	
+}
+
+void AOculusCharacter::OnReleaseSpawning()
+{
+	//do nothing
 }

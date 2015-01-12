@@ -4,7 +4,16 @@
 
 #include "GameFramework/GameMode.h"
 #include "OculusCharacter.h"
+#include "SpawnVolume.h"
 #include "ProjetOculusJDFZGameMode.generated.h"
+
+//Enmum to store the current stats of simulation
+enum class EOculusProjectPlayStats : short
+{
+	EInitialization,
+	ESpawningEnable,
+	EUnknow
+};
 
 /**
  * 
@@ -14,7 +23,24 @@ class PROJETOCULUSJDFZ_API AProjetOculusJDFZGameMode : public AGameMode
 {
 	GENERATED_UCLASS_BODY()
 
+
 		virtual void BeginPlay() override;
+
+	EOculusProjectPlayStats GetCurrentState() const;
+
+	void SetCurrentState(EOculusProjectPlayStats NewState);
+
+private:
+
+	TArray<ASpawnVolume*> SpawnVolumeActors;
+
+	EOculusProjectPlayStats CurrentState;
+
+	void HandleNewState(EOculusProjectPlayStats NewState);
 	
-	
+};
+
+FORCEINLINE EOculusProjectPlayStats AProjetOculusJDFZGameMode::GetCurrentState() const
+{
+	return CurrentState;
 };

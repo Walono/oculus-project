@@ -27,6 +27,14 @@ class PROJETOCULUSJDFZ_API AOculusCharacter : public ACharacter
 	UFUNCTION()
 	void OnStopJump();
 
+	//set the state in gamemode to ESpawningEnable
+	UFUNCTION()
+	void OnStartSpawning();
+	//do nothing
+	UFUNCTION()
+	void OnReleaseSpawning();
+
+
 protected:
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
 	
