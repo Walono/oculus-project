@@ -274,7 +274,6 @@ void ASpawnVolume::SpawnFace()
 
 			//Verify this face doesn't already exist
 			FString searchedFace = FString(TEXT("Face")) + FString::SanitizeFloat(newFace->getFaceId());
-			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, searchedFace + TEXT(" Spawned"));
 
 			if (IsFaceAlreadySpawned(searchedFace) == false) {
 					//Extract the position of the face to spawn
@@ -303,7 +302,6 @@ void ASpawnVolume::SpawnFace()
 
 					//Test hard coded part
 					if (Counter == 6) {
-						GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Counter = 6!!!"));
 						std::list<float> posTwo;
 						posTwo.push_back(-300.f);
 						posTwo.push_back(0.f);
@@ -345,7 +343,6 @@ void ASpawnVolume::DeleteFace()
 {
 	int faceId = library->getNextFaceIdToDelete();
 	FString searchedFace = FString(TEXT("Face")) + FString::SanitizeFloat((float)faceId);
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, searchedFace);
 	for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr) {
 		if (ActorItr->GetName() == searchedFace) {
 			ActorItr->Destroy();
@@ -381,7 +378,6 @@ void ASpawnVolume::Tick(float DeltaSeconds)
 
 	//Is there a face to delete?
 	if (library->isFacesToDeleteEmpty() == false) {
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Delete it, it's an order!!!"));
 		DeleteFace();
 	}
 }
