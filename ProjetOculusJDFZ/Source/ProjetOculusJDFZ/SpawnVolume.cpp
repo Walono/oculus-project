@@ -392,15 +392,16 @@ void ASpawnVolume::SpawnSound()
 			//look up or down, 0 = straight, + up and - down
 			float rotationFirtstValue = viewDirection.Z;
 			//rotation around Z axis of the object
+			float rotationSecondValue;
 			if (viewDirection.X != 0.f) {
-				float rotationSecondValue = FMath::Atan(viewDirection.Y / viewDirection.X);
+				rotationSecondValue = FMath::Atan(viewDirection.Y / viewDirection.X);
 			}
 			else {
 				if (viewDirection.Y > 0){
-					float rotationSecondValue = 90.f;
+					rotationSecondValue = 90.f;
 				}
 				else {
-					float rotationSecondValue = 270.f;
+					rotationSecondValue = 270.f;
 				}
 			}
 			
