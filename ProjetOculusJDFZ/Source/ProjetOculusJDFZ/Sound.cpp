@@ -52,7 +52,7 @@ void Sound::setPosition(std::list<float> newPosition) {
 	position = newPosition;
 }
 
-void Sound::setFaceSpawned(bool isSpawned)
+void Sound::setSoundSpawned(bool isSpawned)
 {
 	hasProceduralFaceActor = isSpawned;
 }

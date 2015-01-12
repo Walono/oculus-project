@@ -35,10 +35,13 @@ class PROJETOCULUSJDFZ_API ASpawnVolume : public AActor
 	void SetSpawningEnable(bool isEnable);
 
 	/** Verify if a FName already existe or not */
-	bool IsFaceAlreadySpawned(FString FaceName);
+	bool IsActorAlreadySpawned(FString FaceName);
 
 private:
 	int32 Counter;
+
+	/** The container of all object to spawn */
+	Library * library;
 
 	/** Base location for the SpawnVolume. */
 	FVector InitialSpawnVolumePos;
@@ -52,16 +55,24 @@ private:
 	/** Handles the spawning of a new Face */
 	void SpawnFace();
 
-	/** Handles the move of an existing face */
+	/** Handles the move of an existing Face */
 	void MoveFace();
 
-	/** Handles the delete of an existing face */
+	/** Handles the delete of an existing Face */
 	void DeleteFace();
+
+	/** Handles the spawning of a Sound */
+	void SpawnSound();
+
+	/** Handles the move of an existing Sound */
+	void MoveSound();
+
+	/** Handles the delete of an existing Sound */
+	void DeleteSound();
 
 	/** The timer for when to spawn the Obect */
 	float SpawnTime;
 
-	/** The container of all object to spawn */
-	Library * library;
+
 	
 };

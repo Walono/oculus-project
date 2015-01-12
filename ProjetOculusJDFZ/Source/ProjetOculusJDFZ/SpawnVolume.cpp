@@ -261,6 +261,44 @@ ASpawnVolume::ASpawnVolume(const class FPostConstructInitializeProperties& PCIP)
 
 }
 
+void ASpawnVolume::Tick(float DeltaSeconds)
+{
+	//Is there a face to spawn?
+	if (bSpawningEnabled)
+	{
+		//increment the time befor spawnng
+		SpawnTime += DeltaSeconds;
+
+		if (SpawnTime > SpawnDelay)
+		{
+			//Skip if there is no face to spawn
+			if (library->isFacesToSpawnEmpty() == false) {
+				SpawnFace();
+
+				//Restart the timer
+				SpawnTime -= SpawnDelay;
+			}
+
+			//Skip if there is no sound to spawn
+			if (library->isSoundToSpawnEmpty() == false) {
+				SpawnSound();
+			}
+		}
+
+
+	}
+
+	//Is there a face to move?
+	if (library->isFacesToMoveEmpty() == false) {
+		MoveFace();
+	}
+
+	//Is there a face to delete?
+	if (library->isFacesToDeleteEmpty() == false) {
+		DeleteFace();
+	}
+}
+
 void ASpawnVolume::SpawnFace()
 {
 	Counter += 1;
@@ -269,13 +307,13 @@ void ASpawnVolume::SpawnFace()
 		if (World)
 		{
 
-			//Get the current coordinat from our object.
+			//Get the current face to spawn
 			Face* newFace = library->getNextFaceToSpawn();
 
 			//Verify this face doesn't already exist
 			FString searchedFace = FString(TEXT("Face")) + FString::SanitizeFloat(newFace->getFaceId());
 
-			if (IsFaceAlreadySpawned(searchedFace) == false) {
+			if (IsActorAlreadySpawned(searchedFace) == false) {
 					//Extract the position of the face to spawn
 					std::list<float> facePositionList = newFace->getPosition();
 					FVector SpawnLocation;
@@ -314,6 +352,76 @@ void ASpawnVolume::SpawnFace()
 		}
 }
 
+void ASpawnVolume::SpawnSound()
+{
+	//Check the world is valid
+	UWorld* const World = GetWorld();
+	if (World)
+	{
+		//Get the current sound to spawn
+		Sound* newSound = library->getNextSoundToSpawn();
+
+		//Verify this sound doesn't already exist
+		FString searchedSound = FString(TEXT("Sound")) + FString::SanitizeFloat(newSound->getSourceId());
+		if (IsActorAlreadySpawned(searchedSound) == false) {
+			//Extract the position of the sound to spawn
+			std::list<float> soundPositionList = newSound->getPosition();
+			FVector SpawnLocation;
+			if (soundPositionList.size() >= 3){
+				SpawnLocation.X = soundPositionList.front();
+				std::list<float>::iterator itY = soundPositionList.begin();
+				std::advance(itY, 1);
+				SpawnLocation.Y = *itY;
+				std::list<float>::iterator itZ = soundPositionList.begin();
+				std::advance(itZ, 2);
+				SpawnLocation.Z = *itZ;
+			}
+
+			//Extracte the viewDirection to have the rotation
+			std::vector<float> soundViewDirection = newSound->getViewDirection();
+			FVector viewDirection;
+			if (soundViewDirection.size() >= 3){
+				viewDirection.X = soundViewDirection.front();
+				std::vector<float>::iterator itY = soundViewDirection.begin();
+				std::advance(itY, 1);
+				viewDirection.Y = *itY;
+				std::vector<float>::iterator itZ = soundViewDirection.begin();
+				std::advance(itZ, 2);
+				viewDirection.Z = *itZ;
+			}
+			//look up or down, 0 = straight, + up and - down
+			float rotationFirtstValue = viewDirection.Z;
+			//rotation around Z axis of the object
+			if (viewDirection.X != 0.f) {
+				float rotationSecondValue = FMath::Atan(viewDirection.Y / viewDirection.X);
+			}
+			else {
+				if (viewDirection.Y > 0){
+					float rotationSecondValue = 90.f;
+				}
+				else {
+					float rotationSecondValue = 270.f;
+				}
+			}
+			
+			//rotation around X axis of the object
+			float rotationThirdValue = 0.f;
+			FRotator SpawnRotation = FRotator(rotationFirtstValue, rotationSecondValue, rotationThirdValue);
+
+			//Set the spawn parameters
+			FActorSpawnParameters SpawnParams;
+			SpawnParams.Owner = this;
+			SpawnParams.Instigator = Instigator;
+			SpawnParams.Name = FName(*searchedSound);
+
+			//Spawn the face, and update the library
+			AProceduralSoundActor* const SpawnedFace = World->SpawnActor<AProceduralSoundActor>(SpawnLocation, SpawnRotation, SpawnParams);
+			library->getNextSoundToSpawn()->setSoundSpawned(true);
+			library->deleteSoundSpawned();
+		}
+	}
+}
+
 void ASpawnVolume::MoveFace()
 {
 	Face* movedFace = library->getNextFaceToMove();
@@ -339,6 +447,11 @@ void ASpawnVolume::MoveFace()
 	library->deleteFaceMoved();
 }
 
+void ASpawnVolume::MoveSound()
+{
+
+}
+
 void ASpawnVolume::DeleteFace()
 {
 	int faceId = library->getNextFaceIdToDelete();
@@ -351,37 +464,10 @@ void ASpawnVolume::DeleteFace()
 	library->deleteFaceDeleted();
 }
 
-void ASpawnVolume::Tick(float DeltaSeconds)
+void ASpawnVolume::DeleteSound()
 {
-	//Is there a face to spawn?
-	if (bSpawningEnabled)
-	{
-		//Skip if there is no face to spawn
-		if (library->isFacesToSpawnEmpty() == false) {
 
-			//increment the time befor spawnng
-			SpawnTime += DeltaSeconds;
-
-			if (SpawnTime > SpawnDelay)
-			{
-				SpawnFace();
-	
-				//Restart the timer
-				SpawnTime -= SpawnDelay;
-			}
-		}
-	}	
-	//Is there a face to move?
-	if (library->isFacesToMoveEmpty() == false) {
-		MoveFace();
-	}
-
-	//Is there a face to delete?
-	if (library->isFacesToDeleteEmpty() == false) {
-		DeleteFace();
-	}
 }
-
 
 void ASpawnVolume::SetSpawningEnable(bool isEnable)
 {
@@ -393,7 +479,7 @@ void ASpawnVolume::SetSpawnVolumeDimension(float NewX, float NewY, float NewZ)
 	InitialSpawnVolumeDim = FVector(NewX, NewY, NewZ);
 }
 
-bool ASpawnVolume::IsFaceAlreadySpawned(FString FaceName){
+bool ASpawnVolume::IsActorAlreadySpawned(FString FaceName){
 	for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)
 	{
 		if (ActorItr->GetName() == FaceName) {

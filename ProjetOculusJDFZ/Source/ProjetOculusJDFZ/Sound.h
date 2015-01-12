@@ -24,7 +24,7 @@ public:
 	bool getSoundActivity();
 
 	void setPosition(std::list<float> newPosition);
-	void setFaceSpawned(bool isSpawned);
+	void setSoundSpawned(bool isSpawned);
 	void setSoundActive(bool isNewActive);
 
 	bool hasProceduralFaceActor;
