@@ -91,6 +91,8 @@ void Library::move_source(std::list<float> newPosition,
 	std::map<int, Sound>::iterator it = sounds.find(sourceId);
 	if (it != sounds.end()) {
 		it->second.setPosition(newPosition);
+		it->second.setViewDirecton(newViewDirection);
+		it->second.setUpDirection(newUpDirection);
 		if (it->second.hasProceduralFaceActor) {
 			soundToMove.Add(it->first);
 		}

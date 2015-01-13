@@ -24,6 +24,8 @@ public:
 	bool getSoundActivity();
 
 	void setPosition(std::list<float> newPosition);
+	void setViewDirecton(std::vector<float> newViewDirection);
+	void setUpDirection(std::vector<float> newUpDirection);
 	void setSoundSpawned(bool isSpawned);
 	void setSoundActive(bool isNewActive);
 

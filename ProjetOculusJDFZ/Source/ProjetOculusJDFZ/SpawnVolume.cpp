@@ -292,14 +292,11 @@ void ASpawnVolume::Tick(float DeltaSeconds)
 				//Restart the timer
 				SpawnTime -= SpawnDelay;
 			}
-
 			//Skip if there is no sound to spawn
 			if (library->isSoundToSpawnEmpty() == false) {
 				SpawnSound();
 			}
 		}
-
-
 	}
 
 	//Is there a face to move?
@@ -478,6 +475,8 @@ void ASpawnVolume::MoveFace()
 void ASpawnVolume::MoveSound()
 {
 	Sound* movedSound = library->getNextSoundToMove();
+
+	//Get and update the position
 	FVector newPosition;
 	std::list<float> soundPositionList = movedSound->getPosition();
 	if (soundPositionList.size() >= 3) {
@@ -489,12 +488,50 @@ void ASpawnVolume::MoveSound()
 		std::advance(itZ, 2);
 		newPosition.Z = *itZ;
 	}
-	//Find the actor from the face
+	//Get and update the viewDirection
+	//Extracte the viewDirection to have the rotation
+	std::vector<float> soundViewDirection = movedSound->getViewDirection();
+	FVector viewDirection;
+	if (soundViewDirection.size() >= 3){
+		viewDirection.X = soundViewDirection.front();
+		std::vector<float>::iterator itY = soundViewDirection.begin();
+		std::advance(itY, 1);
+		viewDirection.Y = *itY;
+		std::vector<float>::iterator itZ = soundViewDirection.begin();
+		std::advance(itZ, 2);
+		viewDirection.Z = *itZ;
+	}
+	//rotation around Y axis (look up or down), 0 = straight, + up and - down
+	float rotationFirtstValue = viewDirection.Z;
+	//rotation around Z axis of the object
+	float rotationSecondValue;
+	if (viewDirection.X != 0.f) {
+		if (viewDirection.X > 0) {
+			rotationSecondValue = FMath::Atan(viewDirection.Y / viewDirection.X);
+		}
+		else {
+			rotationSecondValue = FMath::Atan(viewDirection.Y / viewDirection.X) + 180.f;
+		}
+	}
+	else {
+		if (viewDirection.Y > 0){
+			rotationSecondValue = 90.f;
+		}
+		else {
+			rotationSecondValue = 270.f;
+		}
+	}
+	//rotation around X axis of the object
+	float rotationThirdValue = 0.f;
+	FRotator newRotation = FRotator(rotationFirtstValue, rotationSecondValue, rotationThirdValue);
+
+	//Find the actor from the sound and modify it
 	FString searchedSound = FString(TEXT("Sound")) + FString::SanitizeFloat(movedSound->getSourceId());
 	for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr) {
 		if (ActorItr->GetName() == searchedSound) {
 			//Teleport the actor to the new location
 			ActorItr->SetActorLocation(newPosition, false);
+			ActorItr->SetActorRotation(newRotation);
 		}
 	}
 	library->deleteSoundMoved();

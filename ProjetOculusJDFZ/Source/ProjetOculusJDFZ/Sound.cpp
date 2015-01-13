@@ -51,6 +51,16 @@ bool Sound::getSoundActivity() {
 void Sound::setPosition(std::list<float> newPosition) {
 	position = newPosition;
 }
+void Sound::setViewDirecton(std::vector<float> newViewDirection) 
+{
+	viewDirection = newDirection;
+}
+
+void Sound::setUpDirection(std::vector<float> newUpDirection) 
+{
+	upDirection = newUpDirection;
+}
+
 
 void Sound::setSoundSpawned(bool isSpawned)
 {
