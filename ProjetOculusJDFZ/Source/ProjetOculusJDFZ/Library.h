@@ -87,6 +87,9 @@ public:
 	int getNextSoundIdToDelete();
 	bool isSoundToDeleteEmpty();
 	void deleteSoundDeleted();
+	Sound* getNextSoundIdToEnable();
+	bool isSoundToEnableEmpty();
+	void deleteSoundEnabled();
 
 
 private:
@@ -106,6 +109,7 @@ private:
 	TArray<int> soundToSpawn;
 	TArray<int> soundToMove;
 	TArray<int> soundToDelete;
+	TArray<int> soundToEnable;
 
 };
 

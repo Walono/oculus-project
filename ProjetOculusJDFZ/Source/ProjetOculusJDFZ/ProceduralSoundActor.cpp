@@ -147,3 +147,13 @@ void AProceduralSoundActor::GenerateLathe(const TArray<FVector>& InPoints, const
 		}
 	}
 }
+
+void AProceduralSoundActor::IOActorSound(bool isActive)
+{
+	if (isActive) {
+		AudioComp->Play();
+	}
+	else {
+		AudioComp->Stop();
+	}
+}

@@ -318,6 +318,11 @@ void ASpawnVolume::Tick(float DeltaSeconds)
 	if (library->isSoundToDeleteEmpty() == false) {
 		DeleteSound();
 	}
+
+	//Is there a sound to enable/disable?
+	if (library->isSoundToEnableEmpty() == false) {
+		IOSound();
+	}
 }
 
 void ASpawnVolume::SpawnFace()
@@ -556,11 +561,31 @@ void ASpawnVolume::DeleteSound()
 	FString searchedSound = FString(TEXT("Sound")) + FString::SanitizeFloat((float)soundId);
 	for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr) {
 		if (ActorItr->GetName() == searchedSound) {
-			ActorItr->Destroy;
+			ActorItr->Destroy();
 			break;
 		}
 	}
 	library->deleteFaceDeleted();
+}
+
+void ASpawnVolume::IOSound()
+{
+	Sound* soundToEnable = library->getNextSoundIdToEnable();
+	FString searchedSound = FString(TEXT("Sound")) + FString::SanitizeFloat((float)soundToEnable->getSourceId());
+
+	//find the current proceduralSoundActor
+	TArray<AActor*> FoundActors;
+
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AProceduralSoundActor::StaticClass(), FoundActors);
+
+	for (auto Actor : FoundActors)
+	{
+		AProceduralSoundActor* ProceduralSoundActor = Cast<AProceduralSoundActor>(Actor);
+		if (ProceduralSoundActor)
+		{
+			ProceduralSoundActor->IOActorSound(soundToEnable->getSoundActivity());
+		}
+	}
 }
 
 void ASpawnVolume::SetSpawningEnable(bool isEnable)

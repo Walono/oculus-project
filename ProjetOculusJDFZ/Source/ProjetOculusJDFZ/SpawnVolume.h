@@ -70,6 +70,9 @@ private:
 	/** Handles the delete of an existing Sound */
 	void DeleteSound();
 
+	/** Handles the enable/disable of an existing Sound */
+	void IOSound();
+
 	/** The timer for when to spawn the Obect */
 	float SpawnTime;
 

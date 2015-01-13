@@ -102,7 +102,12 @@ void Library::move_source(std::list<float> newPosition,
 //TODO Define method
 void Library::enable_sound(bool enable, int sourceId) 
 {
-
+	std::map<int, Sound>::iterator it = sounds.find(sourceId);
+	if (it != sounds.end()) {
+		if (it->second.getSoundActivity() != enable) {
+			soundToEnable.Add(sourceId);
+		}
+	}
 }
 
 //TODO Define method
@@ -232,6 +237,20 @@ void Library::deleteFaceDeleted() {
 void Library::deleteSoundDeleted() {
 	sounds.erase(soundToDelete[0]);
 	soundToDelete.RemoveAt(0);
+}
+
+Sound* Library::getNextSoundIdToEnable(){
+	std::map<int, Sound>::iterator it = sounds.find(soundToSpawn[0]);
+	return &it->second;
+}
+bool Library::isSoundToEnableEmpty() {
+	if (soundToEnable.Num() == 0) {
+		return true;
+	}
+	return false;
+}
+void Library::deleteSoundEnabled() {
+	soundToEnable.RemoveAt(0);
 }
 
 

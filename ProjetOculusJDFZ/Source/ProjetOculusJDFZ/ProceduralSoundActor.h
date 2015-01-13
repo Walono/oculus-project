@@ -22,6 +22,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = AudioComponent)
 	TSubobjectPtr <UAudioComponent> AudioComp;
 
+	UFUNCTION()
+	void IOActorSound(bool isActive);
+
 private: 
 	void GenerateLathe(const TArray<FVector>& InPoints, const int InSegments, TArray<FProceduralMeshTriangle>& OutTriangles);
 };

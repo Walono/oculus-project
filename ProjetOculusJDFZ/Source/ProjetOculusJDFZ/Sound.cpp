@@ -53,7 +53,7 @@ void Sound::setPosition(std::list<float> newPosition) {
 }
 void Sound::setViewDirecton(std::vector<float> newViewDirection) 
 {
-	viewDirection = newDirection;
+	viewDirection = newViewDirection;
 }
 
 void Sound::setUpDirection(std::vector<float> newUpDirection) 
