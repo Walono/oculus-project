@@ -36,36 +36,14 @@ ASpawnVolume::ASpawnVolume(const class FPostConstructInitializeProperties& PCIP)
 
 	library = Library::getLibrary();
 
+
+
 	std::list<float> posOne;
 	posOne.push_back(0.f);
 	posOne.push_back(0.f);
 	posOne.push_back(0.f);
 
-	//Base floor
-	std::list<std::list<float>> coordiOne;
-	std::list<float> coordOne00;
-	coordOne00.push_back(300.f);
-	coordOne00.push_back(-500.f);
-	coordOne00.push_back(100.f);
-	coordiOne.push_back(coordOne00);
-
-	std::list<float> coordOne01;
-	coordOne01.push_back(300.f);
-	coordOne01.push_back(500.f);
-	coordOne01.push_back(100.f);
-	coordiOne.push_back(coordOne01);
-
-	std::list<float> coordOne02;
-	coordOne02.push_back(1300.f);
-	coordOne02.push_back(500.f);
-	coordOne02.push_back(100.f);
-	coordiOne.push_back(coordOne02);
-
-	std::list<float> coordOne03;
-	coordOne03.push_back(1300.f);
-	coordOne03.push_back(-500.f);
-	coordOne03.push_back(100.f);
-	coordiOne.push_back(coordOne03);
+	
 
 	//Left wall
 	std::list<std::list<float>> coordiTwo;
@@ -274,11 +252,7 @@ ASpawnVolume::ASpawnVolume(const class FPostConstructInitializeProperties& PCIP)
 
 	library->add_sound_source("SourceOne", posTwo, viewDirectionOne, upDirectionOne, 1);
 
-	std::list<float> initPos;
-	initPos.push_back(500.f);
-	initPos.push_back(0.f);
-	initPos.push_back(300.f);
-	library->set_initial_position(initPos);
+
 		
 }
 
