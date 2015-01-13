@@ -99,7 +99,6 @@ void Library::move_source(std::list<float> newPosition,
 	}
 }
 
-//TODO Define method
 void Library::enable_sound(bool enable, int sourceId) 
 {
 	std::map<int, Sound>::iterator it = sounds.find(sourceId);
@@ -110,11 +109,30 @@ void Library::enable_sound(bool enable, int sourceId)
 	}
 }
 
-//TODO Define method
-void Library::set_initial_position(std::list<float> position) {}
+void Library::set_initial_position(std::list<float> position) 
+{
+	initialPosition = position;
+}
 
-//TODO Define method
-void Library::reset_position() {}
+std::list<float> Library::getInitialPosition()
+{
+	return initialPosition;
+}
+
+// SpawnVolume verify this bool every tick and handles it
+void Library::reset_position() 
+{
+	setResetActivity(true);
+}
+
+void Library::setResetActivity(bool resetActivity)
+{
+	isResetActive = resetActivity;
+}
+bool Library::getResetActivity()
+{
+	return isResetActive;
+}
 
 void Library::addPolyhedron(std::list<int> facesId, int polyhedronId) {
 	Polyhedron newPolyhedron =

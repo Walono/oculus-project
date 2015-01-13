@@ -15,6 +15,8 @@ AProjetOculusJDFZGameMode::AProjetOculusJDFZGameMode(const class FPostConstructI
 
 	//Set the default HUD class
 	HUDClass = AOculusHUD::StaticClass();
+
+	library = Library::getLibrary();
 }
 
 void AProjetOculusJDFZGameMode::BeginPlay()
@@ -41,7 +43,7 @@ void AProjetOculusJDFZGameMode::BeginPlay()
 			SpawnVolumeActors.Add(SpawnVolumeActor);
 		}
 	}
-
+	library->setResetActivity(false);
 	SetCurrentState(EOculusProjectPlayStats::EInitialization);
 }
 
@@ -54,13 +56,15 @@ void AProjetOculusJDFZGameMode::SetCurrentState(EOculusProjectPlayStats NewState
 
 void AProjetOculusJDFZGameMode::HandleNewState(EOculusProjectPlayStats NewState)
 {
-
+	//Get the current character and it's controller. As we have only one of both, it is the character and controller 0.
 	APlayerController* PlayerController = UGameplayStatics::GetPlayerController(this, 0);
+	AOculusCharacter* MyCharacter = Cast<AOculusCharacter>(UGameplayStatics::GetPlayerPawn(this, 0));	
 	switch (NewState)
 	{
 	case EOculusProjectPlayStats::EInitialization:
 		//disable the possibility to move befor entering the spawning state		
 		PlayerController->SetIgnoreMoveInput(true);
+		MyCharacter->setIsResetButtonPressed(false);
 		//at initializazion state, nothing spawn
 		for (ASpawnVolume* Volume : SpawnVolumeActors)
 		{
@@ -68,6 +72,7 @@ void AProjetOculusJDFZGameMode::HandleNewState(EOculusProjectPlayStats NewState)
 		}
 		break;
 	case EOculusProjectPlayStats::ESpawningEnable:
+	{
 		//Player can now move normaly
 		PlayerController->SetIgnoreMoveInput(false);
 		//at spawning state, spawnVolume can spawn element
@@ -75,7 +80,26 @@ void AProjetOculusJDFZGameMode::HandleNewState(EOculusProjectPlayStats NewState)
 		{
 			Volume->SetSpawningEnable(true);
 		}
+		
+		
+		//Extracte the initial position
+		std::list<float> newInitialPosition = library->getInitialPosition();
+		FVector CharacterInitialPosition;
+		if (newInitialPosition.size() >= 3){
+			CharacterInitialPosition.X = newInitialPosition.front();
+			std::list<float>::iterator itY = newInitialPosition.begin();
+			std::advance(itY, 1);
+			CharacterInitialPosition.Y = *itY;
+			std::list<float>::iterator itZ = newInitialPosition.begin();
+			std::advance(itZ, 2);
+			//add 50.f to fall on your point, and give the editor the time to spawn your floor
+			CharacterInitialPosition.Z = *itZ + 50.f;
+		}
+		//Teleport the character to the new position
+		MyCharacter->SetActorLocation(CharacterInitialPosition, false);
 		break;
+	}
+
 	case EOculusProjectPlayStats::EUnknow:
 	default:
 		//do nothing

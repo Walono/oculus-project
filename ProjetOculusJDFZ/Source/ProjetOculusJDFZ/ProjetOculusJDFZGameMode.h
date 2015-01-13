@@ -24,7 +24,7 @@ class PROJETOCULUSJDFZ_API AProjetOculusJDFZGameMode : public AGameMode
 	GENERATED_UCLASS_BODY()
 
 
-		virtual void BeginPlay() override;
+	virtual void BeginPlay() override;
 
 	EOculusProjectPlayStats GetCurrentState() const;
 
@@ -37,6 +37,8 @@ private:
 	EOculusProjectPlayStats CurrentState;
 
 	void HandleNewState(EOculusProjectPlayStats NewState);
+
+	Library* library;
 	
 };
 

@@ -9,7 +9,7 @@
 AOculusCharacter::AOculusCharacter(const class FPostConstructInitializeProperties& PCIP)
 	: Super(PCIP)
 {
-
+	buttonPressedDelay = 3.0f;
 }
 
 void AOculusCharacter::SetupPlayerInputComponent(UInputComponent* InputComponent)
@@ -23,6 +23,8 @@ void AOculusCharacter::SetupPlayerInputComponent(UInputComponent* InputComponent
 	InputComponent->BindAction("Jump", IE_Released, this, &AOculusCharacter::OnStopJump);
 	InputComponent->BindAction("StartSpawning", IE_Pressed, this, &AOculusCharacter::OnStartSpawning);
 	InputComponent->BindAction("StartSpawning", IE_Released, this, &AOculusCharacter::OnReleaseSpawning);
+	InputComponent->BindAction("ResetPosition", IE_Pressed, this, &AOculusCharacter::OnStartReset);
+	InputComponent->BindAction("ResetPosition", IE_Released, this, &AOculusCharacter::OnReleaseReset);
 }
 
 void AOculusCharacter::MoveForward(float Value)
@@ -75,4 +77,43 @@ void AOculusCharacter::OnStartSpawning()
 void AOculusCharacter::OnReleaseSpawning()
 {
 	//do nothing
+}
+
+void AOculusCharacter::OnStartReset()
+{
+	if (isResetButtonPressed == false) {
+
+		GetWorldTimerManager().SetTimer(this, &AOculusCharacter::ResetCharacterPosition, buttonPressedDelay, true);
+		isResetButtonPressed = true;
+	}
+}
+
+void AOculusCharacter::OnReleaseReset()
+{
+	GetWorldTimerManager().ClearTimer(this, &AOculusCharacter::ResetCharacterPosition);
+	isResetButtonPressed = false;
+}
+
+void AOculusCharacter::setIsResetButtonPressed(bool isPressed)
+{
+	isResetButtonPressed = isPressed;
+}
+
+void AOculusCharacter::ResetCharacterPosition()
+{
+	Library* library = Library::getLibrary();
+	std::list<float> initialPosition = library->getInitialPosition();
+	FVector CharacterInitialPosition;
+	if (initialPosition.size() >= 3){
+		CharacterInitialPosition.X = initialPosition.front();
+		std::list<float>::iterator itY = initialPosition.begin();
+		std::advance(itY, 1);
+		CharacterInitialPosition.Y = *itY;
+		std::list<float>::iterator itZ = initialPosition.begin();
+		std::advance(itZ, 2);
+		//add 50.f to fall on your point, and give the editor the time to spawn your floor
+		CharacterInitialPosition.Z = *itZ + 50.f;
+	}
+	//Teleport the character to the new position
+	this->SetActorLocation(CharacterInitialPosition, false);
 }

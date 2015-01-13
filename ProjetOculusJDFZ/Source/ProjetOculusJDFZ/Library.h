@@ -48,8 +48,13 @@ public:
 	// Set the initial position 
 	virtual void set_initial_position(std::list<float> position);
 
+	// Get the initial position
+	virtual std::list<float> getInitialPosition();
+
 	// Reset the position to the initial position
 	virtual void reset_position();
+	void setResetActivity(bool resetActivity);
+	bool getResetActivity();
 
 	/* Concerning a Polyhedron */
 
@@ -98,6 +103,10 @@ private:
 	Library() {}
 	Library(Library const&);
 	void operator=(Library const&);
+
+	std::list<float> initialPosition;
+	// Set to false by the GameMode with BeginPlay()
+	bool isResetActive;
 
 	std::map<int, Scene> scenes;
 	std::map<int, Polyhedron> polyhedrons;

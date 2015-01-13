@@ -4,6 +4,7 @@
 #include "ProceduralFaceActor.h"
 #include "ProceduralSoundActor.h"
 #include "Library.h"
+#include "OculusCharacter.h"
 #include "SpawnVolume.h"
 
 
@@ -259,7 +260,7 @@ ASpawnVolume::ASpawnVolume(const class FPostConstructInitializeProperties& PCIP)
 
 	//add a sound source
 	std::list<float> posTwo;
-	posTwo.push_back(800.f);
+	posTwo.push_back(900.f);
 	posTwo.push_back(0.f);
 	posTwo.push_back(300.f);
 	std::vector<float> viewDirectionOne;
@@ -272,11 +273,24 @@ ASpawnVolume::ASpawnVolume(const class FPostConstructInitializeProperties& PCIP)
 	viewDirectionOne.push_back(0.f);
 
 	library->add_sound_source("SourceOne", posTwo, viewDirectionOne, upDirectionOne, 1);
+
+	std::list<float> initPos;
+	initPos.push_back(500.f);
+	initPos.push_back(0.f);
+	initPos.push_back(300.f);
+	library->set_initial_position(initPos);
 		
 }
 
 void ASpawnVolume::Tick(float DeltaSeconds)
 {
+	// Do we need to reset the position of the character
+	if (library->getResetActivity()) {
+		AOculusCharacter* MyCharacter = Cast<AOculusCharacter>(UGameplayStatics::GetPlayerPawn(this, 0));
+		MyCharacter->ResetCharacterPosition();
+		library->setResetActivity(false);
+	}
+
 	//Is there a face to spawn?
 	if (bSpawningEnabled)
 	{
@@ -370,7 +384,7 @@ void ASpawnVolume::SpawnFace()
 						posTwo.push_back(-300.f);
 						posTwo.push_back(0.f);
 						posTwo.push_back(3000.f);
-						library->move_face(posTwo, 1);
+						library->move_face(posTwo, 4);
 						library->remove_face(2);
 					}
 				}
