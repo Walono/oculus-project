@@ -4,6 +4,7 @@
 #include "ProjetOculusJDFZGameMode.h"
 #include "Engine.h"
 #include "OculusHUD.h"
+#include "FakeServer.h"
 
 
 
@@ -44,12 +45,14 @@ void AProjetOculusJDFZGameMode::BeginPlay()
 		}
 	}
 	library->setResetActivity(false);
-
+	//set a default initial position
 	std::list<float> initPos;
 	initPos.push_back(0.f);
 	initPos.push_back(0.f);
 	initPos.push_back(50.f);
 	library->set_initial_position(initPos);
+	FakeServer fakeServer = FakeServer::FakeServer();
+	fakeServer.startSendingData();
 	SetCurrentState(EOculusProjectPlayStats::EInitialization);
 }
 

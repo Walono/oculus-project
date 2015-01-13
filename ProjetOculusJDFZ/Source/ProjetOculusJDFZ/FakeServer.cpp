@@ -42,6 +42,43 @@ void FakeServer::startSendingData()
 	outsideSouthCoord.Add(FVector(0.f, 16 * unitWidth, unitHigh));
 	outsideSouthCoord.Add(FVector(0.f, 16 * unitWidth, 0.f));
 	addFaceToLibrary(FVector(0.f, 0.f, 0.f), outsideSouthCoord, 0, 2);
+
+	TArray<FVector> outsideEastCoord;
+	outsideEastCoord.Add(FVector(0.f, 0.f, 0.f));
+	outsideEastCoord.Add(FVector(0.f, 0.f, unitHigh));
+	outsideEastCoord.Add(FVector(21 * unitLength, 0.f, unitHigh));
+	outsideEastCoord.Add(FVector(21 * unitLength, 0.f, 0.f));
+	addFaceToLibrary(FVector(0.f, 16 * unitWidth, 0.f), outsideEastCoord, 0, 3);
+
+	TArray<FVector> littleOutsideEastCoord;
+	littleOutsideEastCoord.Add(FVector(0.f, 0.f, 0.f));
+	littleOutsideEastCoord.Add(FVector(0.f, 0.f, unitHigh));
+	littleOutsideEastCoord.Add(FVector(unitLength, 0.f, unitHigh));
+	littleOutsideEastCoord.Add(FVector(unitLength, 0.f, 0.f));
+	addFaceToLibrary(FVector(22 * unitLength, 16 * unitWidth, 0.f), littleOutsideEastCoord, 0, 4);
+
+	TArray<FVector>outsideNorthCoord;
+	outsideNorthCoord.Add(FVector(0.f, 0.f, 0.f));
+	outsideNorthCoord.Add(FVector(0.f, 0.f, unitHigh));
+	outsideNorthCoord.Add(FVector(0.f, 16 * unitWidth, unitHigh));
+	outsideNorthCoord.Add(FVector(0.f, 16 * unitWidth, 0.f));
+	addFaceToLibrary(FVector(23 * unitLength, 0.f, 0.f), outsideNorthCoord, 0, 5);
+
+	TArray<FVector>littleOutsidWestCoord;
+	littleOutsidWestCoord.Add(FVector(0.f, 0.f, 0.f));
+	littleOutsidWestCoord.Add(FVector(0.f, 0.f, unitHigh));
+	littleOutsidWestCoord.Add(FVector(unitLength, 0.f, unitHigh));
+	littleOutsidWestCoord.Add(FVector(unitLength, 0.f, 0.f));
+	addFaceToLibrary(FVector(0.f, 0.f, 0.f), littleOutsidWestCoord, 0, 6);
+
+	TArray<FVector>outsidWestCoord;
+	outsidWestCoord.Add(FVector(0.f, 0.f, 0.f));
+	outsidWestCoord.Add(FVector(0.f, 0.f, unitHigh));
+	outsidWestCoord.Add(FVector(21 * unitLength, 0.f, unitHigh));
+	outsidWestCoord.Add(FVector(21 * unitLength, 0.f, 0.f));
+	addFaceToLibrary(FVector(2 * unitLength, 0.f, 0.f), outsidWestCoord, 0, 7);
+
+
 }
 
 void FakeServer::addFaceToLibrary(FVector pos, TArray<FVector> face, int texture, int id)
