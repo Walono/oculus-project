@@ -33,8 +33,15 @@ void FakeServer::startSendingData()
 	floorcoord.Add(FVector((23 * unitLength) + 400.f, 0.f, 0.f));
 	floorcoord.Add(FVector((23 * unitLength) + 400.f, (16 * unitWidth) + 400.f, 0.f));
 	floorcoord.Add(FVector(0.f, (16 * unitWidth) + 400.f, 0.f));
+	addFaceToLibrary(FVector(-200.f, -200.f, 0.f), floorcoord, 0, 1);
 
-	addFaceToLibrary(FVector pos, TArray<FVector> face, int texture, int id)
+	//outside face
+	TArray<FVector> outsideSouthCoord;
+	outsideSouthCoord.Add(FVector(0.f, 0.f, 0.f));
+	outsideSouthCoord.Add(FVector(0.f, 0.f, unitHigh));
+	outsideSouthCoord.Add(FVector(0.f, 16 * unitWidth, unitHigh));
+	outsideSouthCoord.Add(FVector(0.f, 16 * unitWidth, 0.f));
+	addFaceToLibrary(FVector(0.f, 0.f, 0.f), outsideSouthCoord, 0, 2);
 }
 
 void FakeServer::addFaceToLibrary(FVector pos, TArray<FVector> face, int texture, int id)

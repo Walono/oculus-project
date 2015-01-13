@@ -227,7 +227,6 @@ ASpawnVolume::ASpawnVolume(const class FPostConstructInitializeProperties& PCIP)
 	coordiHeight3.push_back(800.f);
 	coordiHeight.push_back(coordiHeight3);
 
-	library->add_face(posOne, coordiOne, 0, 1);
 	library->add_face(posOne, coordiTwo, 0, 2);
 	library->add_face(posOne, coordiTree, 0, 3);
 	library->add_face(posOne, coordiFour, 0, 4);
@@ -351,16 +350,6 @@ void ASpawnVolume::SpawnFace()
 					AProceduralFaceActor* const SpawnedFace = World->SpawnActor<AProceduralFaceActor>(SpawnLocation, FRotator(0.f, 0.f, 0.f), SpawnParams);
 					library->getNextFaceToSpawn()->setFaceSpawned(true);
 					library->deleteFaceSpawned();
-
-					//Test hard coded part
-					if (Counter == 6) {
-						std::list<float> posTwo;
-						posTwo.push_back(-300.f);
-						posTwo.push_back(0.f);
-						posTwo.push_back(3000.f);
-						library->move_face(posTwo, 4);
-						library->remove_face(2);
-					}
 				}
 		}
 }

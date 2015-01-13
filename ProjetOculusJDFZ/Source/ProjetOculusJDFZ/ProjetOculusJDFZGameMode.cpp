@@ -44,6 +44,12 @@ void AProjetOculusJDFZGameMode::BeginPlay()
 		}
 	}
 	library->setResetActivity(false);
+
+	std::list<float> initPos;
+	initPos.push_back(0.f);
+	initPos.push_back(0.f);
+	initPos.push_back(50.f);
+	library->set_initial_position(initPos);
 	SetCurrentState(EOculusProjectPlayStats::EInitialization);
 }
 
