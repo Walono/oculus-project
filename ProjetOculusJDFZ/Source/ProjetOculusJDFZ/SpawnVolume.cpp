@@ -34,8 +34,7 @@ ASpawnVolume::ASpawnVolume(const class FPostConstructInitializeProperties& PCIP)
 	Counter = 0;
 
 	library = Library::getLibrary();
-	//Face::Face(std::list<float> position, std::list<std::list<float>> coordinates,
-	//	int texture, int faceId)
+
 	std::list<float> posOne;
 	posOne.push_back(0.f);
 	posOne.push_back(0.f);
@@ -249,7 +248,6 @@ ASpawnVolume::ASpawnVolume(const class FPostConstructInitializeProperties& PCIP)
 	coordiHeight3.push_back(800.f);
 	coordiHeight.push_back(coordiHeight3);
 
-
 	library->add_face(posOne, coordiOne, 0, 1);
 	library->add_face(posOne, coordiTwo, 0, 2);
 	library->add_face(posOne, coordiTree, 0, 3);
@@ -259,6 +257,22 @@ ASpawnVolume::ASpawnVolume(const class FPostConstructInitializeProperties& PCIP)
 	library->add_face(posOne, coordiSeven, 0, 7);
 	library->add_face(posOne, coordiHeight, 0, 8);
 
+	//add a sound source
+	std::list<float> posTwo;
+	posTwo.push_back(800.f);
+	posTwo.push_back(0.f);
+	posTwo.push_back(300.f);
+	std::vector<float> viewDirectionOne;
+	viewDirectionOne.push_back(-20.f);
+	viewDirectionOne.push_back(0.f);
+	viewDirectionOne.push_back(0.f);
+	std::vector<float> upDirectionOne;
+	viewDirectionOne.push_back(0.f);
+	viewDirectionOne.push_back(0.f);
+	viewDirectionOne.push_back(0.f);
+
+	library->add_sound_source("SourceOne", posTwo, viewDirectionOne, upDirectionOne, 1);
+		
 }
 
 void ASpawnVolume::Tick(float DeltaSeconds)
@@ -296,6 +310,16 @@ void ASpawnVolume::Tick(float DeltaSeconds)
 	//Is there a face to delete?
 	if (library->isFacesToDeleteEmpty() == false) {
 		DeleteFace();
+	}
+
+	//Is there a sound to move?
+	if (library->isSoundToMoveEmpty() == false) {
+		MoveSound();
+	}
+
+	//Is there a sound to delete?
+	if (library->isSoundToDeleteEmpty() == false) {
+		DeleteSound();
 	}
 }
 
@@ -346,7 +370,6 @@ void ASpawnVolume::SpawnFace()
 						posTwo.push_back(3000.f);
 						library->move_face(posTwo, 1);
 						library->remove_face(2);
-						//AProceduralSoundActor* const SpawnedSound = World->SpawnActor<AProceduralSoundActor>(FVector(800.f, 0.f, 500.f), FRotator(0.f, 180.f, 0.f), SpawnParams);
 					}
 				}
 		}
@@ -389,12 +412,17 @@ void ASpawnVolume::SpawnSound()
 				std::advance(itZ, 2);
 				viewDirection.Z = *itZ;
 			}
-			//look up or down, 0 = straight, + up and - down
+			//rotation around Y axis (look up or down), 0 = straight, + up and - down
 			float rotationFirtstValue = viewDirection.Z;
 			//rotation around Z axis of the object
 			float rotationSecondValue;
 			if (viewDirection.X != 0.f) {
-				rotationSecondValue = FMath::Atan(viewDirection.Y / viewDirection.X);
+				if (viewDirection.X > 0) {
+					rotationSecondValue = FMath::Atan(viewDirection.Y / viewDirection.X);
+				}
+				else {
+					rotationSecondValue = FMath::Atan(viewDirection.Y / viewDirection.X) + 180.f;
+				}				
 			}
 			else {
 				if (viewDirection.Y > 0){
@@ -403,8 +431,7 @@ void ASpawnVolume::SpawnSound()
 				else {
 					rotationSecondValue = 270.f;
 				}
-			}
-			
+			}			
 			//rotation around X axis of the object
 			float rotationThirdValue = 0.f;
 			FRotator SpawnRotation = FRotator(rotationFirtstValue, rotationSecondValue, rotationThirdValue);
@@ -428,7 +455,7 @@ void ASpawnVolume::MoveFace()
 	Face* movedFace = library->getNextFaceToMove();
 	FVector newPosition;
 	std::list<float> facePositionList = movedFace->getPosition();
-	if (facePositionList.size() >= 3){
+	if (facePositionList.size() >= 3) {
 		newPosition.X = facePositionList.front();
 		std::list<float>::iterator itY = facePositionList.begin();
 		std::advance(itY, 1);
@@ -442,7 +469,7 @@ void ASpawnVolume::MoveFace()
 	for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)	{
 		if (ActorItr->GetName() == searchedFace) {
 			//Teleport the actor to the new location
-			ActorItr->SetActorLocation(newPosition, true);
+			ActorItr->SetActorLocation(newPosition, false);
 		}
 	}
 	library->deleteFaceMoved();
@@ -450,7 +477,27 @@ void ASpawnVolume::MoveFace()
 
 void ASpawnVolume::MoveSound()
 {
-
+	Sound* movedSound = library->getNextSoundToMove();
+	FVector newPosition;
+	std::list<float> soundPositionList = movedSound->getPosition();
+	if (soundPositionList.size() >= 3) {
+		newPosition.X = soundPositionList.front();
+		std::list<float>::iterator itY = soundPositionList.begin();
+		std::advance(itY, 1);
+		newPosition.Y = *itY;
+		std::list<float>::iterator itZ = soundPositionList.begin();
+		std::advance(itZ, 2);
+		newPosition.Z = *itZ;
+	}
+	//Find the actor from the face
+	FString searchedSound = FString(TEXT("Sound")) + FString::SanitizeFloat(movedSound->getSourceId());
+	for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr) {
+		if (ActorItr->GetName() == searchedSound) {
+			//Teleport the actor to the new location
+			ActorItr->SetActorLocation(newPosition, false);
+		}
+	}
+	library->deleteSoundMoved();
 }
 
 void ASpawnVolume::DeleteFace()
@@ -460,6 +507,7 @@ void ASpawnVolume::DeleteFace()
 	for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr) {
 		if (ActorItr->GetName() == searchedFace) {
 			ActorItr->Destroy();
+			break;
 		}
 	}
 	library->deleteFaceDeleted();
@@ -467,7 +515,15 @@ void ASpawnVolume::DeleteFace()
 
 void ASpawnVolume::DeleteSound()
 {
-
+	int soundId = library->getNextSoundIdToDelete();
+	FString searchedSound = FString(TEXT("Sound")) + FString::SanitizeFloat((float)soundId);
+	for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr) {
+		if (ActorItr->GetName() == searchedSound) {
+			ActorItr->Destroy;
+			break;
+		}
+	}
+	library->deleteFaceDeleted();
 }
 
 void ASpawnVolume::SetSpawningEnable(bool isEnable)
