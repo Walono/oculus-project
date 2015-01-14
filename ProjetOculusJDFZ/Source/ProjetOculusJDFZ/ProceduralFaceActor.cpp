@@ -12,19 +12,12 @@ AProceduralFaceActor::AProceduralFaceActor(const class FPostConstructInitializeP
 
 	// Apply a simple material directly using the VertexColor as its BaseColor input
 	static ConstructorHelpers::FObjectFinder<UMaterialInterface> Material(TEXT("Material'/Game/Materials/BrickTumbled_Mat.BrickTumbled_Mat'"));
-	// TODO Apply a real material with textures, using UVs
-	//	static ConstructorHelpers::FObjectFinder<UMaterialInterface> Material(TEXT("Material'/Game/Materials/M_Concrete_Poured.M_Concrete_Poured'"));
-	
+	// TODO find a way to realy display it
 	mesh->SetMaterial(0, Material.Object);
 	
-
-	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("creating a face"));
-	
-	library = Library::getLibrary();
-	// Verify if there is a new face to spawn
-	
+	//Get and store the vertex of the current face from the Library
+	library = Library::getLibrary();	
 	if (library->isFacesToSpawnEmpty() == false) {
-
 		Face* newFace = library->getNextFaceToSpawn();
 		std::list<std::list<float>> coordinate = newFace->getCoordinates();
 		std::list<std::list<float>>::const_iterator
@@ -32,16 +25,16 @@ AProceduralFaceActor::AProceduralFaceActor(const class FPostConstructInitializeP
 			lend(coordinate.end());
 		TArray<FVector> newPoints;
 		for (; lit != lend; ++lit) {
-
 			std::list<float> point = *lit;
 			float x = point.front();
 			point.pop_front();
 			float y = point.front();
 			point.pop_front();
 			float z = point.front();
-
 			newPoints.Add(FVector(x, y, z));
 		}
+
+		//Build the triangle Array, send it to the generator and attach it to the Actor
 		TArray<FProceduralMeshTriangle> newTriangles;
 		GenerateFace(newPoints, newTriangles);
 		mesh->SetProceduralMeshTriangles(newTriangles);
@@ -68,15 +61,15 @@ void AProceduralFaceActor::GenerateFace(const TArray<FVector>& InPoints, TArray<
 	middleYPos = middleYPos / nbrPoints;
 	middleZPos = middleZPos / nbrPoints;
 
-	
-	//static const FColor color(255,255,255);
+	//Set the vertex color. It actually hide the texture and color the face, we don't know why.
+	static const FColor color(0,155,0);
 
 	//generate the triangle of the mesh for one side of the face
 	for (i = 0; i < nbrPoints; ++i){
 		FProceduralMeshTriangle triangle;
-		//triangle.Vertex0.Color = color;
-		//triangle.Vertex1.Color = color;
-		//triangle.Vertex2.Color = color;
+		triangle.Vertex0.Color = color;
+		triangle.Vertex1.Color = color;
+		triangle.Vertex2.Color = color;
 		triangle.Vertex0.Position.Set(InPoints[i][0], InPoints[i][1], InPoints[i][2]);
 		if (i == nbrPoints - 1) {
 			triangle.Vertex1.Position.Set(InPoints[0][0], InPoints[0][1], InPoints[0][2]);
@@ -91,9 +84,9 @@ void AProceduralFaceActor::GenerateFace(const TArray<FVector>& InPoints, TArray<
 	//The same procedure is call on the other side to generate the mesh visible on both side
 	for (i = nbrPoints - 1; i >= 0; --i){
 		FProceduralMeshTriangle triangle;
-		//triangle.Vertex0.Color = color;
-		//triangle.Vertex1.Color = color;
-		//triangle.Vertex2.Color = color;
+		triangle.Vertex0.Color = color;
+		triangle.Vertex1.Color = color;
+		triangle.Vertex2.Color = color;
 		triangle.Vertex0.Position.Set(InPoints[i][0], InPoints[i][1], InPoints[i][2]);
 		if (i == 0) {
 			triangle.Vertex1.Position.Set(InPoints[nbrPoints - 1][0], InPoints[nbrPoints - 1][1], InPoints[nbrPoints - 1][2]);
