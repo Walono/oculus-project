@@ -25,8 +25,8 @@ void AOculusHUD::DrawHUD()
 	//Call to the parent versions of DrawHUD
 	Super::DrawHUD();
 
+	//Only write the introduction message on the GameMode's inizialize state
 	AProjetOculusJDFZGameMode* MyGameMode = Cast<AProjetOculusJDFZGameMode>(UGameplayStatics::GetGameMode(this));
-	//if game is in initialize state
 	if (MyGameMode->GetCurrentState() == EOculusProjectPlayStats::EInitialization)
 	{
 		FString InstructionString = TEXT("Hello, press X button/front left button/Enter to start the simulation");

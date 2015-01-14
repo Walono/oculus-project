@@ -64,9 +64,10 @@ void AOculusCharacter::OnStopJump()
 {
 	bPressedJump = false;
 }
-//Set the simulation to Spawning state
+
 void AOculusCharacter::OnStartSpawning()
 {
+	//Set the simulation to Spawning state
 	AProjetOculusJDFZGameMode* MyGameMode = Cast<AProjetOculusJDFZGameMode>(UGameplayStatics::GetGameMode(this));
 	if (MyGameMode->GetCurrentState() != EOculusProjectPlayStats::ESpawningEnable){
 		MyGameMode->SetCurrentState(EOculusProjectPlayStats::ESpawningEnable);
@@ -81,8 +82,8 @@ void AOculusCharacter::OnReleaseSpawning()
 
 void AOculusCharacter::OnStartReset()
 {
+	//if not already pressed, start the timer for reset position
 	if (isResetButtonPressed == false) {
-
 		GetWorldTimerManager().SetTimer(this, &AOculusCharacter::ResetCharacterPosition, buttonPressedDelay, true);
 		isResetButtonPressed = true;
 	}
@@ -90,6 +91,7 @@ void AOculusCharacter::OnStartReset()
 
 void AOculusCharacter::OnReleaseReset()
 {
+	//end the timer for reset position
 	GetWorldTimerManager().ClearTimer(this, &AOculusCharacter::ResetCharacterPosition);
 	isResetButtonPressed = false;
 }
@@ -101,9 +103,11 @@ void AOculusCharacter::setIsResetButtonPressed(bool isPressed)
 
 void AOculusCharacter::ResetCharacterPosition()
 {
+
 	Library* library = Library::getLibrary();
 	std::list<float> initialPosition = library->getInitialPosition();
 	FVector CharacterInitialPosition;
+	//Extract position of the basic library type to a FVector
 	if (initialPosition.size() >= 3){
 		CharacterInitialPosition.X = initialPosition.front();
 		std::list<float>::iterator itY = initialPosition.begin();

@@ -32,11 +32,6 @@ void FakeServer::addFaceToLibrary(FVector pos, TArray<FVector> face, int texture
 	library->add_face(facePosition, faceCoordinates, texture, id);
 }
 
-//void Library::add_sound_source(std::string name,
-//	std::list<float> position,
-//	std::vector<float> viewDirection,
-//	std::vector<float> upDirection, int sourceId) {
-
 void FakeServer::addSoundToLibrary(std::string name, FVector pos, FVector viewDirection, FVector upDirection, int id)
 {
 	std::list<float> soundPosition;
@@ -741,5 +736,7 @@ void FakeServer::startSendingData()
 
 	//add sound
 
-	addSoundToLibrary("Sound1", FVector(3 * unitLength + 150.f, unitWidth + 150.f, 100.f), FVector(0.f, 1.f, 0.f), FVector(0.f, 0.f, 1.f), 1);
+	addSoundToLibrary("Sound1", FVector(1 * unitLength + 150.f, 14 * unitWidth + 250.f, 100.f), FVector(0.f, -1.f, 0.f), FVector(0.f, 0.f, 1.f), 1);
+	addSoundToLibrary("Sound1", FVector(19 * unitLength + 250.f, 14 * unitWidth + 150.f, 100.f), FVector(-1.f, 0.f, 0.f), FVector(0.f, 0.f, 1.f), 2);
+	addSoundToLibrary("Sound1", FVector(3 * unitLength + 50.f, 4 * unitWidth + 150.f, 100.f), FVector(1.f, 0.f, 0.f), FVector(0.f, 0.f, 1.f), 3);
 }
