@@ -390,35 +390,35 @@ void FakeServer::startSendingData()
 	midFloorTopBotSouth.Add(FVector(0.f, 0.f, unitHigh));
 	midFloorTopBotSouth.Add(FVector(0.f, 2 * unitWidth, unitHigh));
 	midFloorTopBotSouth.Add(FVector(0.f, 2 * unitWidth, 0.f));
-	addFaceToLibrary(FVector(15 * unitLength, 6 * unitWidth, 0.f), midFloorTopBotSouth, 0, 49);
+	addFaceToLibrary(FVector(14 * unitLength, 6 * unitWidth, 0.f), midFloorTopBotSouth, 0, 49);
 
 	TArray<FVector>midFloorMiddleNorth;
 	midFloorMiddleNorth.Add(FVector(0.f, 0.f, 0.f));
 	midFloorMiddleNorth.Add(FVector(0.f, 0.f, unitHigh));
 	midFloorMiddleNorth.Add(FVector(0.f, 3 * unitWidth, unitHigh));
 	midFloorMiddleNorth.Add(FVector(0.f, 3 * unitWidth, 0.f));
-	addFaceToLibrary(FVector(14 * unitLength, 5 * unitWidth, 0.f), midFloorMiddleNorth, 0, 50);
+	addFaceToLibrary(FVector(13 * unitLength, 5 * unitWidth, 0.f), midFloorMiddleNorth, 0, 50);
 
 	TArray<FVector>midFloorMiddleSouth;
 	midFloorMiddleSouth.Add(FVector(0.f, 0.f, 0.f));
 	midFloorMiddleSouth.Add(FVector(0.f, 0.f, unitHigh));
 	midFloorMiddleSouth.Add(FVector(0.f, 4 * unitWidth, unitHigh));
 	midFloorMiddleSouth.Add(FVector(0.f, 4 * unitWidth, 0.f));
-	addFaceToLibrary(FVector(13 * unitLength, 4 * unitWidth, 0.f), midFloorMiddleSouth, 0, 51);
+	addFaceToLibrary(FVector(12 * unitLength, 4 * unitWidth, 0.f), midFloorMiddleSouth, 0, 51);
 
 	TArray<FVector>midFloorMiddleFrontSouth;
 	midFloorMiddleFrontSouth.Add(FVector(0.f, 0.f, 0.f));
 	midFloorMiddleFrontSouth.Add(FVector(0.f, 0.f, unitHigh));
 	midFloorMiddleFrontSouth.Add(FVector(0.f, 6 * unitWidth, unitHigh));
 	midFloorMiddleFrontSouth.Add(FVector(0.f, 6 * unitWidth, 0.f));
-	addFaceToLibrary(FVector(12 * unitLength, 2 * unitWidth, 0.f), midFloorMiddleFrontSouth, 0, 52);
+	addFaceToLibrary(FVector(11 * unitLength, 2 * unitWidth, 0.f), midFloorMiddleFrontSouth, 0, 52);
 
 	TArray<FVector>midFloorMiddleFrontSouthOposit;
 	midFloorMiddleFrontSouthOposit.Add(FVector(0.f, 0.f, 0.f));
 	midFloorMiddleFrontSouthOposit.Add(FVector(0.f, 0.f, unitHigh));
 	midFloorMiddleFrontSouthOposit.Add(FVector(0.f, 5 * unitWidth, unitHigh));
 	midFloorMiddleFrontSouthOposit.Add(FVector(0.f, 5 * unitWidth, 0.f));
-	addFaceToLibrary(FVector(11 * unitLength, 2 * unitWidth, 0.f), midFloorMiddleFrontSouthOposit, 0, 53);
+	addFaceToLibrary(FVector(10 * unitLength, 2 * unitWidth, 0.f), midFloorMiddleFrontSouthOposit, 0, 53);
 
 	TArray<FVector>midSouthWrongWayNorth;
 	midSouthWrongWayNorth.Add(FVector(0.f, 0.f, 0.f));
@@ -430,8 +430,8 @@ void FakeServer::startSendingData()
 	TArray<FVector>midSouthWrongWaySouth;
 	midSouthWrongWaySouth.Add(FVector(0.f, 0.f, 0.f));
 	midSouthWrongWaySouth.Add(FVector(0.f, 0.f, unitHigh));
-	midSouthWrongWaySouth.Add(FVector(0.f, 2 * unitWidth, unitHigh));
-	midSouthWrongWaySouth.Add(FVector(0.f, 2 * unitWidth, 0.f));
+	midSouthWrongWaySouth.Add(FVector(0.f, 3 * unitWidth, unitHigh));
+	midSouthWrongWaySouth.Add(FVector(0.f, 3 * unitWidth, 0.f));
 	addFaceToLibrary(FVector(3 * unitLength, 6 * unitWidth, 0.f), midSouthWrongWaySouth, 0, 55);
 
 	TArray<FVector>midSouthWrongWayEast;
@@ -605,15 +605,15 @@ void FakeServer::startSendingData()
 	TArray<FVector>lastLNorth;
 	lastLNorth.Add(FVector(0.f, 0.f, 0.f));
 	lastLNorth.Add(FVector(0.f, 0.f, unitHigh));
-	lastLNorth.Add(FVector(15 * unitLength, 0.f, unitHigh));
-	lastLNorth.Add(FVector(15 * unitLength, 0.f, 0.f));
+	lastLNorth.Add(FVector(0.f, 15 * unitWidth, unitHigh));
+	lastLNorth.Add(FVector(0.f, 15 * unitWidth, 0.f));
 	addFaceToLibrary(FVector(22 * unitLength, 1 * unitWidth, 0.f), lastLNorth, 0, 80);
 
 	TArray<FVector>lastLSouth;
 	lastLSouth.Add(FVector(0.f, 0.f, 0.f));
 	lastLSouth.Add(FVector(0.f, 0.f, unitHigh));
-	lastLSouth.Add(FVector(14 * unitLength, 0.f, unitHigh));
-	lastLSouth.Add(FVector(14 * unitLength, 0.f, 0.f));
+	lastLSouth.Add(FVector(0.f, 14 * unitWidth, unitHigh));
+	lastLSouth.Add(FVector(0.f, 14 * unitWidth, 0.f));
 	addFaceToLibrary(FVector(21 * unitLength, 2 * unitWidth, 0.f), lastLSouth, 0, 81);
 
 	TArray<FVector>fiveNeedleFivethNorth;
