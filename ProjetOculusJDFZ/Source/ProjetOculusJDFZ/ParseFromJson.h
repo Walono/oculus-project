@@ -1,7 +1,10 @@
 /*
-Author: Julie Djeffal (julied20)
-
 Class: ParseFromJson
+
+It's a Parser which take the JSON message we receive 
+fromthe server and extracts all the data 
+to store them in a DataFromJson object.
+
 */
 #pragma once
 #include<string>
@@ -13,7 +16,7 @@ class ParseFromJson
 {
 private:
 
-	//A string containong our JSON
+	//A string containing our JSON message
 	std::string json;
 
 public:
@@ -24,7 +27,8 @@ public:
 	~ParseFromJson();
 
 	/*
-	* Parse a or some JSON, and return the datas into an array
+	* Parse one or multiples JSON, and 
+	* @return an Array of parsed messages
 	*/
 	std::vector<DataFromJson> ParseJSON();
 
