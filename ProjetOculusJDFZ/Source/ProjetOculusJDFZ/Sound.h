@@ -22,12 +22,14 @@ public:
 	std::vector<float> getUpDirection();
 	int getSourceId();
 	bool getSoundActivity();
+	std::list<float> getTranslationVector();
 
 	void setPosition(std::list<float> newPosition);
 	void setViewDirecton(std::vector<float> newViewDirection);
 	void setUpDirection(std::vector<float> newUpDirection);
 	void setSoundSpawned(bool isSpawned);
 	void setSoundActive(bool isNewActive);
+	void setSoundTranslationVector(std::list<float> newTranslationVector);
 
 	bool hasProceduralFaceActor;
 
@@ -39,5 +41,6 @@ private:
 	std::vector<float> upDirection; 
 	int sourceId;
 	bool isActive;
+	std::list<float> translationVector;
 };
 

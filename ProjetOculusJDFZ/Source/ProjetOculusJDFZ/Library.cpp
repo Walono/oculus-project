@@ -40,14 +40,32 @@ void Library::remove_face(int faceId) {
 }
 
 
-void Library::move_face(std::list<float> newPosition, int faceId) {
+void Library::move_face(std::list<float> translationVector, std::list<float> rotation, int faceId) {
 	std::map<int, Face>::iterator it = faces.find(faceId);
 	if (it != faces.end()) {
-		it->second.setPosition(newPosition);
 		Face newFace = it->second;
 		if (newFace.hasProceduralFaceActor) {
+			it->second.setFaceTranslationVector(translationVector);
+			it->second.setFaceRotation(rotation);
 			facesToMove.Add(newFace.getFaceId());
 		}
+		//update the position
+		std::list<float> oldPosition = it->second.getPosition();
+		std::list<float> newPosition;
+		if (oldPosition.size() >= 3) {
+			newPosition.push_back(oldPosition.front() + translationVector.front());
+			std::list<float>::iterator itY = oldPosition.begin();
+			std::advance(itY, 1);
+			std::list<float>::iterator itTransY = translationVector.begin();
+			std::advance(itTransY, 1);
+			newPosition.push_back(*itY + *itTransY);
+			std::list<float>::iterator itZ = oldPosition.begin();
+			std::advance(itZ, 2);
+			std::list<float>::iterator itTransZ = translationVector.begin();
+			std::advance(itTransZ, 2);
+			newPosition.push_back(*itZ + *itTransZ);
+		}
+		it->second.setPosition(newPosition);
 	}
 }
 
@@ -84,18 +102,36 @@ void Library::remove_sound_source(int sourceId) {
 	}
 }
 
-void Library::move_source(std::list<float> newPosition,
+void Library::move_source(std::list<float> translationVector,
 	std::vector<float> newViewDirection,
 	std::vector<float> newUpDirection, int sourceId) {
 	
 	std::map<int, Sound>::iterator it = sounds.find(sourceId);
 	if (it != sounds.end()) {
-		it->second.setPosition(newPosition);
 		it->second.setViewDirecton(newViewDirection);
 		it->second.setUpDirection(newUpDirection);
 		if (it->second.hasProceduralFaceActor) {
+			it->second.setSoundTranslationVector(translationVector);
 			soundToMove.Add(it->first);
 		}
+		//update the position
+		std::list<float> oldPosition = it->second.getPosition();
+		std::list<float> newPosition;
+		if (oldPosition.size() >= 3) {
+			newPosition.push_back(oldPosition.front() + translationVector.front());
+			std::list<float>::iterator itY = oldPosition.begin();
+			std::advance(itY, 1);
+			std::list<float>::iterator itTransY = translationVector.begin();
+			std::advance(itTransY, 1);
+			newPosition.push_back(*itY + *itTransY);
+			std::list<float>::iterator itZ = oldPosition.begin();
+			std::advance(itZ, 2);
+			std::list<float>::iterator itTransZ = translationVector.begin();
+			std::advance(itTransZ, 2);
+			newPosition.push_back(*itZ + *itTransZ);
+		}
+		it->second.setPosition(newPosition);
+
 	}
 }
 

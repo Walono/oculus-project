@@ -20,4 +20,6 @@ private:
 	Library* library;
 
 	void addFaceToLibrary(FVector pos, TArray<FVector> face, int texture, int id);
+
+	void addSoundToLibrary(std::string name, FVector pos, FVector viewDirection, FVector upDirection, int id);
 };

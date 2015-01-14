@@ -37,6 +37,16 @@ int Face::getFaceId() {
 	return faceId;
 }
 
+std::list<float> Face::getTranslationVector()
+{
+	return translationVector;
+}
+
+std::list<float> Face::getRotation()
+{
+	return rotation;
+}
+
 void Face::setPosition(std::list<float> setPosition) {
 	position = setPosition;
 }
@@ -55,5 +65,14 @@ void Face::setfaceId(int setFaceId) {
 
 void Face::setFaceSpawned(bool isSpawned){
 	hasProceduralFaceActor = isSpawned;
+}
+
+void Face::setFaceTranslationVector(std::list<float> newTranslationVector)
+{
+	translationVector = newTranslationVector;
+}
+void Face::setFaceRotation(std::list<float> newRotation)
+{
+	rotation = newRotation;
 }
 

@@ -19,6 +19,7 @@ public:
 	// Allow viewing/changing the Material ot the procedural Mesh in editor (if placed in a level at construction)
 	UPROPERTY(VisibleAnywhere, Category = Materials)
 	TSubobjectPtr<UProceduralMeshComponent> mesh;
+
 	
 private:
 

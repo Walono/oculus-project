@@ -213,24 +213,41 @@ void ASpawnVolume::SpawnSound()
 
 void ASpawnVolume::MoveFace()
 {
-	Face* movedFace = library->getNextFaceToMove();
-	FVector newPosition;
-	std::list<float> facePositionList = movedFace->getPosition();
-	if (facePositionList.size() >= 3) {
-		newPosition.X = facePositionList.front();
-		std::list<float>::iterator itY = facePositionList.begin();
+	Face* movedFace = library->getNextFaceToMove();	
+
+	//Extracte the translation value and put it in a FVector
+	FVector newTranslation;
+	std::list<float> faceTranslationList = movedFace->getTranslationVector();
+	if (faceTranslationList.size() >= 3) {
+		newTranslation.X = faceTranslationList.front();
+		std::list<float>::iterator itY = faceTranslationList.begin();
 		std::advance(itY, 1);
-		newPosition.Y = *itY;
-		std::list<float>::iterator itZ = facePositionList.begin();
+		newTranslation.Y = *itY;
+		std::list<float>::iterator itZ = faceTranslationList.begin();
 		std::advance(itZ, 2);
-		newPosition.Z = *itZ;
+		newTranslation.Z = *itZ;
 	}	
+
+	//Extracte the rotationValue and put it in a FRotator
+	FRotator newRotation;
+	std::list<float> faceRotationList = movedFace->getRotation();
+	if (faceRotationList.size() >= 3) {
+		newRotation.Pitch = faceRotationList.front();
+		std::list<float>::iterator itY = faceRotationList.begin();
+		std::advance(itY, 1);
+		newRotation.Yaw = *itY;
+		std::list<float>::iterator itZ = faceRotationList.begin();
+		std::advance(itZ, 2);
+		newRotation.Roll = *itZ;
+	}
+
 	//Find the actor from the face
 	FString searchedFace = FString(TEXT("Face")) + FString::SanitizeFloat(movedFace->getFaceId());
 	for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr)	{
 		if (ActorItr->GetName() == searchedFace) {
 			//Teleport the actor to the new location
-			ActorItr->SetActorLocation(newPosition, false);
+			ActorItr->SetActorLocation(newTranslation, false);
+			ActorItr->SetActorRotation(newRotation);
 		}
 	}
 	library->deleteFaceMoved();
@@ -240,17 +257,17 @@ void ASpawnVolume::MoveSound()
 {
 	Sound* movedSound = library->getNextSoundToMove();
 
-	//Get and update the position
-	FVector newPosition;
+	//Extracte the translation value and put it in a FVector
+	FVector newTranslation;
 	std::list<float> soundPositionList = movedSound->getPosition();
 	if (soundPositionList.size() >= 3) {
-		newPosition.X = soundPositionList.front();
+		newTranslation.X = soundPositionList.front();
 		std::list<float>::iterator itY = soundPositionList.begin();
 		std::advance(itY, 1);
-		newPosition.Y = *itY;
+		newTranslation.Y = *itY;
 		std::list<float>::iterator itZ = soundPositionList.begin();
 		std::advance(itZ, 2);
-		newPosition.Z = *itZ;
+		newTranslation.Z = *itZ;
 	}
 	//Get and update the viewDirection
 	//Extracte the viewDirection to have the rotation
@@ -294,7 +311,7 @@ void ASpawnVolume::MoveSound()
 	for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr) {
 		if (ActorItr->GetName() == searchedSound) {
 			//Teleport the actor to the new location
-			ActorItr->SetActorLocation(newPosition, false);
+			ActorItr->SetActorLocation(newTranslation, false);
 			ActorItr->SetActorRotation(newRotation);
 		}
 	}

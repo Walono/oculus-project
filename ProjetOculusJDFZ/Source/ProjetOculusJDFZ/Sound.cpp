@@ -48,6 +48,12 @@ bool Sound::getSoundActivity() {
 	return isActive;
 }
 
+std::list<float> Sound::getTranslationVector()
+{
+	return translationVector;
+}
+
+
 void Sound::setPosition(std::list<float> newPosition) {
 	position = newPosition;
 }
@@ -70,4 +76,9 @@ void Sound::setSoundSpawned(bool isSpawned)
 void Sound::setSoundActive(bool isNewActive) 
 {
 	isActive = isNewActive;
+}
+
+void Sound::setSoundTranslationVector(std::list<float> newTranslationVector)
+{
+	translationVector = newTranslationVector;
 }

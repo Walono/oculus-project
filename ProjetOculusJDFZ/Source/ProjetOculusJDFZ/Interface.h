@@ -23,8 +23,9 @@ class Interface {
 		// Remove a face from the Environment
 		virtual void remove_face(int faceId) = 0;
 		
-		//Move a face in the Environment
-		virtual void move_face(std::list<float> newPosition, int faceId) = 0;
+		/**Move a face in the Environment with translation of position */
+		//rotation list with (Pitch, Yaw, Roll)
+		virtual void move_face(std::list<float> translationVector, std::list<float> rotation, int faceId) = 0;
 		
 		//Add a sound source to the environment
 		virtual void add_sound_source(std::string name, 
@@ -36,7 +37,7 @@ class Interface {
 		virtual void remove_sound_source(int sourceId) = 0;
 		
 		// Move a source sound from the environment
-		virtual void move_source(std::list<float> newPosition, 
+		virtual void move_source(std::list<float> translationVector,
 			std::vector<float> newViewDirection,
 			std::vector<float> newUpDirection, int sourceId) = 0;
 		

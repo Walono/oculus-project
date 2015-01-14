@@ -32,6 +32,31 @@ void FakeServer::addFaceToLibrary(FVector pos, TArray<FVector> face, int texture
 	library->add_face(facePosition, faceCoordinates, texture, id);
 }
 
+//void Library::add_sound_source(std::string name,
+//	std::list<float> position,
+//	std::vector<float> viewDirection,
+//	std::vector<float> upDirection, int sourceId) {
+
+void FakeServer::addSoundToLibrary(std::string name, FVector pos, FVector viewDirection, FVector upDirection, int id)
+{
+	std::list<float> soundPosition;
+	soundPosition.push_back(pos.X);
+	soundPosition.push_back(pos.Y);
+	soundPosition.push_back(pos.Z);
+
+	std::vector<float> soundViewDirection;
+	soundViewDirection.push_back(viewDirection.X);
+	soundViewDirection.push_back(viewDirection.Y);
+	soundViewDirection.push_back(viewDirection.Z);
+
+	std::vector<float> soundUpDirection;
+	soundUpDirection.push_back(upDirection.X);
+	soundUpDirection.push_back(upDirection.Y);
+	soundUpDirection.push_back(upDirection.Z);
+
+	library->add_sound_source(name, soundPosition, soundViewDirection, soundUpDirection, id);
+}
+
 void FakeServer::startSendingData()
 {
 	//The basic unit for our maze
@@ -52,7 +77,7 @@ void FakeServer::startSendingData()
 	floorcoord.Add(FVector((23 * unitLength) + 400.f, 0.f, 0.f));
 	floorcoord.Add(FVector((23 * unitLength) + 400.f, (16 * unitWidth) + 400.f, 0.f));
 	floorcoord.Add(FVector(0.f, (16 * unitWidth) + 400.f, 0.f));
-	addFaceToLibrary(FVector(-200.f, -200.f, 0.f), floorcoord, 0, 1);
+	addFaceToLibrary(FVector(-200.f, -200.f, 0.f), floorcoord, 1, 1);
 
 	//outside wall
 	TArray<FVector> outsideSouthCoord;
@@ -60,7 +85,7 @@ void FakeServer::startSendingData()
 	outsideSouthCoord.Add(FVector(0.f, 0.f, unitHigh));
 	outsideSouthCoord.Add(FVector(0.f, 16 * unitWidth, unitHigh));
 	outsideSouthCoord.Add(FVector(0.f, 16 * unitWidth, 0.f));
-	addFaceToLibrary(FVector(0.f, 0.f, 0.f), outsideSouthCoord, 0, 2);
+	addFaceToLibrary(FVector(0.f, 0.f, 0.f), outsideSouthCoord, 2, 2);
 
 	TArray<FVector> outsideEastCoord;
 	outsideEastCoord.Add(FVector(0.f, 0.f, 0.f));
@@ -713,4 +738,8 @@ void FakeServer::startSendingData()
 	twoNeedleNorthWestSecondNeedleSouthOposit.Add(FVector(0.f, 2 * unitWidth, unitHigh));
 	twoNeedleNorthWestSecondNeedleSouthOposit.Add(FVector(0.f, 2 * unitWidth, 0.f));
 	addFaceToLibrary(FVector(15 * unitLength, 3 * unitWidth, 0.f), twoNeedleNorthWestSecondNeedleSouthOposit, 0, 95);
+
+	//add sound
+
+	addSoundToLibrary("Sound1", FVector(3 * unitLength + 150.f, unitWidth + 150.f, 100.f), FVector(0.f, 1.f, 0.f), FVector(0.f, 0.f, 1.f), 1);
 }
