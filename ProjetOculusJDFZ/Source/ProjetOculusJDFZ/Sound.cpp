@@ -1,6 +1,7 @@
 #include "ProjetOculusJDFZ.h"
 #include "Sound.h"
 
+/* Constructors and Destructor */
 
 Sound::Sound(std::string name, std::list<float> position,
 	std::vector<float> viewDirection,
@@ -23,6 +24,7 @@ Sound::~Sound()
 {
 }
 
+/* Getter and Setter */
 
 std::string Sound::getName() {
 	return name;
