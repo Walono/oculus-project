@@ -11,7 +11,7 @@
 ASpawnVolume::ASpawnVolume(const class FPostConstructInitializeProperties& PCIP)
 	: Super(PCIP)
 {
-	//TODO: Find a way to self generate the spawnVolum without the editor
+	//TODO: create and spawn this actor in the GameMode during the initialize state or beginPlay()
 
 	//Set the initial position and size of our  spawnVolum
 	InitialSpawnVolumeDim = FVector(10000.f, 10000.f, 10000.f);
@@ -23,16 +23,10 @@ ASpawnVolume::ASpawnVolume(const class FPostConstructInitializeProperties& PCIP)
 	WhereToSpawn->SetWorldLocation(InitialSpawnVolumePos);
 	WhereToSpawn->AttachTo(RootComponent);
 
-	//Set the spawn delay
 	SpawnDelay = 500000.f;
-
 
 	//Make the SpawnVolume tickable.
 	PrimaryActorTick.bCanEverTick = true;
-
-	//TODO Use a key after to set it true/false
-	SetSpawningEnable(true);
-	Counter = 0;
 
 	library = Library::getLibrary();
 }
@@ -46,7 +40,7 @@ void ASpawnVolume::Tick(float DeltaSeconds)
 		library->setResetActivity(false);
 	}
 
-	//Is there a face to spawn?
+	//Can this class spawn element? 
 	if (bSpawningEnabled)
 	{
 		//increment the time befor spawnng
@@ -54,14 +48,14 @@ void ASpawnVolume::Tick(float DeltaSeconds)
 
 		if (SpawnTime > SpawnDelay)
 		{
-			//Skip if there is no face to spawn
+			//Is there a face to spawn?
 			if (library->isFacesToSpawnEmpty() == false) {
 				SpawnFace();
 
 				//Restart the timer
 				SpawnTime -= SpawnDelay;
 			}
-			//Skip if there is no sound to spawn
+			//Is thete a sound to spawn?
 			if (library->isSoundToSpawnEmpty() == false) {
 				SpawnSound();
 			}
@@ -96,7 +90,6 @@ void ASpawnVolume::Tick(float DeltaSeconds)
 
 void ASpawnVolume::SpawnFace()
 {
-	Counter += 1;
 		//Check the world is valid
 		UWorld* const World = GetWorld();
 		if (World)
@@ -203,7 +196,7 @@ void ASpawnVolume::SpawnSound()
 			SpawnParams.Instigator = Instigator;
 			SpawnParams.Name = FName(*searchedSound);
 
-			//Spawn the face, and update the library
+			//Spawn the sound, and update the library
 			AProceduralSoundActor* const SpawnedFace = World->SpawnActor<AProceduralSoundActor>(SpawnLocation, SpawnRotation, SpawnParams);
 			library->getNextSoundToSpawn()->setSoundSpawned(true);
 			library->deleteSoundSpawned();
@@ -320,6 +313,7 @@ void ASpawnVolume::MoveSound()
 
 void ASpawnVolume::DeleteFace()
 {
+	// Find the Actor with it name in all actor and destroy it
 	int faceId = library->getNextFaceIdToDelete();
 	FString searchedFace = FString(TEXT("Face")) + FString::SanitizeFloat((float)faceId);
 	for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr) {
@@ -333,6 +327,7 @@ void ASpawnVolume::DeleteFace()
 
 void ASpawnVolume::DeleteSound()
 {
+	// Find the Actor with it name in all actor and destroy it
 	int soundId = library->getNextSoundIdToDelete();
 	FString searchedSound = FString(TEXT("Sound")) + FString::SanitizeFloat((float)soundId);
 	for (TActorIterator<AActor> ActorItr(GetWorld()); ActorItr; ++ActorItr) {
@@ -349,11 +344,9 @@ void ASpawnVolume::IOSound()
 	Sound* soundToEnable = library->getNextSoundIdToEnable();
 	FString searchedSound = FString(TEXT("Sound")) + FString::SanitizeFloat((float)soundToEnable->getSourceId());
 
-	//find the current proceduralSoundActor
+	//find the current proceduralSoundActor with it name and play/stop it
 	TArray<AActor*> FoundActors;
-
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AProceduralSoundActor::StaticClass(), FoundActors);
-
 	for (auto Actor : FoundActors)
 	{
 		AProceduralSoundActor* ProceduralSoundActor = Cast<AProceduralSoundActor>(Actor);
@@ -367,11 +360,6 @@ void ASpawnVolume::IOSound()
 void ASpawnVolume::SetSpawningEnable(bool isEnable)
 {
 	bSpawningEnabled = isEnable;
-}
-
-void ASpawnVolume::SetSpawnVolumeDimension(float NewX, float NewY, float NewZ)
-{
-	InitialSpawnVolumeDim = FVector(NewX, NewY, NewZ);
 }
 
 bool ASpawnVolume::IsActorAlreadySpawned(FString FaceName){

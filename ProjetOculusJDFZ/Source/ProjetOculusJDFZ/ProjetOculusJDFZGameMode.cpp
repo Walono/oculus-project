@@ -26,33 +26,34 @@ void AProjetOculusJDFZGameMode::BeginPlay()
 
 	StartMatch();
 
+	//Wrtie a wellcome message the 5 first seconds
 	if (GEngine)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, TEXT("HELLO WORLD"));
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, TEXT("Wellcome to the simulation"));
 	}
 
-	//find all spawn volume actor
+	//find all spawn volume actor and store them
 	TArray<AActor*> FoundActors;
-
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ASpawnVolume::StaticClass(), FoundActors);
-
-	for (auto Actor : FoundActors)
-	{
+	for (auto Actor : FoundActors)	{
 		ASpawnVolume* SpawnVolumeActor = Cast<ASpawnVolume>(Actor);
 		if (SpawnVolumeActor)
 		{
 			SpawnVolumeActors.Add(SpawnVolumeActor);
 		}
 	}
+	//We currently don't need torstart the position
 	library->setResetActivity(false);
-	//set a default initial position
+
 	std::list<float> initPos;
 	initPos.push_back(0.f);
 	initPos.push_back(0.f);
 	initPos.push_back(50.f);
 	library->set_initial_position(initPos);
+
 	FakeServer fakeServer = FakeServer::FakeServer();
 	fakeServer.startSendingData();
+
 	SetCurrentState(EOculusProjectPlayStats::EInitialization);
 }
 
@@ -65,9 +66,10 @@ void AProjetOculusJDFZGameMode::SetCurrentState(EOculusProjectPlayStats NewState
 
 void AProjetOculusJDFZGameMode::HandleNewState(EOculusProjectPlayStats NewState)
 {
-	//Get the current character and it's controller. As we have only one of both, it is the character and controller 0.
+	//Get the current character and its controller. As we have only one of both, it is the character and controller 0.
 	APlayerController* PlayerController = UGameplayStatics::GetPlayerController(this, 0);
-	AOculusCharacter* MyCharacter = Cast<AOculusCharacter>(UGameplayStatics::GetPlayerPawn(this, 0));	
+	AOculusCharacter* MyCharacter = Cast<AOculusCharacter>(UGameplayStatics::GetPlayerPawn(this, 0));
+
 	switch (NewState)
 	{
 	case EOculusProjectPlayStats::EInitialization:
