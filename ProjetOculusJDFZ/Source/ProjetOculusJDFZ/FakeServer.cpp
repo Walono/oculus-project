@@ -737,6 +737,6 @@ void FakeServer::startSendingData()
 	//add sound
 
 	addSoundToLibrary("Sound1", FVector(1 * unitLength + 150.f, 14 * unitWidth + 250.f, 100.f), FVector(0.f, -1.f, 0.f), FVector(0.f, 0.f, 1.f), 1);
-	addSoundToLibrary("Sound1", FVector(19 * unitLength + 250.f, 14 * unitWidth + 150.f, 100.f), FVector(-1.f, 0.f, 0.f), FVector(0.f, 0.f, 1.f), 2);
-	addSoundToLibrary("Sound1", FVector(3 * unitLength + 50.f, 4 * unitWidth + 150.f, 100.f), FVector(1.f, 0.f, 0.f), FVector(0.f, 0.f, 1.f), 3);
+	addSoundToLibrary("Sound1", FVector(19 * unitLength + 250.f, 14 * unitWidth + 150.f, 100.f), FVector(-2.f, -1.f, 0.f), FVector(0.f, 0.f, 1.f), 2);
+	addSoundToLibrary("Sound1", FVector(18 * unitLength + 50.f, 7 * unitWidth + 150.f, 100.f), FVector(0.f, 2.f, 0.f), FVector(0.f, 0.f, 1.f), 3);
 }
