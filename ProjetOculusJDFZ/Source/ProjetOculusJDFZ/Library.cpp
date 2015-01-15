@@ -14,6 +14,7 @@ void Library::add_face(std::list<float> position,
 	Face newFace = Face::Face(position, coordinates, texture, faceId);
 	faces[faceId] = newFace;
 	if (isInTArray(facesToSpawn, newFace.getFaceId()) == false) {
+		// Add the Face to the facesToSPawn array
 		facesToSpawn.Add(newFace.getFaceId());
 	}
 
