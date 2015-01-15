@@ -16,9 +16,11 @@ enum class EOculusProjectPlayStats : short
 };
 
 /**
-*	Bachelor Project: Development and Implementation of an Oculus Rift Frontend for Audio-Visual VR Applications
+*	Bachelor Project: Development and Implementation of an Oculus Rift Frontend 
+*		for Audio-Visual VR Applications
 *	ProjetOculusJDFZGameMode
-*	Purpose: Rules the world, set the initial variable and handle the state and state changement
+*	Purpose: Rules the world, set the initial variable and handle the state and 
+*		state changement
 *
 *  @author Julie Djeffal & Fabien Zellweger
 */
@@ -39,7 +41,8 @@ private:
 	TArray<ASpawnVolume*> SpawnVolumeActors;
 
 	EOculusProjectPlayStats CurrentState;
-	/** change state and manage what's needed befor change it, called by SetCurrentState() only */
+	/** change state and manage what's needed befor change it, called by 
+		SetCurrentState() only */
 	void HandleNewState(EOculusProjectPlayStats NewState);
 
 	Library* library;

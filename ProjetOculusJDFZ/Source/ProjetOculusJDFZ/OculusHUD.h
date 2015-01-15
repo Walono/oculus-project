@@ -6,9 +6,11 @@
 #include "OculusHUD.generated.h"
 
 /**
-*	Bachelor Project: Development and Implementation of an Oculus Rift Frontend for Audio-Visual VR Applications
+*	Bachelor Project: Development and Implementation of an Oculus Rift Frontend 
+*		for Audio-Visual VR Applications
 *	OculusHUD
-*	Purpose: create a heads-up display to give the user some information on screen
+*	Purpose: create a heads-up display to give the user some information 
+*		on screen
 *
 *  @author Julie Djeffal & Fabien Zellweger
 */

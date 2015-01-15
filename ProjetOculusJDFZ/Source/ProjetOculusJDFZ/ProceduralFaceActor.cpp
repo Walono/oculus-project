@@ -16,9 +16,7 @@ AProceduralFaceActor(const class FPostConstructInitializeProperties& PCIP)
 	// as its BaseColor input
 	static ConstructorHelpers::FObjectFinder<UMaterialInterface> Material
 		(TEXT("Material'/Game/Materials/BrickTumbled_Mat.BrickTumbled_Mat'"));
-	// TODO Apply a real material with textures, using UVs
-	//	static ConstructorHelpers::FObjectFinder<UMaterialInterface> Material(TEXT("Material'/Game/Materials/M_Concrete_Poured.M_Concrete_Poured'"));
-	
+	// TODO find a way to realy display it
 	mesh->SetMaterial(0, Material.Object);
 	
 	//Get and store the vertex of the current face from the Library

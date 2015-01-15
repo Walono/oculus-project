@@ -30,7 +30,8 @@ void AProjetOculusJDFZGameMode::BeginPlay()
 	//Wrtie a wellcome message the 5 first seconds
 	if (GEngine)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, TEXT("Wellcome to the simulation"));
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, TEXT(
+			"Wellcome to the simulation"));
 	}
 
 	//find all spawn volume actor and store them

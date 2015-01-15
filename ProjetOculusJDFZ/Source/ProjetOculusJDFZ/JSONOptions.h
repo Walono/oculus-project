@@ -9,13 +9,15 @@
 
 /*
  *  JSON_LIBRARY must be declared if libjson is compiled as a static or dynamic 
- *  library.  This exposes a C-style interface, but none of the inner workings of libjson
+ *  library.  This exposes a C-style interface, but none of the inner workings 
+ *  of libjson
  */
 //#define JSON_LIBRARY
 
 
 /*
- *  JSON_STRICT removes all of libjson's extensions.  Meaning no comments, no special numbers
+ *  JSON_STRICT removes all of libjson's extensions.  Meaning no comments, no 
+ *	special numbers
  */
 //#define JSON_STRICT
 
@@ -25,8 +27,8 @@
  *  does on the fly parsing, validation is impossible, so this option will allow
  *  you to register an error callback so that you can record what is going wrong 
  *  before the library crashes.  This option does not protect from these errors,
- *  it simply tells you about them, which is nice for debugging, but not preferable
- *  for release candidates
+ *  it simply tells you about them, which is nice for debugging, but not 
+ *  preferable for release candidates
  */
 #ifndef JSON_DEBUG
 #ifdef _DEBUG
@@ -36,16 +38,16 @@
 
 
 /*
- *  JSON_ISO_STRICT turns off all code that uses non-standard C++.  This removes all
- *  references to long long and long double as well as a few others
+ *  JSON_ISO_STRICT turns off all code that uses non-standard C++.  This removes 
+ *  all references to long long and long double as well as a few others
  */
 //#define JSON_ISO_STRICT
 
 
 /*
  *  JSON_SAFE performs similarly to JSON_DEBUG, except this option does protect
- *  from the errors that it encounters.  This option is recommended for those who
- *  feel it's possible for their program to encounter invalid json.
+ *  from the errors that it encounters.  This option is recommended for those 
+ *  who feel it's possible for their program to encounter invalid json.
  */
 //#define JSON_SAFE
 
@@ -60,10 +62,11 @@
 
 /*
  *  JSON_PREPARSE causes all parsing to be done immediately.  By default, libjson
- *  parses nodes on the fly as they are needed, this makes parsing much faster if
- *  your program gets a lot of information that it doesn't need.  An example of
- *  this would be a client application communicating with a server if the server
- *  returns things like last modified date and other things that you don't use.
+ *  parses nodes on the fly as they are needed, this makes parsing much faster 
+ *  if your program gets a lot of information that it doesn't need.  An example 
+ *  of this would be a client application communicating with a server if the 
+ *  server returns things like last modified date and other things that you 
+ *	don't use.
  */
 //#define JSON_PREPARSE
 
@@ -288,7 +291,6 @@
  *  long will be used
  */
 #define JSON_INT_TYPE long long
-
 
 /*
  *  JSON_NUMBER_TYPE lets you change the number type for as_float as well as the internal storage for the
