@@ -35,3 +35,9 @@ https://wiki.unrealengine.com/First_Person_Shooter_C%2B%2B_Tutorial
 
 -How to add a ThirdParty library to a UE4 project: \\
 https://wiki.unrealengine.com/Linking_Static_Libraries_Using_The_Build_System
+
+-UE4 tutorial code
+https://www.youtube.com/playlist?list=PLZlv_N0_O1gb5xvsc7VM7pfoRAKLuIcFi
+
+Sound information:
+https://docs.unrealengine.com/latest/INT/Engine/Audio/Overview/index.html
