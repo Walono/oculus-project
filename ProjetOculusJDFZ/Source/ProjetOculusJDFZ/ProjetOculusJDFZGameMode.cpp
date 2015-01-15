@@ -27,35 +27,48 @@ void AProjetOculusJDFZGameMode::BeginPlay()
 
 	StartMatch();
 
+	//Wrtie a wellcome message the 5 first seconds
 	if (GEngine)
 	{
+<<<<<<< HEAD
 		GEngine->AddOnScreenDebugMessage(-1, 5.f,
 			FColor::Yellow, TEXT("HELLO WORLD"));
+=======
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, TEXT("Wellcome to the simulation"));
+>>>>>>> 6dc8f40f518fdfcc7f32e55f232c2529f34794ae
 	}
 
-	//find all spawn volume actor
+	//find all spawn volume actor and store them
 	TArray<AActor*> FoundActors;
+<<<<<<< HEAD
 
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), 
 		ASpawnVolume::StaticClass(), FoundActors);
 
 	for (auto Actor : FoundActors)
 	{
+=======
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ASpawnVolume::StaticClass(), FoundActors);
+	for (auto Actor : FoundActors)	{
+>>>>>>> 6dc8f40f518fdfcc7f32e55f232c2529f34794ae
 		ASpawnVolume* SpawnVolumeActor = Cast<ASpawnVolume>(Actor);
 		if (SpawnVolumeActor)
 		{
 			SpawnVolumeActors.Add(SpawnVolumeActor);
 		}
 	}
+	//We currently don't need torstart the position
 	library->setResetActivity(false);
-	//set a default initial position
+
 	std::list<float> initPos;
 	initPos.push_back(0.f);
 	initPos.push_back(0.f);
 	initPos.push_back(50.f);
 	library->set_initial_position(initPos);
+
 	FakeServer fakeServer = FakeServer::FakeServer();
 	fakeServer.startSendingData();
+
 	SetCurrentState(EOculusProjectPlayStats::EInitialization);
 }
 
@@ -69,12 +82,19 @@ SetCurrentState(EOculusProjectPlayStats NewState)
 
 void AProjetOculusJDFZGameMode::HandleNewState(EOculusProjectPlayStats NewState)
 {
+<<<<<<< HEAD
 	//Get the current character and it's controller. 
 	//As we have only one of both, it is the character and controller 0.
 	APlayerController* PlayerController = 
 		UGameplayStatics::GetPlayerController(this, 0);
 	AOculusCharacter* MyCharacter = 
 		Cast<AOculusCharacter>(UGameplayStatics::GetPlayerPawn(this, 0));	
+=======
+	//Get the current character and its controller. As we have only one of both, it is the character and controller 0.
+	APlayerController* PlayerController = UGameplayStatics::GetPlayerController(this, 0);
+	AOculusCharacter* MyCharacter = Cast<AOculusCharacter>(UGameplayStatics::GetPlayerPawn(this, 0));
+
+>>>>>>> 6dc8f40f518fdfcc7f32e55f232c2529f34794ae
 	switch (NewState)
 	{
 	case EOculusProjectPlayStats::EInitialization:

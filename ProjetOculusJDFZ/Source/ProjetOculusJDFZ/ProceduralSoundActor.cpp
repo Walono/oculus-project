@@ -4,66 +4,70 @@
 #include "ProceduralSoundActor.h"
 
 
-AProceduralSoundActor::AProceduralSoundActor(const class FPostConstructInitializeProperties& PCIP)
+AProceduralSoundActor::
+AProceduralSoundActor(const class FPostConstructInitializeProperties& PCIP)
 	: Super(PCIP)
 {
-	mesh = PCIP.CreateDefaultSubobject<UProceduralMeshComponent>(this, TEXT("ProceduralSound"));
+	mesh = PCIP.CreateDefaultSubobject<UProceduralMeshComponent>(this, 
+		TEXT("ProceduralSound"));
 
-	// Apply a simple material directly using the VertexColor as its BaseColor input
-	static ConstructorHelpers::FObjectFinder<UMaterialInterface> Material(TEXT("Material'/Game/Materials/BaseColor.BaseColor'"));
-	// TODO Apply a real material with textures, using UVs
-	//	static ConstructorHelpers::FObjectFinder<UMaterialInterface> Material(TEXT("Material'/Game/Materials/M_Concrete_Poured.M_Concrete_Poured'"));
+	// Apply a simple material directly using the VertexColor 
+	//as its BaseColor input
+	static ConstructorHelpers::FObjectFinder<UMaterialInterface> 
+		Material(TEXT("Material'/Game/Materials/BaseColor.BaseColor'"));
+	// TODO find a way to realy display it
 	mesh->SetMaterial(0, Material.Object);
 
-	//Create a audio for our mesh
-	AudioComp = PCIP.CreateDefaultSubobject<UAudioComponent>(this, TEXT("Object sound"));
-	static ConstructorHelpers::FObjectFinder<USoundWave> Sound(TEXT("SoundWave'/Game/Audio/short_audio.short_audio'"));
-
-	//The array of triangles who will build all faces
+	// The array of triangles who will build all faces
 	TArray<FProceduralMeshTriangle> triangles;
 
-	// Contains the points describing the polyline we are going to rotate
+	// Hard coded polyline for a speacker
 	TArray<FVector> points;
-
 	points.Add(FVector(25, 0, 0));
 	points.Add(FVector(19, 13, 0));
 	points.Add(FVector(38, 50, 0));
 	points.Add(FVector(25, 50, 0));
 	points.Add(FVector(7, 13, 0));
-	points.Add(FVector(0, 13, 0));
+	points.Add(FVector(0, 13, 0));	
 
-	
-
+	// Build the triangle Array, send it to the generator 
+	//and attach it to the Actor
 	GenerateLathe(points, 256, triangles);
 	mesh->SetProceduralMeshTriangles(triangles);
 	RootComponent = mesh;
 
+	// Create a audio for our mesh and give it a sound
+	AudioComp = PCIP.CreateDefaultSubobject<UAudioComponent>(this, 
+		TEXT("Object sound"));
+	static ConstructorHelpers::FObjectFinder<USoundWave> 
+		Sound(TEXT("SoundWave'/Game/Audio/blu.blu'"));
 	AudioComp->SetSound(Sound.Object);
 	AudioComp->AttachParent = RootComponent;
+	// Give the sound a cone attenuation
 	AudioComp->bOverrideAttenuation = true;
-	AudioComp->AttenuationOverrides.AttenuationShape = EAttenuationShape::Cone;
-	AudioComp->AttenuationOverrides.DistanceAlgorithm = ESoundDistanceModel::ATTENUATION_Linear;
-	AudioComp->AttenuationOverrides.ConeOffset = 150.f;
-	AudioComp->AttenuationOverrides.FalloffDistance = 3600.f;
-	/* The dimensions to use for the attenuation shape. Interpretation of the values differ per shape.
+	AudioComp->AttenuationOverrides.AttenuationShape = 
+		EAttenuationShape::Cone;
+	AudioComp->AttenuationOverrides.DistanceAlgorithm = 
+		ESoundDistanceModel::ATTENUATION_Linear;
+	AudioComp->AttenuationOverrides.ConeOffset = 450.f;
+	AudioComp->AttenuationOverrides.FalloffDistance = 4000.f;
+	/* The dimensions to use for the attenuation shape. Interpretation 
+	of the values differ per shape.
 	Sphere  - X is Sphere Radius. Y and Z are unused
 	Capsule - X is Capsule Half Height, Y is Capsule Radius, Z is unused
 	Box     - X, Y, and Z are the Box's dimensions
 	Cone    - X is Cone Radius, Y is Cone Angle, Z is Cone Falloff Angle
 	*/
-	AudioComp->AttenuationOverrides.AttenuationShapeExtents = FVector(1500.f, 15.f, 45.f);
+	AudioComp->AttenuationOverrides.AttenuationShapeExtents = 
+		FVector(1500.f, 15.f, 45.f);
 	AudioComp->Play();
 	
 }
 
 
-void AProceduralSoundActor::GenerateLathe(const TArray<FVector>& InPoints, const int InSegments, TArray<FProceduralMeshTriangle>& OutTriangles)
+void AProceduralSoundActor::GenerateLathe(const TArray<FVector>& InPoints, 
+	const int InSegments, TArray<FProceduralMeshTriangle>& OutTriangles)
 {
-		
-	UE_LOG(LogClass, Log, TEXT("AProceduralLatheActor::Lathe POINTS %d"), InPoints.Num());
-
-	TArray<FVector> verts;
-
 	// precompute some trig
 	float angle = FMath::DegreesToRadians(360.0f / InSegments);
 	float sinA = FMath::Sin(angle);
@@ -100,7 +104,8 @@ void AProceduralSoundActor::GenerateLathe(const TArray<FVector>& InPoints, const
 	FVector pLast(wp[wp.Num() - 1].X, 0, 0);
 
 	FProceduralMeshTriangle tri;
-	// for each segment draw the OutTriangles clockwise for normals pointing out or counterclockwise for the opposite (this here does CW)
+	// for each segment draw the OutTriangles clockwise for normals 
+	//pointing out or counterclockwise for the opposite (this here does CW)
 	for (int segment = 0; segment<InSegments; segment++)
 	{
 

@@ -8,8 +8,17 @@
 #include "SpawnVolume.generated.h"
 
 /**
- * 
- */
+*	Bachelor Project: Development and Implementation of 
+*   an Oculus Rift Frontend for Audio-Visual VR Applications
+*	SpawnVolume
+*	Purpose: Make the link between the library and the visualization. 
+*       Look into the library if there is something to do, and
+*		and acte in concequence.
+*		This Actor is curently placed in the editor. 
+*       No code doing this right now.
+*
+*  @author Julie Djeffal & Fabien Zellweger
+*/
 UCLASS()
 class PROJETOCULUSJDFZ_API ASpawnVolume : public AActor
 {
@@ -19,26 +28,23 @@ class PROJETOCULUSJDFZ_API ASpawnVolume : public AActor
 	UPROPERTY(VisibleInstanceOnly, Category = Spawning)
 	TSubobjectPtr<UBoxComponent> WhereToSpawn;
 
-	/** The delay of the delay */
+	/** How many tick between two spawn */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Spawning)
 	float SpawnDelay;
 
-	/** ovverdide the tick to spawn object on the right time */
+	/** ovverdide the tick to spawn object on the right time, 
+	* it tick every frame */
 	virtual void Tick(float DeltSeconds) override;
 
-	/** change the dimension of the spawnVolum according to the level dim */
-	UFUNCTION()
-	void SetSpawnVolumeDimension(float NewX, float NewY, float NewZ);
-
-	/** Enable/disable the spawning behaviours */
+	/** Enable/disable the spawning behaviours, called in 
+	* GameMode when changing state */
 	UFUNCTION()
 	void SetSpawningEnable(bool isEnable);
 
-	/** Verify if a FName already existe or not */
+	/** Verify if a FName already existe or not in the World's Actor list */
 	bool IsActorAlreadySpawned(FString FaceName);
 
 private:
-	int32 Counter;
 
 	/** The container of all object to spawn */
 	Library * library;
@@ -49,31 +55,34 @@ private:
 	/** Base dimension for the SpawnVolume */
 	FVector InitialSpawnVolumeDim;
 
-	/** Can be changed with SetSpawningEnable */
+	/** Can be changed with SetSpawningEnable() */
 	bool bSpawningEnabled;
 
-	/** Handles the spawning of a new Face */
+	/** Verify if a face is spawned, get the position from library, 
+		give it parameters and spawn a new Face, then update the library*/
 	void SpawnFace();
 
-	/** Handles the move of an existing Face */
+	/** Find the Actor to move with it name and move it*/
 	void MoveFace();
 
-	/** Handles the delete of an existing Face */
+	/** Find the Actor to delete with it name and destroy it */
 	void DeleteFace();
 
-	/** Handles the spawning of a Sound */
+	/** Verify if a sound is spawned, get the position and the 
+	viewDirection from library,
+	give it parameters and spawn a new Face, then update the library*/
 	void SpawnSound();
 
-	/** Handles the move of an existing Sound */
+	/** Find the Actor to move with it name and move it*/
 	void MoveSound();
 
-	/** Handles the delete of an existing Sound */
+	/** Find the Actor to delete with it name and destroy it */
 	void DeleteSound();
 
-	/** Handles the enable/disable of an existing Sound */
+	/** Handles the enable/disable sound of an existing Sound */
 	void IOSound();
 
-	/** The timer for when to spawn the Obect */
+	/** The timer for when to spawn the Obect, update every tick */
 	float SpawnTime;
 
 
