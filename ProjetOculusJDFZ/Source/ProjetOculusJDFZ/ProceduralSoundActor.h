@@ -20,12 +20,8 @@ class PROJETOCULUSJDFZ_API AProceduralSoundActor : public AActor
 	GENERATED_UCLASS_BODY()
 
 public:
-<<<<<<< HEAD
-	// Allow viewing/changing the Material ot the procedural 
-	// Mesh in editor (if placed in a level at construction)
-=======
+
 	/** The visual and physical entity of the Actor*/
->>>>>>> 6dc8f40f518fdfcc7f32e55f232c2529f34794ae
 	UPROPERTY(VisibleAnywhere, Category = Materials)
 	TSubobjectPtr<UProceduralMeshComponent> mesh;
 	/** The sound component we can manipulate with attenuation,... */
