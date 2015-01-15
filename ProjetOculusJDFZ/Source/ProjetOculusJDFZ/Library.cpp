@@ -14,42 +14,48 @@ void Library::add_face(std::list<float> position,
 	Face newFace = Face::Face(position, coordinates, texture, faceId);
 	faces[faceId] = newFace;
 	if (isInTArray(facesToSpawn, newFace.getFaceId()) == false) {
+		// Add the Face to the facesToSPawn array
 		facesToSpawn.Add(newFace.getFaceId());
 	}
 
 }
 
 void Library::remove_face(int faceId) {
+	// Look in the map if the Face exist
 	std::map<int, Face>::iterator it = faces.find(faceId);
 	if (it != faces.end()) {
+		//If the object exist in the Engine
 		if (it->second.hasProceduralFaceActor) {
 			facesToDelete.Add(it->first);
 		}
 		else {
+			//If the object is in facesToSpawn
 			if (isInTArray(facesToSpawn, it->first)) {
 				for (int i = 0; i < facesToSpawn.Num(); ++i) {
 					if (facesToSpawn[i] == it->first) {
 						facesToSpawn.RemoveAt(i);
-						faces.erase(it->first);
 						break;
 					}
 				}
 			}
+			faces.erase(it->first);
 		}
 	}
 }
 
 
 void Library::move_face(std::list<float> translationVector, std::list<float> rotation, int faceId) {
+	// Look in the map if the Face exist
 	std::map<int, Face>::iterator it = faces.find(faceId);
 	if (it != faces.end()) {
 		Face newFace = it->second;
+		//If the object exist in the Engine
 		if (newFace.hasProceduralFaceActor) {
 			it->second.setFaceTranslationVector(translationVector);
 			it->second.setFaceRotation(rotation);
 			facesToMove.Add(newFace.getFaceId());
 		}
-		//update the position
+		//Update the position depending of the translation Vector
 		std::list<float> oldPosition = it->second.getPosition();
 		std::list<float> newPosition;
 		if (oldPosition.size() >= 3) {
@@ -83,12 +89,15 @@ void Library::add_sound_source(std::string name,
 }
 
 void Library::remove_sound_source(int sourceId) {
+	// Look in the map if the Sound exist
 	std::map<int, Sound>::iterator it = sounds.find(sourceId);
 	if (it != sounds.end()) {
+		//If the object exist in the Engine
 		if (it->second.hasProceduralFaceActor) {
 			soundToDelete.Add(it->first);
 		}
-		else {
+		else {	
+			//If the object is in soundToSpawn
 			if (isInTArray(soundToSpawn, it->first)) {
 				for (int i = 0; i < soundToSpawn.Num(); i++) {
 					if (soundToSpawn[i] == it->first) {
@@ -105,7 +114,8 @@ void Library::remove_sound_source(int sourceId) {
 void Library::move_source(std::list<float> translationVector,
 	std::vector<float> newViewDirection,
 	std::vector<float> newUpDirection, int sourceId) {
-	
+		
+	// Look in the map if the Sound exist
 	std::map<int, Sound>::iterator it = sounds.find(sourceId);
 	if (it != sounds.end()) {
 		it->second.setViewDirecton(newViewDirection);
