@@ -1,6 +1,7 @@
 #include "ProjetOculusJDFZ.h"
 #include "Face.h"
 
+/*Constructors and Destructor */
 
 Face::Face(std::list<float> position, std::list<std::list<float>> coordinates,
 	int texture, int faceId) :
@@ -20,6 +21,9 @@ Face::Face(const Face& other) :
 	position(other.position), coordinates(other.coordinates), 
 	texture(other.texture), faceId(other.faceId), 
 	hasProceduralFaceActor(other.hasProceduralFaceActor) {}
+
+
+/* Getter and Setter */
 
 std::list<float> Face::getPosition() {
 	return position;

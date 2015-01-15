@@ -1,8 +1,13 @@
-/*
-Author: Julie Djeffal (julied20)
+/**
+*	Bachelor Project: Development and Implementation of an Oculus Rift Frontend for Audio-Visual VR Applications
+*	ParseFromJson
+*	Purpose: It's a Parser which take the JSON message we receive 
+*		from the server and extracts all the data 
+*		to store them in a DataFromJson object.
+*
+*  @author Julie Djeffal & Fabien Zellweger
+**/
 
-Class: ParseFromJson
-*/
 #pragma once
 #include<string>
 #include "DataFromJson.h"
@@ -13,7 +18,7 @@ class ParseFromJson
 {
 private:
 
-	//A string containong our JSON
+	//A string containing our JSON message
 	std::string json;
 
 public:
@@ -24,7 +29,8 @@ public:
 	~ParseFromJson();
 
 	/*
-	* Parse a or some JSON, and return the datas into an array
+	* Parse one or multiples JSON, and 
+	* @return an Array of parsed messages
 	*/
 	std::vector<DataFromJson> ParseJSON();
 

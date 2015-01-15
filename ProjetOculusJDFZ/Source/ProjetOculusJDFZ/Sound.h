@@ -1,3 +1,10 @@
+/**
+* Bachelor Project: Development and Implementation of an Oculus Rift Frontend for Audio-Visual VR Applications
+* Sound
+* Purpose: Represent a sound source
+* 
+* @author Julie Djeffal & Fabien Zellweger
+*/
 #pragma once
 #include<vector>
 #include<list>
@@ -5,6 +12,8 @@
 
 class Sound
 {
+	
+/* Constructors and Desctructor */
 public:
 	Sound(std::string name, std::list<float> position,
 		std::vector<float> viewDirection,
@@ -15,6 +24,8 @@ public:
 	Sound(const Sound& other);
 
 	~Sound();
+
+/* Getter and Setter */
 
 	std::string getName();
 	std::list<float> getPosition();

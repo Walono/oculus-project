@@ -1,10 +1,3 @@
-/*
-Author: Julie Djeffal (julied20)
-
-Class: DataFromJson
-*/
-
-
 #include "ProjetOculusJDFZ.h"
 #include "DataFromJson.h"
 

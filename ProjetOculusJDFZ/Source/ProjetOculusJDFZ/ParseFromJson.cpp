@@ -1,10 +1,7 @@
-/*
-Author: Julie Djeffal (julied20)
-
-Class: ParseFromJson
-*/
 #include "ProjetOculusJDFZ.h"
 #include "ParseFromJson.h"
+
+/* Constructors and Destructor */
 
 ParseFromJson::ParseFromJson()
 {
