@@ -42,7 +42,8 @@ private:
 	
 };
 
-FORCEINLINE EOculusProjectPlayStats AProjetOculusJDFZGameMode::GetCurrentState() const
+FORCEINLINE EOculusProjectPlayStats 
+AProjetOculusJDFZGameMode::GetCurrentState() const
 {
 	return CurrentState;
 };

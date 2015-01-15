@@ -2,4 +2,5 @@
 
 #include "ProjetOculusJDFZ.h"
 
-IMPLEMENT_PRIMARY_GAME_MODULE( FDefaultGameModuleImpl, ProjetOculusJDFZ, "ProjetOculusJDFZ" );
+IMPLEMENT_PRIMARY_GAME_MODULE( FDefaultGameModuleImpl, ProjetOculusJDFZ, 
+	"ProjetOculusJDFZ" );

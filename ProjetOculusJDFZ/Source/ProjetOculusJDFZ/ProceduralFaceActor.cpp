@@ -5,13 +5,17 @@
 #include "ProceduralFaceActor.h"
 
 
-AProceduralFaceActor::AProceduralFaceActor(const class FPostConstructInitializeProperties& PCIP)
+AProceduralFaceActor::
+AProceduralFaceActor(const class FPostConstructInitializeProperties& PCIP)
 	: Super(PCIP)
 {
-	mesh = PCIP.CreateDefaultSubobject<UProceduralMeshComponent>(this, TEXT("ProceduralFace"));
+	mesh = PCIP.CreateDefaultSubobject<UProceduralMeshComponent>(this, 
+		TEXT("ProceduralFace"));
 
-	// Apply a simple material directly using the VertexColor as its BaseColor input
-	static ConstructorHelpers::FObjectFinder<UMaterialInterface> Material(TEXT("Material'/Game/Materials/BrickTumbled_Mat.BrickTumbled_Mat'"));
+	// Apply a simple material directly using the VertexColor
+	// as its BaseColor input
+	static ConstructorHelpers::FObjectFinder<UMaterialInterface> Material
+		(TEXT("Material'/Game/Materials/BrickTumbled_Mat.BrickTumbled_Mat'"));
 	// TODO Apply a real material with textures, using UVs
 	//	static ConstructorHelpers::FObjectFinder<UMaterialInterface> Material(TEXT("Material'/Game/Materials/M_Concrete_Poured.M_Concrete_Poured'"));
 	
@@ -50,7 +54,8 @@ AProceduralFaceActor::AProceduralFaceActor(const class FPostConstructInitializeP
 	
 }
 
-void AProceduralFaceActor::GenerateFace(const TArray<FVector>& InPoints, TArray<FProceduralMeshTriangle>& OutTriangles){
+void AProceduralFaceActor::GenerateFace(const TArray<FVector>& InPoints, 
+	TArray<FProceduralMeshTriangle>& OutTriangles){
 
 	//Creat the midle point
 	float middleXPos = 0;
@@ -77,29 +82,36 @@ void AProceduralFaceActor::GenerateFace(const TArray<FVector>& InPoints, TArray<
 		//triangle.Vertex0.Color = color;
 		//triangle.Vertex1.Color = color;
 		//triangle.Vertex2.Color = color;
-		triangle.Vertex0.Position.Set(InPoints[i][0], InPoints[i][1], InPoints[i][2]);
+		triangle.Vertex0.Position.Set(InPoints[i][0], 
+			InPoints[i][1], InPoints[i][2]);
 		if (i == nbrPoints - 1) {
-			triangle.Vertex1.Position.Set(InPoints[0][0], InPoints[0][1], InPoints[0][2]);
+			triangle.Vertex1.Position.Set(InPoints[0][0], 
+				InPoints[0][1], InPoints[0][2]);
 		}
 		else {
-			triangle.Vertex1.Position.Set(InPoints[i + 1][0], InPoints[i + 1][1], InPoints[i + 1][2]);
+			triangle.Vertex1.Position.Set(InPoints[i + 1][0], 
+				InPoints[i + 1][1], InPoints[i + 1][2]);
 		}
 		triangle.Vertex2.Position.Set(middleXPos, middleYPos, middleZPos);
 
 		OutTriangles.Add(triangle);
 	}
-	//The same procedure is call on the other side to generate the mesh visible on both side
+	//The same procedure is call on the other side to generate
+	// the mesh visible on both side
 	for (i = nbrPoints - 1; i >= 0; --i){
 		FProceduralMeshTriangle triangle;
 		//triangle.Vertex0.Color = color;
 		//triangle.Vertex1.Color = color;
 		//triangle.Vertex2.Color = color;
-		triangle.Vertex0.Position.Set(InPoints[i][0], InPoints[i][1], InPoints[i][2]);
+		triangle.Vertex0.Position.Set(InPoints[i][0], 
+			InPoints[i][1], InPoints[i][2]);
 		if (i == 0) {
-			triangle.Vertex1.Position.Set(InPoints[nbrPoints - 1][0], InPoints[nbrPoints - 1][1], InPoints[nbrPoints - 1][2]);
+			triangle.Vertex1.Position.Set(InPoints[nbrPoints - 1][0], 
+				InPoints[nbrPoints - 1][1], InPoints[nbrPoints - 1][2]);
 		}
 		else {
-			triangle.Vertex1.Position.Set(InPoints[i - 1][0], InPoints[i - 1][1], InPoints[i - 1][2]);
+			triangle.Vertex1.Position.Set(InPoints[i - 1][0], 
+				InPoints[i - 1][1], InPoints[i - 1][2]);
 		}
 		triangle.Vertex2.Position.Set(middleXPos, middleYPos, middleZPos);
 

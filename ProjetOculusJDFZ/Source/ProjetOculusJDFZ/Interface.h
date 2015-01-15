@@ -1,7 +1,9 @@
 /**
- * Bachelor Project: Development and Implementation of an Oculus Rift Frontend for Audio-Visual VR Applications
+ * Bachelor Project: Development and Implementation of 
+ * an Oculus Rift Frontend for Audio-Visual VR Applications
  *  Interface
- *  Purpose: The Interface contains all the method we need to generate our environment in the engine
+ *  Purpose: The Interface contains all the method we need to generate
+ *  our environment in the engine
  *  @author Julie Djeffal & Fabien Zellweger
 */
 
@@ -21,7 +23,8 @@ class Interface {
      		* @param The caracteristics of a Face
      		*/
 		virtual void add_face(std::list<float> position, 
-			std::list<std::list<float>> coordinates, int texture, int faceId) = 0;
+			std::list<std::list<float>> coordinates, 
+			int texture, int faceId) = 0;
 		
 		/**
      		* Remove a Face from the Library
@@ -33,7 +36,8 @@ class Interface {
      		* Modifiy the position of a Face in the Library
      		* @param The new position and rotation of a Face and its ID
      		*/
-		virtual void move_face(std::list<float> translationVector, std::list<float> rotation, int faceId) = 0;
+		virtual void move_face(std::list<float> translationVector, 
+			std::list<float> rotation, int faceId) = 0;
 		
 		/**
      		* Add a Sound source to the Library
@@ -53,7 +57,8 @@ class Interface {
 		
 		/**
      		* Move a Sound source in the Library
-     		* @param The new positions caracteristics of the Sounf source and its ID
+     		* @param The new positions caracteristics 
+			* of the Sounf source and its ID
      		*/
 		virtual void move_source(std::list<float> translationVector,
 			std::vector<float> newViewDirection,

@@ -44,7 +44,8 @@ void Library::remove_face(int faceId) {
 }
 
 
-void Library::move_face(std::list<float> translationVector, std::list<float> rotation, int faceId) {
+void Library::move_face(std::list<float> translationVector, 
+	std::list<float> rotation, int faceId) {
 	// Look in the map if the Face exist
 	std::map<int, Face>::iterator it = faces.find(faceId);
 	if (it != faces.end()) {
@@ -59,7 +60,8 @@ void Library::move_face(std::list<float> translationVector, std::list<float> rot
 		std::list<float> oldPosition = it->second.getPosition();
 		std::list<float> newPosition;
 		if (oldPosition.size() >= 3) {
-			newPosition.push_back(oldPosition.front() + translationVector.front());
+			newPosition.push_back(oldPosition.front() + 
+				translationVector.front());
 			std::list<float>::iterator itY = oldPosition.begin();
 			std::advance(itY, 1);
 			std::list<float>::iterator itTransY = translationVector.begin();
@@ -128,7 +130,8 @@ void Library::move_source(std::list<float> translationVector,
 		std::list<float> oldPosition = it->second.getPosition();
 		std::list<float> newPosition;
 		if (oldPosition.size() >= 3) {
-			newPosition.push_back(oldPosition.front() + translationVector.front());
+			newPosition.push_back(oldPosition.front() + 
+				translationVector.front());
 			std::list<float>::iterator itY = oldPosition.begin();
 			std::advance(itY, 1);
 			std::list<float>::iterator itTransY = translationVector.begin();

@@ -1,7 +1,8 @@
 
 /**
-* Bachelor Project: Development and Implementation of an Oculus Rift Frontend for Audio-Visual VR Applications
-* FakeServer
+* Bachelor Project: Development and Implementation of 
+* an Oculus Rift Frontend for Audio-Visual VR Applications
+* Library
 * Purpose: It's a storage manager for all our environment. 
 * Every Objects, Scene, Sound sources created, deleted or 
 * moved are stored in the Library.  
@@ -35,7 +36,8 @@ public:
 
 	virtual void remove_face(int faceId);
 
-	virtual void move_face(std::list<float> translationVector, std::list<float> rotation, int faceId);
+	virtual void move_face(std::list<float> translationVector, 
+		std::list<float> rotation, int faceId);
 
 	virtual void add_sound_source(std::string name,
 		std::list<float> position,

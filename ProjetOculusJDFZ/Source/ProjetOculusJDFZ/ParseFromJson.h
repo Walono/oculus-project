@@ -1,5 +1,6 @@
 /**
-*	Bachelor Project: Development and Implementation of an Oculus Rift Frontend for Audio-Visual VR Applications
+*	Bachelor Project: Development and Implementation of 
+*   an Oculus Rift Frontend for Audio-Visual VR Applications
 *	ParseFromJson
 *	Purpose: It's a Parser which take the JSON message we receive 
 *		from the server and extracts all the data 

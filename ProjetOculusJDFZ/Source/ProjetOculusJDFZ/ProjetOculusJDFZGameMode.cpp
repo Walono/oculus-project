@@ -8,7 +8,8 @@
 
 
 
-AProjetOculusJDFZGameMode::AProjetOculusJDFZGameMode(const class FPostConstructInitializeProperties& PCIP)
+AProjetOculusJDFZGameMode::
+AProjetOculusJDFZGameMode(const class FPostConstructInitializeProperties& PCIP)
 	: Super(PCIP)
 {
 	//Set the default pawn class, respectivly our character
@@ -28,13 +29,15 @@ void AProjetOculusJDFZGameMode::BeginPlay()
 
 	if (GEngine)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, TEXT("HELLO WORLD"));
+		GEngine->AddOnScreenDebugMessage(-1, 5.f,
+			FColor::Yellow, TEXT("HELLO WORLD"));
 	}
 
 	//find all spawn volume actor
 	TArray<AActor*> FoundActors;
 
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ASpawnVolume::StaticClass(), FoundActors);
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), 
+		ASpawnVolume::StaticClass(), FoundActors);
 
 	for (auto Actor : FoundActors)
 	{
@@ -56,7 +59,8 @@ void AProjetOculusJDFZGameMode::BeginPlay()
 	SetCurrentState(EOculusProjectPlayStats::EInitialization);
 }
 
-void AProjetOculusJDFZGameMode::SetCurrentState(EOculusProjectPlayStats NewState)
+void AProjetOculusJDFZGameMode::
+SetCurrentState(EOculusProjectPlayStats NewState)
 {
 	CurrentState = NewState;
 
@@ -65,9 +69,12 @@ void AProjetOculusJDFZGameMode::SetCurrentState(EOculusProjectPlayStats NewState
 
 void AProjetOculusJDFZGameMode::HandleNewState(EOculusProjectPlayStats NewState)
 {
-	//Get the current character and it's controller. As we have only one of both, it is the character and controller 0.
-	APlayerController* PlayerController = UGameplayStatics::GetPlayerController(this, 0);
-	AOculusCharacter* MyCharacter = Cast<AOculusCharacter>(UGameplayStatics::GetPlayerPawn(this, 0));	
+	//Get the current character and it's controller. 
+	//As we have only one of both, it is the character and controller 0.
+	APlayerController* PlayerController = 
+		UGameplayStatics::GetPlayerController(this, 0);
+	AOculusCharacter* MyCharacter = 
+		Cast<AOculusCharacter>(UGameplayStatics::GetPlayerPawn(this, 0));	
 	switch (NewState)
 	{
 	case EOculusProjectPlayStats::EInitialization:
@@ -101,7 +108,8 @@ void AProjetOculusJDFZGameMode::HandleNewState(EOculusProjectPlayStats NewState)
 			CharacterInitialPosition.Y = *itY;
 			std::list<float>::iterator itZ = newInitialPosition.begin();
 			std::advance(itZ, 2);
-			//add 50.f to fall on your point, and give the editor the time to spawn your floor
+			//add 50.f to fall on your point, 
+			//and give the editor the time to spawn your floor
 			CharacterInitialPosition.Z = *itZ + 50.f;
 		}
 		//Teleport the character to the new position

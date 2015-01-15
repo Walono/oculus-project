@@ -1,5 +1,6 @@
 /**
-* Bachelor Project: Development and Implementation of an Oculus Rift Frontend for Audio-Visual VR Applications
+* Bachelor Project: Development and Implementation of 
+* an Oculus Rift Frontend for Audio-Visual VR Applications
 * Scene
 * Purpose: It's  a  container  for  a  set  of  objects
 * 
