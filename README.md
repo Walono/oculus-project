@@ -5,8 +5,8 @@ Bachelor project
 
 What you need:
 
--Visual Studio 2013 \n
--Unreal Engine 4.5 
+- Visual Studio 2013
+- Unreal Engine 4.5 
 
 What you need to do:
 
