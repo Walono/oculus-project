@@ -1,1 +1,0 @@
-start D:\Data\UE4\UnrealEngine4.5\UnrealEngine\Engine\Binaries\Win64\UE4Editor.exe "D:\Data\EPFL\Bachelor-Project\oculus-project\ProjetOculusJDFZ\ProjetOculusJDFZ.uproject" -game
